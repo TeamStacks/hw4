@@ -15,7 +15,7 @@
     <script src="./js/velocity.min.js"></script>
     <script src="./js/main.js"></script>
     <script src="./js/account.js"></script>
-    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+    <script type="text/javascript" src="./js/parse-1.4.2.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <title>Login - CoinFlip</title>
@@ -56,14 +56,14 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="SignUpModal">Sign Up</h4>
           </div>
-          <form onsubmit="signUp()">
+          <form>
             <div class="modal-body">
                   Username: <input type="text" id="user"><br>
                   Password: <input type="password" id="pass">
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Sign Up</button>
+              <button type="button" class="btn btn-primary" onclick="signUp()">Sign Up</button>
             </div>
           </form>
         </div>
@@ -77,14 +77,14 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="LogInModal">Log In</h4>
           </div>
-          <form onsubmit="logIn()">
+          <form>
             <div class="modal-body">
                   Username: <input type="text" id="user2"><br>
                   Password: <input type="password" id="pass2">
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Log In</button>
+              <button type="button" class="btn btn-primary" onclick="logIn()">Log In</button>
             </div>
           </form>
         </div>

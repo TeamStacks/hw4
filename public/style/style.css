@@ -1098,21 +1098,20 @@ select {
 }
 
 .modal-content {
-    background-color: white;
-    font-family: Tahoma;
-    color: black;
-    font-size: 16px;
+    background-color: #272E32;
+
+    color: white;
 
 }
 
-.modal input {
-    font-family: Arial;
-    font-weight:300;
+.no-dec {
+
+    font-size:20px;
 
 }
 
 .close2 {
     float: right;
     font-weight: 600;
+    font-family: Arial;
 }
-

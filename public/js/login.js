@@ -9,8 +9,8 @@ function addStuff() {
 	  if (xhr.readyState == 4) {
 	    var result = JSON.parse(xhr.responseText);
 	    if (result.objectId) {
-	      alert("saved an object with id: " + result.objectId);
-	      
+	      //alert("saved an object with id: " + result.objectId);
+	      window.location ="http://teamstacks.parseapp.com/wire2.html";
 	    }
 	  }
 	}

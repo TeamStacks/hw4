@@ -64,43 +64,43 @@
                     <table>
                         <tr>
                             <td>Metal</td>
-                            <td>Gold</td>
+                            <td id="metal">Loading</td>
                         </tr>
                         <tr>
                             <td>Type</td>
-                            <td>US Eagle</td>
+                            <td id="type">Loading</td>
                         </tr>
                         <tr>
                             <td>Purchase Date</td>
-                            <td>04 March 2015</td>
+                            <td id="purchase_date">Loading</td>
                         </tr>
                         <tr>
                             <td>Qty.</td>
-                            <td>1</td>
+                            <td id="quantity">Loading</td>
                         </tr>
                         <tr>
                             <td>Premium</td>
-                            <td>47.00</td>
+                            <td id="premium">Loading</td>
                         </tr>
                         <tr>
                             <td>Unit Price</td>
-                            <td>1250.60</td>
+                            <td id="unit_price">Loading</td>
                         </tr>
                         <tr>
                             <td>Gold %</td>
-                            <td>0.999</td>
+                            <td id="metal_percentage">Loading</td>
                         </tr>
                         <tr>
                             <td>Weight/unit (g)</td>
-                            <td>1.244</td>
+                            <td id="weight_per_unit">Loading</td>
                         </tr>
                         <tr>
                             <td>Gold g/u</td>
-                            <td>1.244</td>
+                            <td id="grams_per_unit">Loading</td>
                         </tr>
                         <tr>
                             <td>Gold ozt/u</td>
-                            <td>0.0400</td>
+                            <td id="ozt_per_unit">Loading</td>
                         </tr>
                         <tr>
                             <td>Total au (ozt)</td>
@@ -108,7 +108,7 @@
                         </tr>
                         <tr>
                             <td><strong>TOTAL</strong></td>
-                            <td><strong>1199.10</strong></td>
+                            <td><strong id="value">Loading</strong></td>
                         </tr>
                     </table>
                 </section>
@@ -120,6 +120,61 @@
 
         verify();
         loadFooter();
+
+        var inventoryId = "4DxjNX8gsg";
+
+        loadInventory(inventoryId);
+
+        function loadInventory(inventoryId) {
+            var Inventory = Parse.Object.extend("Inventory");
+            var query = new Parse.Query(Inventory);
+            query.get(inventoryId, {
+                success: function(inventory) {
+                    var purchaseDate = inventory.get("purchaseDate");
+                    var quantity = inventory.get("quantity");
+                    var type = inventory.get("type");
+                    var value = inventory.get("value");
+
+                    $("#purchase_date").text(purchaseDate.toDateString());
+                    $("#quantity").text(quantity);
+                    $("#value").text(value);
+
+                    loadCoin(type.id);
+                },
+                error: function(inventory, error) {
+                    alert("Unable to retrieve inventory! " + error.message);
+                }
+            });
+        }
+
+        function loadCoin(coinId) {
+            var Coin = Parse.Object.extend("Coin");
+            var query = new Parse.Query(Coin);
+            query.get(coinId, {
+                success: function(coin) {
+                    var type = coin.get("Type");
+                    var gramsPerUnit = coin.get("gramsPerUnit");
+                    var metal = coin.get("metal");
+                    var metalPercentage = coin.get("metalPercentage");
+                    var oztPerUnit = coin.get("oztPerUnit");
+                    var premium = coin.get("premium");
+                    var unitPrice = coin.get("unitPrice");
+                    var weightPerUnit = coin.get("weightPerUnit");
+
+                    $("#type").text(type);
+                    $("#grams_per_unit").text(gramsPerUnit);
+                    $("#metal").text(metal);
+                    $("#metal_percentage").text(metalPercentage);
+                    $("#ozt_per_unit").text(oztPerUnit);
+                    $("#premium").text(premium);
+                    $("#unit_price").text(unitPrice);
+                    $("#weight_per_unit").text(weightPerUnit);
+                },
+                error: function(coin, error) {
+                    alert("Unable to retrieve coin! " + error.message);
+                }
+            });
+        }
     </script>
 </body>
 

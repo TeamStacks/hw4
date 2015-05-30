@@ -45,8 +45,10 @@ function logfb() {
   success: function(user) {
     if (!user.existed()) {
       alert("User signed up and logged in through Facebook!");
+      window.location.href="./wire2.html";
     } else {
       alert("User logged in through Facebook!");
+      window.location.href="./wire2.html";
     }
   },
   error: function(user, error) {

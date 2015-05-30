@@ -46,10 +46,28 @@ function logOut() {
 	    window.location.href="./index.html"
 }
 
+function update() {
+	newpass = document.getElementById('pass').value;
+	var user = Parse.User.current();
+	user.set("password", newpass);
+
+	user.save(null, {
+	  success: function(user) {
+		alert("You have updated your profile.");
+	  },
+	  error: function(user, error) {
+	    // Show the error message somewhere and let the user try again.
+	    alert("Error: " + error.code + " " + error.message);
+	  }
+	});
+}
+
 function verify() {
 	var currentUser = Parse.User.current();
 	if (currentUser) {
-	    // do stuff with the user
+		Parse.User.current().fetch().then(function (user) {
+    		document.getElementById('user').innerHTML = user.get('username');
+		});
 	} else {
 	    window.location.href="./index.html"
 	}

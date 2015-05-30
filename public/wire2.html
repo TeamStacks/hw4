@@ -5,6 +5,8 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="description" content="bullion management site, rare coins, gold, silver, platinum">
     <meta name="author" content="CSE134B Dream Team">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="./style/style.css">
     <meta name=viewport content="width=device-width, initial-scale=.8, minimum-scale = .8, user-scalable=yes">
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
@@ -20,11 +22,12 @@
 </head>
 
 <body>
+
+
     <script type="text/javascript">loadTopNavPersist();</script>
     <script type="text/javascript">loadSideNav(0);</script>
 
     <section class="main-section">
-
 
         <section class="coin_wrapper">
             <section class="overview-panel">
@@ -183,6 +186,30 @@
         </section>
 
     </section>
+
+    <div class="modal fade" id="profile" tabindex="-1" role="dialog" aria-labelledby="ProfileModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="ProfileModal">My Profile</h4>
+          </div>
+          <form>
+            <div class="modal-body">
+                  Username: <span id="user"></span><br>
+                  New Password: <input type="password" id="pass"><br>
+                <button type="button" class="btn btn-primary" onclick="update()">Update Profile</button> <button type="button" class="btn btn-primary" onclick="linkfb()">Link Facebook</button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                <button type="button" class="btn btn-danger" onclick="logOut()">Log Out</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
 
     <script type="text/javascript">
         Parse.initialize("m8lsJLtBtcOGqT0h9RmcWRIpxpiwyb3Yq6HqrCk2", "XxRGWHTh79dNb2iMpuZ9k5uKUU9IPQDmghGwfgJ6");

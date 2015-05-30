@@ -13,7 +13,7 @@ function signUp() {
 
 	user.signUp(null, {
 	  success: function(user) {
-	  	alert("Your account has been created!");
+	  	//alert("Your account has been created!");
 	    window.location="http://teamstacks.parseapp.com/wire2.html";
 	  },
 	  error: function(user, error) {
@@ -30,7 +30,7 @@ function logIn() {
 	pass = document.getElementById('pass2').value;
 	Parse.User.logIn(name, pass, {
 	  	success: function(user) {
-		   	alert("You have successfully logged in!");
+		   	//alert("You have successfully logged in!");
 	    	window.location="http://teamstacks.parseapp.com/wire2.html";
 		},
 		error: function(user, error) {
@@ -44,11 +44,8 @@ function logIn() {
 
 function logOut() {
 	Parse.User.logOut();
-	if (currentUser == null) {
-	    alert("You have successfully logged out.");
+	    //alert("You have successfully logged out.");
 	    window.location="http://teamstacks.parseapp.com"
-
-	}
 }
 
 function verify() {
@@ -57,5 +54,12 @@ function verify() {
 	    // do stuff with the user
 	} else {
 	    window.location="http://teamstacks.parseapp.com"
+	}
+}
+
+function verifyFirst() {
+	var currentUser = Parse.User.current();
+	if (currentUser) {
+	    window.location="http://teamstacks.parseapp.com/wire2.html"
 	}
 }

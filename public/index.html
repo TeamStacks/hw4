@@ -14,7 +14,7 @@
     <script src="./js/jquery-1.11.2.min.js"></script>
     <script src="./js/velocity.min.js"></script>
     <script src="./js/main.js"></script>
-    <script src="./js/login.js"></script>
+    <script src="./js/account.js"></script>
     <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
@@ -49,44 +49,44 @@
 
     </div>
 
-    <div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="SignUpModal" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Sign Up</h4>
+            <h4 class="modal-title" id="SignUpModal">Sign Up</h4>
           </div>
-           <form onsubmit="addStuff()">
-          <div class="modal-body">
-           
-                Username: <input><br>
-                Password: <input>
-            
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Sign Up</button>
-
-          </div>
+          <form onsubmit="signUp()">
+            <div class="modal-body">
+                  Username: <input type="text" id="user"><br>
+                  Password: <input type="password" id="pass">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Sign Up</button>
+            </div>
           </form>
         </div>
       </div>
     </div>
 
-    <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="LogInModal" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Log In</h4>
+            <h4 class="modal-title" id="LogInModal">Log In</h4>
           </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Sign Up</button>
-          </div>
+          <form onsubmit="logIn()">
+            <div class="modal-body">
+                  Username: <input type="text" id="user2"><br>
+                  Password: <input type="password" id="pass2">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Log In</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -94,7 +94,7 @@
     <script type="text/javascript">
       loadFooter();
 
-      Parse.initialize("Bn4qZapXuVfTFxqRoeagbdQgpPiCIdGdudgnDBSB", "bqE6qmaTnILaijsSicwKWSKYwaoLZGLSp3YC7wDA");
+      Parse.initialize("m8lsJLtBtcOGqT0h9RmcWRIpxpiwyb3Yq6HqrCk2", "XxRGWHTh79dNb2iMpuZ9k5uKUU9IPQDmghGwfgJ6");
      
     </script>
 

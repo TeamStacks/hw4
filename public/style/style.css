@@ -828,6 +828,7 @@ a:hover, a:focus {
     height: 30px;
     line-height: 30px;
     margin-bottom: 15px;
+    background-color: #1D1D1D;
     cursor: pointer;
 }
 
@@ -1099,15 +1100,18 @@ select {
 
 .modal-content {
     background-color: #272E32;
-
     color: white;
-
 }
 
 .no-dec {
 
     font-size:20px;
 
+}
+
+.modal-content input {
+    font-family: Arial;
+    font-weight: 300;
 }
 
 .close2 {

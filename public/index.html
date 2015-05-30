@@ -16,12 +16,14 @@
     <script src="./js/main.js"></script>
     <script src="./js/account.js"></script>
     <script type="text/javascript" src="./js/parse-1.4.2.min.js"></script>
+    <script type="text/javascript" src="./js/parsefb.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <title>Login - CoinFlip</title>
 </head>
 
 <body>
+
     <nav>
         COINFLIP
     </nav>
@@ -68,7 +70,7 @@
               </div>
             </div>
               <div class="modal-footer">            
-                <button type="button" class="btn btn-primary" onclick="linkfb()">Sign Up with Facebook</button> 
+                <button type="button" class="btn btn-primary" onclick="logfb()">Sign Up with Facebook</button> 
                 <button type="button" class="btn btn-primary" onclick="signUp()">Sign Up</button>
               </div>
           </form>
@@ -104,10 +106,8 @@
     </div>
 
     <script type="text/javascript">
-      Parse.initialize("m8lsJLtBtcOGqT0h9RmcWRIpxpiwyb3Yq6HqrCk2", "XxRGWHTh79dNb2iMpuZ9k5uKUU9IPQDmghGwfgJ6");
       verifyFirst();
       loadFooter();
-     
     </script>
 
 </body>

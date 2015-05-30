@@ -16,6 +16,7 @@
     <script src="./js/main.js"></script>
     <script src="./js/account.js"></script>
     <script type="text/javascript" src="./js/parse-1.4.2.min.js"></script>
+    <script type="text/javascript" src="./js/parsefb.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <title>Gold Item - CoinFlip</title>
@@ -115,9 +116,35 @@
             </div>
         </section>
     </section>
-    <script type="text/javascript">
-        Parse.initialize("m8lsJLtBtcOGqT0h9RmcWRIpxpiwyb3Yq6HqrCk2", "XxRGWHTh79dNb2iMpuZ9k5uKUU9IPQDmghGwfgJ6");
 
+    <div class="modal fade" id="profile" tabindex="-1" role="dialog" aria-labelledby="ProfileModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close2 btn btn-default" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="ProfileModal">MY PROFILE</h4>
+          </div>
+          <form>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>USERNAME</label><br>
+                    <p id="user" class="no-dec"></p>
+                </div>
+                <div class="form-group">
+                    <label for="pass">NEW PASSWORD</label>
+                    <input type="password" class="form-control" id="pass" placeholder="Password">
+                </div>
+                <button type="button" class="btn btn-primary" onclick="update()">Update Profile</button> <button type="button" class="btn btn-primary" onclick="linkfb()">Link Facebook</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="logOut()">Log Out</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <script type="text/javascript">
         verify();
         loadFooter();
 

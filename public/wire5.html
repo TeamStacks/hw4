@@ -122,7 +122,7 @@
                         </tr>
                         <tr>
                             <td><strong>TOTAL</strong></td>
-                            <td><strong>1199.10</strong></td>
+                            <td><strong id="total_value">1199.10</strong></td>
                         </tr>
                     </table>
                     <a href="#"><span id="save">Save to My Stack</span></a>
@@ -151,7 +151,6 @@
         var weightPerUnit = parseFloat($("#weight_per_unit").text());
 
         var Coin = Parse.Object.extend("Coin");
-
         var coin = new Coin();
 
         coin.save({
@@ -165,10 +164,34 @@
             weightPerUnit: weightPerUnit
         }, {
             success: function(coin) {
-                window.location.href = '/wire3.html';
+                saveInventory(coin);
             },
             error: function(coin, error) {
                 alert("Unable to save coin! " + error);
+            }
+        });
+    }
+
+    function saveInventory(coin) {
+        var purchaseDate = new Date($("#purchase_date").val());
+        var quantity = parseInt($("#quantity").val());
+        var type = coin;
+        var totalValue = parseFloat($("#total_value").text());
+
+        var Inventory = Parse.Object.extend("Inventory");
+        var inventory = new Inventory();
+
+        inventory.save({
+            purchaseDate: purchaseDate,
+            quantity: quantity,
+            type: type,
+            value: totalValue
+        }, {
+            success: function(inventory) {
+                window.location.href = "/wire3.html";
+            },
+            error: function(inventory, error) {
+                alert("Unable to save inventory! " + error);
             }
         });
     }

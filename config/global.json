@@ -1,0 +1,14 @@
+{
+  "global": {
+    "parseVersion": "1.4.2"
+  },
+  "applications": {
+    "_default": {
+      "link": "cse134b"
+    },
+    "cse134b": {
+      "applicationId": "m8lsJLtBtcOGqT0h9RmcWRIpxpiwyb3Yq6HqrCk2",
+      "masterKey": "Ki2kKASQxWI8AXspzzWku5BYKAsMZ2txg94neR4N"
+    }
+  }
+}

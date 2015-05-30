@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="description" content="bullion management site, rare coins, gold, silver, platinum">
+    <meta name="author" content="CSE134B Dream Team">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./style/style.css">
+    <meta name=viewport content="width=device-width, initial-scale=.8, minimum-scale = .8, user-scalable=yes">
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <script src="./js/jquery-1.11.2.min.js"></script>
+    <script src="./js/velocity.min.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./js/login.js"></script>
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <title>Login - CoinFlip</title>
+</head>
+
+<body>
+    <nav>
+        COINFLIP
+    </nav>
+    <div class="mobile-nav">
+        COINFLIP
+    </div>
+    <div id="w1-wrapper">
+
+        <section id="w1-left">
+            <h1>COINFLIP</h1>
+            <h3>Manage your coin collection with a simple app.</h3>
+
+            <a href="#signup" data-toggle="modal" data-target="#signup"><span id="sign-up-button">Sign up</span></a>
+            <a href="#login" data-toggle="modal" data-target="#login"><span id="log-in-button">Log in</span></a>
+        </section>
+
+        <section id="w1-right">
+            <div id="iphone">
+                <div id="iphone-camera"></div>
+                <div id="iphone-speaker"></div>
+                <div id="iphone-screen"></div>
+                <div id="iphone-home"></div>
+            </div>
+        </section>
+
+    </div>
+
+    <div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Sign Up</h4>
+          </div>
+           <form onsubmit="addStuff()">
+          <div class="modal-body">
+           
+                Username: <input><br>
+                Password: <input>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Log In</h4>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Sign Up</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      loadFooter();
+
+      Parse.initialize("Bn4qZapXuVfTFxqRoeagbdQgpPiCIdGdudgnDBSB", "bqE6qmaTnILaijsSicwKWSKYwaoLZGLSp3YC7wDA");
+     
+    </script>
+
+</body>
+
+</html>

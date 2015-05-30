@@ -1091,3 +1091,7 @@ select {
         visibility: hidden;
     }
 }
+
+.modal-content {
+    background-color: black;
+}

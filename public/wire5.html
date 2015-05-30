@@ -79,25 +79,25 @@
                         <tr>
                             <td>Purchase Date</td>
                             <td>
-                                <input id="purchase_date" name="purchase_date" value="04 March 2015" />
+                                <input id="purchase_date" name="purchase_date" type="date" />
                             </td>
                         </tr>
                         <tr>
                             <td>Qty.</td>
                             <td>
-                                <input id="quantity" name="quantity" value="1" />
+                                <input id="quantity" name="quantity" />
                             </td>
                         </tr>
                         <tr>
                             <td>Premium</td>
                             <td>
-                                <input id="premium" name="quantity" value="47.00" />
+                                <input id="premium" name="quantity" />
                             </td>
                         </tr>
                         <tr>
                             <td>Unit Price</td>
                             <td>
-                                <input id="unit_price" name="quantity" value="1250.60" />
+                                <input id="unit_price" name="quantity" />
                             </td>
                         </tr>
                         <tr>
@@ -167,7 +167,7 @@
                 saveInventory(coin);
             },
             error: function(coin, error) {
-                alert("Unable to save coin! " + error);
+                alert("Unable to save coin!");
             }
         });
     }
@@ -188,16 +188,20 @@
             value: totalValue
         }, {
             success: function(inventory) {
-                window.location.href = "/wire3.html";
+                window.location.href = "./wire3.html";
             },
             error: function(inventory, error) {
-                alert("Unable to save inventory! " + error);
+                alert("Unable to save inventory!");
             }
         });
     }
 
     $("#save").click(function() {
         saveCoin();
+    });
+
+    $("#cancel").click(function() {
+        window.location.href = "/wire3.html";
     });
     </script>
 </body>

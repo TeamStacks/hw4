@@ -44,10 +44,10 @@ function logIn() {
 
 function logOut() {
 	Parse.User.logOut();
-	if (currentUser == null)
+	if (currentUser == null) {
 	    alert("You have successfully logged out.");
 	    window.location="http://teamstacks.parseapp.com"
-	
+
 	}
 }
 

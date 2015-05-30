@@ -1,3 +1,4 @@
+
 function signUp() {
 	name = document.getElementById('user').value;
 	pass = document.getElementById('pass').value;
@@ -37,6 +38,24 @@ function logIn() {
 		}
 	});
 
-	
+
 	event.preventDefault(); 
+}
+
+function logOut() {
+	Parse.User.logOut();
+	if (currentUser == null)
+	    alert("You have successfully logged out.");
+	    window.location="http://teamstacks.parseapp.com"
+	
+	}
+}
+
+function verify() {
+	var currentUser = Parse.User.current();
+	if (currentUser) {
+	    // do stuff with the user
+	} else {
+	    window.location="http://teamstacks.parseapp.com"
+	}
 }

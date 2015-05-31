@@ -104,7 +104,7 @@
                         <tr>
                             <td>Premium</td>
                             <td>
-                                <input id="premium" name="quantity" class="values"/>
+                                <input id="premium" name="quantity"/>
                             </td>
                         </tr>
                         <tr>
@@ -119,7 +119,7 @@
                         </tr>
                         <tr>
                             <td>Weight/unit (g)</td>
-                            <td id="weight_per_unit">1.244</td>
+                            <td id="weight_per_unit" class="values">1.244</td>
                         </tr>
                         <tr>
                             <td>Gold g/u</td>
@@ -198,12 +198,12 @@
 
     // calculations for the ajax total
     $(".values").keyup(function() {
-        var sum = 0;
+        var total = 1;
         $(".values").each(function(){
-            sum += Number($(this).val());
+            total *= Number($(this).val());
         });
-        $("#total_value").text(sum);
-        console.log("current sum: " + sum);
+        $("#total_value").text(total);
+        console.log("current total: " + total);
     });
 
     // for checking if valid input before submitting
@@ -212,28 +212,63 @@
     }
 
     function upImg() {
-        var newImg = document.getElementById('#coinfile');
-        var filename = $('#coinfile').val().replace(/C:\\fakepath\\/i, '');
+        var uploadImage = $("#coinfile")[0];
+             var file = uploadImage.files[0];
+             var name = $('#coinfile').val().replace(/C:\\fakepath\\/i, '');
+         // This function is called when the user clicks on Upload to Parse. It will create the REST API request to upload this image to Parse.
+      var serverUrl = 'https://api.parse.com/1/files/' + name;
+
+      $.ajax({
+        type: "POST",
+        beforeSend: function(request) {
+          request.setRequestHeader("X-Parse-Application-Id", 'm8lsJLtBtcOGqT0h9RmcWRIpxpiwyb3Yq6HqrCk2');
+          request.setRequestHeader("X-Parse-REST-API-Key", 'JrtCwMABQRvOOtixhzLAZwk46nhxnUlJBIuxx1NZ');
+          request.setRequestHeader("Content-Type", file.type);
+        },
+        url: serverUrl,
+        data: file,
+        processData: false,
+        contentType: false,
+        success: function(data) {
+          alert("File available at: " + data.url);
+        },
+        error: function(data) {
+          var obj = jQuery.parseJSON(data);
+          alert(obj.error);
+        }
+      });
+
+        // var uploadImage = $("#coinfile")[0];
+
+        //  if(uploadImage.files.length > 0) {
+        //     console.log("Uploading an image called " + filename);
+        //     var file = uploadImage.files[0];
+        //     var name = $('#coinfile').val().replace(/C:\\fakepath\\/i, '');
+        //     var imageFile = new Parse.File(name, file);
+
+        //     var result = imageFile.save()
+        // }
+        ////////////
         //var newImg = new Parse.File(filename, newImg);
 
-        console.log("Uploading an image called " + filename);
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "https://api.parse.com/1/files/" + filename, true);
-        xhr.setRequestHeader("X-Parse-Application-Id", "m8lsJLtBtcOGqT0h9RmcWRIpxpiwyb3Yq6HqrCk2");
-        xhr.setRequestHeader("X-Parse-REST-API-Key", "JrtCwMABQRvOOtixhzLAZwk46nhxnUlJBIuxx1NZ");
-        xhr.setRequestHeader("Content-Type", "image/jpeg");
+
+        // var xhr = new XMLHttpRequest();
+        // xhr.open("POST", "https://api.parse.com/1/files/" + filename, true);
+        // xhr.setRequestHeader("X-Parse-Application-Id", "m8lsJLtBtcOGqT0h9RmcWRIpxpiwyb3Yq6HqrCk2");
+        // xhr.setRequestHeader("X-Parse-REST-API-Key", "JrtCwMABQRvOOtixhzLAZwk46nhxnUlJBIuxx1NZ");
+        // xhr.setRequestHeader("Content-Type", "image/jpeg");
 
 
-        xhr.send(newImg);
-        xhr.onreadystatechange = function() {
-          if (xhr.readyState == 4) {
-            var result = JSON.parse(xhr.responseText);
-            if (result.url) {
-              console.log("saved an object with id: " + result.url);
+        // xhr.send(newImg);
+        // xhr.onreadystatechange = function() {
+        //   if (xhr.readyState == 4) {
+        //     var result = JSON.parse(xhr.responseText);
+        //     if (result.url) {
+        //       console.log("saved an object with id: " + result.url);
               
-            }
-          }
-        }
+        //     }
+        //   }
+        // }
 
     }
 

@@ -47,7 +47,7 @@ function logfb() {
       alert("You have signed up and logged in through Facebook!");
       window.location.href="./wire2.html";
     } else {
-      alert("You logged in through Facebook!");
+      //alert("You logged in through Facebook!");
       window.location.href="./wire2.html";
     }
   },
@@ -62,7 +62,7 @@ function linkfb() {
 	if (!Parse.FacebookUtils.isLinked(user)) {
   		Parse.FacebookUtils.link(user, null, {
     		success: function(user) {
-      			alert("Woohoo, you logged in with Facebook!");
+      			alert("Woohoo, you have linked your account with Facebook!");
     		},
     		error: function(user, error) {
       			alert("You cancelled the Facebook login or did not fully authorize.");
@@ -92,7 +92,7 @@ function update() {
 
 	user.save(null, {
 	  success: function(user) {
-		alert("You have updated your profile.");
+		alert("Your profile has been updated.");
 	  },
 	  error: function(user, error) {
 	    // Show the error message somewhere and let the user try again.

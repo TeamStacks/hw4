@@ -73,6 +73,7 @@ function linkfb() {
   		Parse.FacebookUtils.unlink(user, {
   			success: function(user) {
     			alert("Your account is no longer associated with your Facebook account.");
+    			document.getElementById('fblink').innerHTML = "Link Facebook";
   			}
 		});
   	}

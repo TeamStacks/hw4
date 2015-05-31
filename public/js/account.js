@@ -44,15 +44,15 @@ function logfb() {
 	Parse.FacebookUtils.logIn(null, {
   success: function(user) {
     if (!user.existed()) {
-      alert("User signed up and logged in through Facebook!");
+      alert("You have signed up and logged in through Facebook!");
       window.location.href="./wire2.html";
     } else {
-      alert("User logged in through Facebook!");
+      alert("You logged in through Facebook!");
       window.location.href="./wire2.html";
     }
   },
   error: function(user, error) {
-    alert("User cancelled the Facebook login or did not fully authorize.");
+    alert("You cancelled the Facebook login or did not fully authorize.");
   }
 });
 }
@@ -62,17 +62,17 @@ function linkfb() {
 	if (!Parse.FacebookUtils.isLinked(user)) {
   		Parse.FacebookUtils.link(user, null, {
     		success: function(user) {
-      			alert("Woohoo, user logged in with Facebook!");
+      			alert("Woohoo, you logged in with Facebook!");
     		},
     		error: function(user, error) {
-      			alert("User cancelled the Facebook login or did not fully authorize.");
+      			alert("You cancelled the Facebook login or did not fully authorize.");
     		}
   		});
 	}
   	else {
   		Parse.FacebookUtils.unlink(user, {
   			success: function(user) {
-    			alert("The user is no longer associated with their Facebook account.");
+    			alert("Your account is no longer associated with your Facebook account.");
   			}
 		});
   	}
@@ -107,7 +107,7 @@ function verify() {
 		Parse.User.current().fetch().then(function (user) {
     		document.getElementById('user').innerHTML = user.get('username');
     		if (Parse.FacebookUtils.isLinked(user)) {
-    			document.getElementById('linkfb').innerHTML = user.get('Unlink Facebook');
+    			document.getElementById('linkfb').innerHTML = "Unlink Facebook";
     		}
 		});
 	} else {

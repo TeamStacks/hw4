@@ -90,19 +90,19 @@
                         <tr>
                             <td>Qty.</td>
                             <td>
-                                <input id="quantity" name="quantity" />
+                                <input id="quantity" name="quantity" class="values"/>
                             </td>
                         </tr>
                         <tr>
                             <td>Premium</td>
                             <td>
-                                <input id="premium" name="quantity" />
+                                <input id="premium" name="quantity" class="values"/>
                             </td>
                         </tr>
                         <tr>
                             <td>Unit Price</td>
                             <td>
-                                <input id="unit_price" name="quantity" />
+                                <input id="unit_price" name="quantity" class="values"/>
                             </td>
                         </tr>
                         <tr>
@@ -127,7 +127,7 @@
                         </tr>
                         <tr>
                             <td><strong>TOTAL</strong></td>
-                            <td><strong id="total_value">1199.10</strong></td>
+                            <td><strong id="total_value">0.0</strong></td>
                         </tr>
                     </table>
                     <a href="#"><span id="save">Save to My Stack</span></a>
@@ -168,6 +168,22 @@
     verify();
     loadFooter();
 
+    // calculations for the ajax total
+    $(".values").keyup(function() {
+        var sum = 0;
+        $(".values").each(function(){
+            sum += Number($(this).val());
+        });
+        $("#total_value").text(sum);
+        console.log("current sum: " + sum);
+    });
+
+    // for checking if valid input before submitting
+    function validateAdd() {
+        // not sure, but parse might validate for us already - Angie
+    }
+
+    // saving the coin and inventory
     function saveCoin() {
         var type = $("#type").val();
         var gramsPerUnit = parseFloat($("#grams_per_unit").text());

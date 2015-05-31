@@ -217,7 +217,7 @@
       error: function(error) {
         alert("Unable to retrieve coin! " + error.message);
       }
-    })
+    });
 
     function retrieveCoin(coinId) {
       var Coin = Parse.Object.extend("Coin");

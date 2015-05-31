@@ -148,57 +148,72 @@
         verify();
         loadFooter();
 
-        var inventoryId = "4DxjNX8gsg";
+        var user = Parse.User.current();
+        var urlParams = parseURLParams();
 
-        loadInventory(inventoryId);
+        loadCoin(urlParams['id']);
 
-        function loadInventory(inventoryId) {
-            var Inventory = Parse.Object.extend("Inventory");
-            var query = new Parse.Query(Inventory);
-            query.get(inventoryId, {
-                success: function(inventory) {
-                    var purchaseDate = inventory.get("purchaseDate");
-                    var quantity = inventory.get("quantity");
-                    var type = inventory.get("type");
-                    var value = inventory.get("value");
-
-                    $("#purchase_date").text(purchaseDate.toDateString());
-                    $("#quantity").text(quantity);
-                    $("#value").text(value);
-
-                    loadCoin(type.id);
-                },
-                error: function(inventory, error) {
-                    alert("Unable to retrieve inventory! " + error.message);
-                }
+        function parseURLParams() {
+            var params = {};
+            window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(ms, key,value) {
+                params[key] = value;
             });
+            return params;
         }
 
-        function loadCoin(coinId) {
+        function loadCoin(inventoryId) {
             var Coin = Parse.Object.extend("Coin");
-            var query = new Parse.Query(Coin);
-            query.get(coinId, {
-                success: function(coin) {
-                    var type = coin.get("Type");
-                    var gramsPerUnit = coin.get("gramsPerUnit");
-                    var metal = coin.get("metal");
-                    var metalPercentage = coin.get("metalPercentage");
-                    var oztPerUnit = coin.get("oztPerUnit");
-                    var premium = coin.get("premium");
-                    var unitPrice = coin.get("unitPrice");
-                    var weightPerUnit = coin.get("weightPerUnit");
+            var coinType = new Parse.Query(Coin);
 
-                    $("#type").text(type);
-                    $("#grams_per_unit").text(gramsPerUnit);
-                    $("#metal").text(metal);
-                    $("#metal_percentage").text(metalPercentage);
-                    $("#ozt_per_unit").text(oztPerUnit);
-                    $("#premium").text(premium);
-                    $("#unit_price").text(unitPrice);
-                    $("#weight_per_unit").text(weightPerUnit);
+            // Make sure the coin actually exists...
+            coinType.get(inventoryId, {
+                success: function(coin) {
+                    var Inventory = Parse.Object.extend("Inventory");
+                    var userInventory = new Parse.Query(Inventory);
+                    userInventory.equalTo("ownedBy", user);
+                    userInventory.equalTo("type", coin);
+
+                    // Cool, now make sure the coin is actually in the user's inventory
+                    userInventory.find({
+                        success: function(userItem) {
+                            // THERE CAN BE ONLY ONE!!!! (I think...)
+                            if(userItem.length !== 1) {
+                                alert("Unable to retrieve inventory!");
+                            } else {
+                                var purchaseDate = userItem[0].get("purchaseDate");
+                                var quantity = userItem[0].get("quantity");
+                                var value = userItem[0].get("value");
+                                var type = coin.get("Type");
+                                var gramsPerUnit = coin.get("gramsPerUnit");
+                                var metal = coin.get("metal");
+                                var metalPercentage = coin.get("metalPercentage");
+                                var oztPerUnit = coin.get("oztPerUnit");
+                                var premium = coin.get("premium");
+                                var unitPrice = coin.get("unitPrice");
+                                var weightPerUnit = coin.get("weightPerUnit");
+
+                                $("#purchase_date").text(purchaseDate.toDateString());
+                                $("#quantity").text(quantity);
+                                $("#value").text(value);
+                                $("#type").text(type);
+                                $("#grams_per_unit").text(gramsPerUnit);
+                                $("#metal").text(metal);
+                                $("#metal_percentage").text(metalPercentage);
+                                $("#ozt_per_unit").text(oztPerUnit);
+                                $("#premium").text(premium);
+                                $("#unit_price").text(unitPrice);
+                                $("#weight_per_unit").text(weightPerUnit);
+                            }
+                        },
+                        // Someone's a broke asshole...
+                        error: function(inventory, error) {
+                            alert("Unable to retrieve inventory! " + error.message);
+                        }
+                    });
                 },
-                error: function(coin, error) {
-                    alert("Unable to retrieve coin! " + error.message);
+                // The cake's a lie...
+                error: function(inventory, error) {
+                    alert("Unable to retrieve inventory! " + error.message);
                 }
             });
         }

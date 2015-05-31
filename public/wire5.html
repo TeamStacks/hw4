@@ -214,8 +214,8 @@
 
     function upImg() {
         var uploadImage = $("#coinfile")[0];
-             var file = uploadImage.files[0];
-             var name = $('#coinfile').val().replace(/C:\\fakepath\\/i, '');
+        var file = uploadImage.files[0];
+        var name = $('#coinfile').val().replace(/C:\\fakepath\\/i, '');
          // This function is called when the user clicks on Upload to Parse. It will create the REST API request to upload this image to Parse.
       var serverUrl = 'https://api.parse.com/1/files/' + name;
 
@@ -232,7 +232,7 @@
         contentType: false,
         success: function(data) {
             console.log("File available at: " + data.url);
-            $(".img_container")[0].innerHTML ='<img src="'+data.url+'">';
+            $(".img_container")[0].innerHTML ='<img id="coinimg" src="'+data.url+'">';
             $('#uploadimg').modal('hide');
           
         },
@@ -242,43 +242,12 @@
         }
       });
 
-        // var uploadImage = $("#coinfile")[0];
-
-        //  if(uploadImage.files.length > 0) {
-        //     console.log("Uploading an image called " + filename);
-        //     var file = uploadImage.files[0];
-        //     var name = $('#coinfile').val().replace(/C:\\fakepath\\/i, '');
-        //     var imageFile = new Parse.File(name, file);
-
-        //     var result = imageFile.save()
-        // }
-        ////////////
-        //var newImg = new Parse.File(filename, newImg);
-
-
-        // var xhr = new XMLHttpRequest();
-        // xhr.open("POST", "https://api.parse.com/1/files/" + filename, true);
-        // xhr.setRequestHeader("X-Parse-Application-Id", "m8lsJLtBtcOGqT0h9RmcWRIpxpiwyb3Yq6HqrCk2");
-        // xhr.setRequestHeader("X-Parse-REST-API-Key", "JrtCwMABQRvOOtixhzLAZwk46nhxnUlJBIuxx1NZ");
-        // xhr.setRequestHeader("Content-Type", "image/jpeg");
-
-
-        // xhr.send(newImg);
-        // xhr.onreadystatechange = function() {
-        //   if (xhr.readyState == 4) {
-        //     var result = JSON.parse(xhr.responseText);
-        //     if (result.url) {
-        //       console.log("saved an object with id: " + result.url);
-              
-        //     }
-        //   }
-        // }
-
     }
 
     // saving the coin and inventory
     function saveCoin() {
         var type = $("#type").val();
+        var imgUrl = $('#coinimg').attr('src');
         var gramsPerUnit = parseFloat($("#grams_per_unit").text());
         var metal = $("#metal").val();
         var metalPercentage = parseFloat($("#metal_percentage").text());
@@ -287,11 +256,13 @@
         var unitPrice = parseFloat($("#unit_price").val());
         var weightPerUnit = parseFloat($("#weight_per_unit").text());
 
+
         var Coin = Parse.Object.extend("Coin");
         var coin = new Coin();
 
         coin.save({
             Type: type,
+            imageURL: imgUrl,
             gramsPerUnit: gramsPerUnit,
             metal: metal,
             metalPercentage: metalPercentage,
@@ -310,55 +281,26 @@
     }
 
     function saveInventory(coin) {
-        var Inventory = Parse.Object.extend("Inventory");
-        var inventory = new Inventory();
-
-        var uploadImage = $("#upload-img")[0];
         var purchaseDate = new Date($("#purchase_date").val());
         var quantity = parseInt($("#quantity").val());
         var type = coin;
         var totalValue = parseFloat($("#total_value").text());
-
-        if(uploadImage.files.length > 0) {
-            var file = uploadImage.files[0];
-            var name = "coin.jpg";
-            var imageFile = new Parse.File(name, file);
-
-            imageFile.save().then(function() {
-                inventory.save({
-                    purchaseDate: purchaseDate,
-                    quantity: quantity,
-                    type: type,
-                    ownedBy: Parse.User.current(),
-                    image: imageFile,
-                    value: totalValue
-                }, {
-                    success: function(inventory) {
-                        window.location.href = "./wire3.html";
-                    },
-                    error: function(inventory, error) {
-                        alert("Unable to save inventory!");
-                    }
-                });
-            }, function(error) {
+        var Inventory = Parse.Object.extend("Inventory");
+        var inventory = new Inventory();
+        inventory.save({
+            purchaseDate: purchaseDate,
+            quantity: quantity,
+            type: type,
+            ownedBy: Parse.User.current(),
+            value: totalValue
+        }, {
+            success: function(inventory) {
+                window.location.href = "./wire3.html";
+            },
+            error: function(inventory, error) {
                 alert("Unable to save inventory!");
-            });
-        } else {
-            inventory.save({
-                purchaseDate: purchaseDate,
-                quantity: quantity,
-                type: type,
-                ownedBy: Parse.User.current(),
-                value: totalValue
-            }, {
-                success: function (inventory) {
-                    window.location.href = "./wire3.html";
-                },
-                error: function (inventory, error) {
-                    alert("Unable to save inventory!");
-                }
-            });
-        }
+            }
+        });
     }
 
     $("#save").click(function() {

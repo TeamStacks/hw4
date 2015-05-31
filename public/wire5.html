@@ -179,6 +179,7 @@
             <button type="button" class="close2 btn btn-default" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="UploadModal">UPLOAD A PICTURE</h4>
           </div>
+          <form id="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
             <div class="modal-body">
                 <p>We only support JPG/JPEG images at the moment.</p>
                 <input type="file" id="coinfile"></input>
@@ -186,6 +187,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" onclick="upImg()">Upload</button>
             </div>
+        </form>
         </div>
       </div>
     </div>
@@ -219,7 +221,7 @@
         xhr.open("POST", "https://api.parse.com/1/files/" + filename, true);
         xhr.setRequestHeader("X-Parse-Application-Id", "m8lsJLtBtcOGqT0h9RmcWRIpxpiwyb3Yq6HqrCk2");
         xhr.setRequestHeader("X-Parse-REST-API-Key", "JrtCwMABQRvOOtixhzLAZwk46nhxnUlJBIuxx1NZ");
-        xhr.setRequestHeader("Content-Type", "image/jpg");
+        xhr.setRequestHeader("Content-Type", "image/jpeg");
 
 
         xhr.send(newImg);

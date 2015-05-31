@@ -67,6 +67,10 @@ function linkfb() {
     error: function(user, error) {
       alert("User cancelled the Facebook login or did not fully authorize.");
     }
+  }
+  else {
+  	// unlink!
+
   });
 }
 }
@@ -98,6 +102,9 @@ function verify() {
 	if (currentUser) {
 		Parse.User.current().fetch().then(function (user) {
     		document.getElementById('user').innerHTML = user.get('username');
+    		if (Parse.FacebookUtils.isLinked(user)) {
+    			document.getElementById('linkfb').innerHTML = user.get('Unlink Facebook');
+    		}
 		});
 	} else {
 	    window.location.href="./index.html"

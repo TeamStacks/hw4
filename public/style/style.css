@@ -381,6 +381,16 @@ a:hover, a:focus {
     margin-top: 30px;
 }
 
+#upload-img {
+    background: transparent;
+    color: white;
+    text-decoration: none;
+    width: 275px;
+    height: 40px;
+    line-height: 40px;
+    margin-top: 15px;
+}
+
 #sign-up-button {
     background: #1C3A3F;
     border: 1px solid #151515;
@@ -861,12 +871,13 @@ a:hover, a:focus {
     padding-bottom: 50px;
 }
 
-.coin_detail a {
+.coin_image a {
     text-decoration: none;
     color: #E6E6E6;
 }
 
-.coin_detail span {
+.coin_detail span,
+.coin_image span {
     display: block;
     height: 55px;
     line-height: 55px;
@@ -876,7 +887,8 @@ a:hover, a:focus {
     margin-right: auto;
 }
 
-.coin_detail table {
+.coin_detail table,
+.coin_detail a {
     width: 275px;
     margin-left: auto;
     margin-right: auto;

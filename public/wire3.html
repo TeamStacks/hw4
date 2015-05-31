@@ -195,15 +195,11 @@
     var Inventory = Parse.Object.extend("Inventory");
     var inventory = new Inventory();
     var query = new Parse.Query(Inventory);
-    var numInventories = 0;
-    var numCoins = 0;
     var inventories = {};
     var coins = {};
 
     query.find({
       success: function(results) {
-        numInventories = results.length;
-
         for (var i = 0; i < results.length; i++) {
           var curr = results[i];
           var quantity = curr.get("quantity");
@@ -235,9 +231,6 @@
           coins[coin.id].coinType = coinType;
           coins[coin.id].metalPercentage = metalPercentage;
           coins[coin.id].weightPerUnit = weightPerUnit;
-
-          numCoins++;
-
           updateTable(coin.id, coinId);
 
         },

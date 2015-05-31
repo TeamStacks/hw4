@@ -811,6 +811,13 @@ a:hover, a:focus {
     margin-right: auto;
     background-color: #5D5D5D;
 }
+
+    .img_mini {
+
+    width: 35px;
+    height: 35px;
+ 
+    }
 /* * * * * * * * * * * * * * * *
  *                             *
  *           WIRE 4            *

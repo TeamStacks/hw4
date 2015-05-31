@@ -227,11 +227,13 @@
           var coinType = coin.get("Type");
           var metalPercentage = coin.get("metalPercentage");
           var weightPerUnit = coin.get("weightPerUnit");
+          var imageURL = coin.get("imageURL");
 
           coins[coin.id] = {};
           coins[coin.id].coinType = coinType;
           coins[coin.id].metalPercentage = metalPercentage;
           coins[coin.id].weightPerUnit = weightPerUnit;
+          coins[coin.id].imageURL = imageURL;
           updateTable(coin.id, coinId);
 
         },
@@ -242,7 +244,12 @@
     }
 
     function updateTable(coinId, invenId) {
-        var col1 = '<td class="stack_img_col"><div class="coin_mini"></div></td>';
+        if (coins[coinId].imageURL == null) {
+            var col1 = '<td class="stack_img_col"><div class="coin_mini"></div></td>';
+        }
+        else {
+            var col1 = '<td class="stack_img_col"><img class="img_mini" src="'+coins[coinId].imageURL+'"></td>';
+        }
         var col2 = '<td>' + coins[coinId].coinType + '</td>';
         var col3 = '<td>' + inventories[invenId].quantity + '</td>';
         var col4 = '<td>' + coins[coinId].weightPerUnit + '</td>';

@@ -107,7 +107,7 @@ function verify() {
 		Parse.User.current().fetch().then(function (user) {
     		document.getElementById('user').innerHTML = user.get('username');
     		if (Parse.FacebookUtils.isLinked(user)) {
-    			document.getElementById('linkfb').innerHTML = "Unlink Facebook";
+    			document.getElementById('fblink').innerHTML = "Unlink Facebook";
     		}
 		});
 	} else {

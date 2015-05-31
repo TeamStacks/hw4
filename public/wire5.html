@@ -56,11 +56,18 @@
                         Add Item
                     </div>
                 </a>
-                <section class="coin_image">
+                <section class="coin_image" >
+                    
                     <div class="img_box">
-                        <div class="img_circle"></div>
+                        <a href="#uploadimg" data-toggle="modal" data-target="#uploadimg">
+                            <div class="img_container">
+                                <div class="img_circle">
+                                </div>
+                            </div>
+                        </a>
                     </div> 
-                    <input type="file" id="uploadimg"></input>
+                    <!-- 
+                    <input type="file" id="uploadimg"></input> -->
                 </section>
                 <section class="coin_detail">
                     <table>
@@ -165,6 +172,24 @@
       </div>
     </div>
 
+    <div class="modal fade" id="uploadimg" tabindex="-1" role="dialog" aria-labelledby="UploadModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close2 btn btn-default" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="UploadModal">UPLOAD A PICTURE</h4>
+          </div>
+            <div class="modal-body">
+                <p>We only support JPG/JPEG images at the moment.</p>
+                <input type="file" id="coinfile"></input>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="upImg()">Upload</button>
+            </div>
+        </div>
+      </div>
+    </div>
+
     <script type="text/javascript">
     verify();
     loadFooter();
@@ -182,6 +207,32 @@
     // for checking if valid input before submitting
     function validateAdd() {
         // not sure, but parse might validate for us already - Angie
+    }
+
+    function upImg() {
+        var newImg = document.getElementById('#coinfile');
+        var filename = $('#coinfile').val().replace(/C:\\fakepath\\/i, '');
+        //var newImg = new Parse.File(filename, newImg);
+
+        console.log("Uploading an image called " + filename);
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "https://api.parse.com/1/files/" + filename, true);
+        xhr.setRequestHeader("X-Parse-Application-Id", "m8lsJLtBtcOGqT0h9RmcWRIpxpiwyb3Yq6HqrCk2");
+        xhr.setRequestHeader("X-Parse-REST-API-Key", "JrtCwMABQRvOOtixhzLAZwk46nhxnUlJBIuxx1NZ");
+        xhr.setRequestHeader("Content-Type", "image/jpg");
+
+
+        xhr.send(newImg);
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState == 4) {
+            var result = JSON.parse(xhr.responseText);
+            if (result.url) {
+              console.log("saved an object with id: " + result.url);
+              
+            }
+          }
+        }
+
     }
 
     // saving the coin and inventory

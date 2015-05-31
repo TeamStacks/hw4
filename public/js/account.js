@@ -58,26 +58,26 @@ function logfb() {
 }
 
 function linkfb() {
-		var user = Parse.User.current();
+	var user = Parse.User.current();
 	if (!Parse.FacebookUtils.isLinked(user)) {
-  Parse.FacebookUtils.link(user, null, {
-    success: function(user) {
-      alert("Woohoo, user logged in with Facebook!");
-    },
-    error: function(user, error) {
-      alert("User cancelled the Facebook login or did not fully authorize.");
-    }
-  }
-  else {
-  	Parse.FacebookUtils.unlink(user, {
-  success: function(user) {
-    alert("The user is no longer associated with their Facebook account.");
-  }
-});
-  }
-  });
+  		Parse.FacebookUtils.link(user, null, {
+    		success: function(user) {
+      			alert("Woohoo, user logged in with Facebook!");
+    		},
+    		error: function(user, error) {
+      			alert("User cancelled the Facebook login or did not fully authorize.");
+    		}
+  		});
+	}
+  	else {
+  		Parse.FacebookUtils.unlink(user, {
+  			success: function(user) {
+    			alert("The user is no longer associated with their Facebook account.");
+  			}
+		});
+  	}
 }
-}
+
 
 function logOut() {
 	Parse.User.logOut();

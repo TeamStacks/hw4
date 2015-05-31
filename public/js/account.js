@@ -63,6 +63,7 @@ function linkfb() {
   		Parse.FacebookUtils.link(user, null, {
     		success: function(user) {
       			alert("Woohoo, you have linked your account with Facebook!");
+      			document.getElementById('fblink').innerHTML = "Unlink Facebook";
     		},
     		error: function(user, error) {
       			alert("You cancelled the Facebook login or did not fully authorize.");

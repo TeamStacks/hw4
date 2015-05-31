@@ -131,7 +131,7 @@
             </section>
 
             <section class="my_stack">
-                <table>
+                <table id = "inventory">
                     <caption>
                         <section class="label-and-search">
                             <h3>My Gold</h3>
@@ -156,30 +156,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="stack_img_col"><div class="coin_mini"></div></td>
-                            <td><a href="wire4.html"></a>US Eagle</td>
-                            <td>1</td>
-                            <td>1.244</td>
-                            <td>.917</td>
-                            <td>1199.10</td>
-                        </tr>
-                        <tr>
-                            <td class="stack_img_col"><div class="coin_mini"></div></td>
-                            <td><a href="wire4.html"></a>US Eagle</td>
-                            <td>5</td>
-                            <td>1.244</td>
-                            <td>.917</td>
-                            <td>5995.50</td>
-                        </tr>
-                        <tr>
-                            <td class="stack_img_col"><div class="coin_mini"></div></td>
-                            <td><a href="wire4.html"></a>US Eagle</td>
-                            <td>5</td>
-                            <td>1.244</td>
-                            <td>.917</td>
-                            <td>5995.50</td>
-                        </tr>
+
                     </tbody>
                 </table>
             </section>
@@ -212,7 +189,81 @@
         </div>
       </div>
     </div>
-
+      <script>
+         Parse.initialize("m8lsJLtBtcOGqT0h9RmcWRIpxpiwyb3Yq6HqrCk2", "XxRGWHTh79dNb2iMpuZ9k5uKUU9IPQDmghGwfgJ6");
+         
+         verify();
+             
+         var Inventory = Parse.Object.extend("Inventory");
+         var inventory = new Inventory();
+         var query = new Parse.Query(Inventory);        
+         var numInventories = 0;
+         var numCoins = 0;
+         var inventories = {};
+         var coins = {};
+         
+         query.find({
+             success: function (results) {
+             numInventories = results.length;
+         
+             for (var i = 0; i < results.length; i++) {
+                 var curr = results[i];
+                 var quantity = curr.get("quantity");
+                 var totalValue = curr.get("value");
+                 var type = curr.get("type");
+         
+                 inventories[type.id] = {};
+                 inventories[type.id].quantity = quantity;
+                 inventories[type.id].totalValue = totalValue;
+                  
+                 retrieveCoin(type.id);               
+             }
+         },
+         error: function (error) {
+             alert("Unable to retrieve coin! " + error.message);
+         } })
+         
+         function retrieveCoin(coinId) {
+             var Coin = Parse.Object.extend("Coin");
+             var query = new Parse.Query(Coin);
+             query.get(coinId, {
+                     success: function(coin) {
+                         var coinType = coin.get("Type");
+                         var metalPercentage = coin.get("metalPercentage"); 
+                         var weightPerUnit = coin.get("weightPerUnit");
+         
+                         coins[coin.id] = {};
+                         coins[coin.id].coinType = coinType;
+                         coins[coin.id].metalPercentage = metalPercentage;
+                         coins[coin.id].weightPerUnit = weightPerUnit;
+         
+                         numCoins++;
+                         if (numCoins == numInventories) {
+                             updateTable(coin.id, coinId);   
+                         }
+                     },
+                     error: function(coin, error) {
+                         alert("Unable to retrieve coin! " + error.message);
+                     }
+                 });
+         }
+         
+         function updateTable(coinId, invenId) {
+             for (var i = 0; i < numInventories; i++) {
+                 $('#inventory > tbody')
+                     .append($('<tr>')
+                         .append($('<td>')
+                             .attr('class', 'stack_img_col')
+                             .append($('<div>')
+                                 .attr('class', 'coin_mini')))
+                         .append($('<td><a href="wire4.html"></a>' + coins[coinId].coinType + '</td>' ))
+                         .append($('<td>' + inventories[invenId].quantity + '</td>'))
+                         .append($('<td>' + coins[coinId].weightPerUnit + '</td>'))
+                         .append($('<td>' + coins[coinId].metalPercentage + '</td>'))
+                         .append($('<td>' + inventories[invenId].totalValue  + '</td>')) );
+             }
+         }
+      </script>
     <script type="text/javascript">
         verify();
         loadFooter();

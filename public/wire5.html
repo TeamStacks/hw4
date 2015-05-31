@@ -119,7 +119,7 @@
                         </tr>
                         <tr>
                             <td>Weight/unit (g)</td>
-                            <td id="weight_per_unit" class="values">1.244</td>
+                            <td id="weight_per_unit">1.244</td>
                         </tr>
                         <tr>
                             <td>Gold g/u</td>
@@ -198,8 +198,9 @@
 
     // calculations for the ajax total
     $(".values").keyup(function() {
-        var total = 1;
+        var total = Number($('#weight_per_unit').text());
         $(".values").each(function(){
+            console.log("current: " + Number($(this).val()));
             total *= Number($(this).val());
         });
         $("#total_value").text(total);

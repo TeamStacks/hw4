@@ -976,6 +976,16 @@ select {
     border: 1px solid #68CEDE;
 }
 
+
+#uploadimg {
+    background: #1D1D1D;
+    color: white;
+    text-decoration: none;
+    margin:0 auto;
+    margin-top: 10px;
+    width: 100%;
+}
+
 #cancel {
     background: #1C3A3F;
     border: 1px solid #151515;

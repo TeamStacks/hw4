@@ -134,7 +134,7 @@
                     <label for="pass">NEW PASSWORD</label>
                     <input type="password" class="form-control" id="pass" placeholder="Password">
                 </div>
-                <button type="button" class="btn btn-primary" onclick="update()">Update Profile</button> <button type="button" class="btn btn-primary" onclick="linkfb()">Link Facebook</button>
+                <button type="button" class="btn btn-primary" onclick="update()">Update Profile</button> <button type="button" id ="fblink" class="btn btn-primary" onclick="linkfb()">Link Facebook</button>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" onclick="logOut()">Log Out</button>
@@ -147,58 +147,60 @@
     <script type="text/javascript">
         verify();
         loadFooter();
+        loadCoin(parseURLParams()['id']);
 
-        var inventoryId = "4DxjNX8gsg";
-
-        loadInventory(inventoryId);
-
-        function loadInventory(inventoryId) {
-            var Inventory = Parse.Object.extend("Inventory");
-            var query = new Parse.Query(Inventory);
-            query.get(inventoryId, {
-                success: function(inventory) {
-                    var purchaseDate = inventory.get("purchaseDate");
-                    var quantity = inventory.get("quantity");
-                    var type = inventory.get("type");
-                    var value = inventory.get("value");
-
-                    $("#purchase_date").text(purchaseDate.toDateString());
-                    $("#quantity").text(quantity);
-                    $("#value").text(value);
-
-                    loadCoin(type.id);
-                },
-                error: function(inventory, error) {
-                    alert("Unable to retrieve inventory! " + error.message);
-                }
+        function parseURLParams() {
+            var params = {};
+            window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(ms, key,value) {
+                params[key] = value;
             });
+            return params;
         }
 
-        function loadCoin(coinId) {
+        function loadCoin(coinID) {
             var Coin = Parse.Object.extend("Coin");
-            var query = new Parse.Query(Coin);
-            query.get(coinId, {
-                success: function(coin) {
-                    var type = coin.get("Type");
-                    var gramsPerUnit = coin.get("gramsPerUnit");
-                    var metal = coin.get("metal");
-                    var metalPercentage = coin.get("metalPercentage");
-                    var oztPerUnit = coin.get("oztPerUnit");
-                    var premium = coin.get("premium");
-                    var unitPrice = coin.get("unitPrice");
-                    var weightPerUnit = coin.get("weightPerUnit");
+            var coinType = new Parse.Query(Coin);
 
-                    $("#type").text(type);
-                    $("#grams_per_unit").text(gramsPerUnit);
-                    $("#metal").text(metal);
-                    $("#metal_percentage").text(metalPercentage);
-                    $("#ozt_per_unit").text(oztPerUnit);
-                    $("#premium").text(premium);
-                    $("#unit_price").text(unitPrice);
-                    $("#weight_per_unit").text(weightPerUnit);
+            // Make sure the coin actually exists...
+            coinType.get(coinID, {
+                success: function(coin) {
+                    var Inventory = Parse.Object.extend("Inventory");
+                    var userInventory = new Parse.Query(Inventory);
+                    userInventory.equalTo("ownedBy", Parse.User.current());
+                    userInventory.equalTo("type", coin);
+
+                    // Cool, now make sure the coin is actually in the user's inventory
+                    userInventory.find({
+                        success: function(userItem) {
+                            // THERE CAN BE ONLY ONE!!!! (I think...)
+                            if(userItem.length !== 1) {
+                                alert("Unable to retrieve inventory!");
+                                window.history.back();
+                            } else {
+                                $("#purchase_date").text(userItem[0].get("purchaseDate").toDateString());
+                                $("#quantity").text(userItem[0].get("quantity"));
+                                $("#value").text(userItem[0].get("value"));
+                                $("#type").text(coin.get("Type"));
+                                $("#grams_per_unit").text(coin.get("gramsPerUnit"));
+                                $("#metal").text(coin.get("metal"));
+                                $("#metal_percentage").text(coin.get("metalPercentage"));
+                                $("#ozt_per_unit").text(coin.get("oztPerUnit"));
+                                $("#premium").text(coin.get("premium"));
+                                $("#unit_price").text(coin.get("unitPrice"));
+                                $("#weight_per_unit").text(coin.get("weightPerUnit"));
+                            }
+                        },
+                        // Someone's a broke asshole...
+                        error: function(inventory, error) {
+                            alert("Unable to retrieve inventory! " + error.message);
+                            window.history.back();
+                        }
+                    });
                 },
-                error: function(coin, error) {
-                    alert("Unable to retrieve coin! " + error.message);
+                // The cake's a lie...
+                error: function(inventory, error) {
+                    alert("Unable to retrieve inventory! " + error.message);
+                    window.history.back();
                 }
             });
         }

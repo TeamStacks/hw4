@@ -56,10 +56,18 @@
                         Add Item
                     </div>
                 </a>
-                <section class="coin_image">
+                <section class="coin_image" >
+                    
                     <div class="img_box">
-                        <div class="img_circle"></div>
-                    </div>
+                        <a href="#uploadimg" data-toggle="modal" data-target="#uploadimg">
+                            <div class="img_container">
+                                <div class="img_circle">
+                                </div>
+                            </div>
+                        </a>
+                    </div> 
+                    <!-- 
+                    <input type="file" id="uploadimg"></input> -->
                 </section>
                 <section class="coin_detail">
                     <table>
@@ -90,19 +98,19 @@
                         <tr>
                             <td>Qty.</td>
                             <td>
-                                <input id="quantity" name="quantity" />
+                                <input id="quantity" name="quantity" class="values"/>
                             </td>
                         </tr>
                         <tr>
                             <td>Premium</td>
                             <td>
-                                <input id="premium" name="quantity" />
+                                <input id="premium" name="quantity"/>
                             </td>
                         </tr>
                         <tr>
                             <td>Unit Price</td>
                             <td>
-                                <input id="unit_price" name="quantity" />
+                                <input id="unit_price" name="quantity" class="values"/>
                             </td>
                         </tr>
                         <tr>
@@ -127,7 +135,7 @@
                         </tr>
                         <tr>
                             <td><strong>TOTAL</strong></td>
-                            <td><strong id="total_value">1199.10</strong></td>
+                            <td><strong id="total_value">0</strong></td>
                         </tr>
                     </table>
                     <a href="#"><span id="save">Save to My Stack</span></a>
@@ -137,29 +145,49 @@
         </section>
     </section>
 
-    <div class="modal fade" id="profile" tabindex="-1" role="dialog" aria-labelledby="ProfileModal" aria-hidden="true">
+<div class="modal fade" id="profile" tabindex="-1" role="dialog" aria-labelledby="ProfileModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close2 btn btn-default" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="ProfileModal">MY PROFILE</h4>
+        </div>
+        <form>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>USERNAME</label>
+              <br>
+              <p id="user" class="no-dec"></p>
+            </div>
+            <div class="form-group">
+              <label for="pass">NEW PASSWORD</label>
+              <input type="password" class="form-control" id="pass" placeholder="Password">
+            </div>
+            <button type="button" class="btn btn-primary" onclick="update()">Update Profile</button>
+            <button type="button" id ="fblink" class="btn btn-primary" onclick="linkfb()">Link Facebook</button>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" onclick="logOut()">Log Out</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+    <div class="modal fade" id="uploadimg" tabindex="-1" role="dialog" aria-labelledby="UploadModal" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close2 btn btn-default" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="ProfileModal">MY PROFILE</h4>
+            <h4 class="modal-title" id="UploadModal">UPLOAD A PICTURE</h4>
           </div>
-          <form>
             <div class="modal-body">
-                <div class="form-group">
-                    <label>USERNAME</label><br>
-                    <p id="user" class="no-dec"></p>
-                </div>
-                <div class="form-group">
-                    <label for="pass">NEW PASSWORD</label>
-                    <input type="password" class="form-control" id="pass" placeholder="Password">
-                </div>
-                <button type="button" class="btn btn-primary" onclick="update()">Update Profile</button> <button type="button" class="btn btn-primary" onclick="linkfb()">Link Facebook</button>
+                <p>We only support JPG/JPEG images at the moment.</p>
+                <input type="file" id="coinfile">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick="logOut()">Log Out</button>
+                <button type="button" class="btn btn-primary" onclick="upImg()">Upload</button>
             </div>
-          </form>
         </div>
       </div>
     </div>
@@ -168,8 +196,58 @@
     verify();
     loadFooter();
 
+    // calculations for the ajax total
+    $(".values").keyup(function() {
+        var total = Number($('#weight_per_unit').text());
+        $(".values").each(function(){
+            console.log("current: " + Number($(this).val()));
+            total *= Number($(this).val());
+        });
+        $("#total_value").text(total);
+        console.log("current total: " + total);
+    });
+
+    // for checking if valid input before submitting
+    function validateAdd() {
+        // not sure, but parse might validate for us already - Angie
+    }
+
+    function upImg() {
+        var uploadImage = $("#coinfile")[0];
+        var file = uploadImage.files[0];
+        var name = $('#coinfile').val().replace(/C:\\fakepath\\/i, '');
+         // This function is called when the user clicks on Upload to Parse. It will create the REST API request to upload this image to Parse.
+      var serverUrl = 'https://api.parse.com/1/files/' + name;
+
+      $.ajax({
+        type: "POST",
+        beforeSend: function(request) {
+          request.setRequestHeader("X-Parse-Application-Id", 'm8lsJLtBtcOGqT0h9RmcWRIpxpiwyb3Yq6HqrCk2');
+          request.setRequestHeader("X-Parse-REST-API-Key", 'JrtCwMABQRvOOtixhzLAZwk46nhxnUlJBIuxx1NZ');
+          request.setRequestHeader("Content-Type", file.type);
+        },
+        url: serverUrl,
+        data: file,
+        processData: false,
+        contentType: false,
+        success: function(data) {
+            console.log("File available at: " + data.url);
+            $(".img_container")[0].innerHTML ='<img id="coinimg" src="'+data.url+'">';
+            $('#uploadimg').modal('hide');
+          
+        },
+        error: function(data) {
+          var obj = jQuery.parseJSON(data);
+          alert(obj.error);
+        }
+      });
+
+    }
+
+    // saving the coin and inventory
     function saveCoin() {
         var type = $("#type").val();
+        var imgUrl = $('#coinimg').attr('src');
         var gramsPerUnit = parseFloat($("#grams_per_unit").text());
         var metal = $("#metal").val();
         var metalPercentage = parseFloat($("#metal_percentage").text());
@@ -178,11 +256,13 @@
         var unitPrice = parseFloat($("#unit_price").val());
         var weightPerUnit = parseFloat($("#weight_per_unit").text());
 
+
         var Coin = Parse.Object.extend("Coin");
         var coin = new Coin();
 
         coin.save({
             Type: type,
+            imageURL: imgUrl,
             gramsPerUnit: gramsPerUnit,
             metal: metal,
             metalPercentage: metalPercentage,
@@ -205,14 +285,13 @@
         var quantity = parseInt($("#quantity").val());
         var type = coin;
         var totalValue = parseFloat($("#total_value").text());
-
         var Inventory = Parse.Object.extend("Inventory");
         var inventory = new Inventory();
-
         inventory.save({
             purchaseDate: purchaseDate,
             quantity: quantity,
             type: type,
+            ownedBy: Parse.User.current(),
             value: totalValue
         }, {
             success: function(inventory) {

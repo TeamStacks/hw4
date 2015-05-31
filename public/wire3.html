@@ -179,7 +179,7 @@
               <input type="password" class="form-control" id="pass" placeholder="Password">
             </div>
             <button type="button" class="btn btn-primary" onclick="update()">Update Profile</button>
-            <button type="button" class="btn btn-primary" onclick="linkfb()">Link Facebook</button>
+            <button type="button" id ="fblink" class="btn btn-primary" onclick="linkfb()">Link Facebook</button>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" onclick="logOut()">Log Out</button>
@@ -217,7 +217,7 @@
       error: function(error) {
         alert("Unable to retrieve coin! " + error.message);
       }
-    })
+    });
 
     function retrieveCoin(coinId) {
       var Coin = Parse.Object.extend("Coin");
@@ -227,11 +227,13 @@
           var coinType = coin.get("Type");
           var metalPercentage = coin.get("metalPercentage");
           var weightPerUnit = coin.get("weightPerUnit");
+          var imageURL = coin.get("imageURL");
 
           coins[coin.id] = {};
           coins[coin.id].coinType = coinType;
           coins[coin.id].metalPercentage = metalPercentage;
           coins[coin.id].weightPerUnit = weightPerUnit;
+          coins[coin.id].imageURL = imageURL;
           updateTable(coin.id, coinId);
 
         },
@@ -242,22 +244,26 @@
     }
 
     function updateTable(coinId, invenId) {
-      $('#inventory > tbody')
-        .append($('<tr>')
-          .append($('<td>')
-            .attr('class', 'stack_img_col')
-            .append($('<div>')
-              .attr('class', 'coin_mini')))
-          //.append($('<td><a href="wire4.html"></a>' + coins[coinId].coinType + '</td>' ))
-          .append($('<td>')
-            .append($('<a>')
-              .prop("href", "wire4.html"))
-            .append(coins[coinId].coinType))
-          .append($('<td>' + inventories[invenId].quantity + '</td>'))
-          .append($('<td>' + coins[coinId].weightPerUnit + '</td>'))
-          .append($('<td>' + coins[coinId].metalPercentage + '</td>'))
-          .append($('<td>' + inventories[invenId].totalValue + '</td>')));
+        if (coins[coinId].imageURL == null) {
+            var col1 = '<td class="stack_img_col"><div class="coin_mini"></div></td>';
+        }
+        else {
+            var col1 = '<td class="stack_img_col"><img class="img_mini" src="'+coins[coinId].imageURL+'"></td>';
+        }
+        var col2 = '<td>' + coins[coinId].coinType + '</td>';
+        var col3 = '<td>' + inventories[invenId].quantity + '</td>';
+        var col4 = '<td>' + coins[coinId].weightPerUnit + '</td>';
+        var col5 = '<td>' + coins[coinId].metalPercentage + '</td>';
+        var col6 = '<td>' + inventories[invenId].totalValue + '</td>';
 
+        $('#inventory > tbody')
+            .append($('<tr></tr>').attr('onclick', 'inspectCoin(this)')
+                .attr('id', coinId).append(col1, col2, col3, col4, col5, col6));
+    }
+
+    function inspectCoin(row){
+        alert("Taking a closer look at coin with ID: "+ row.id);
+        window.document.location = "wire4.html?id=" + row.id;
     }
   </script>
   <script type="text/javascript">

@@ -44,32 +44,42 @@ function logfb() {
 	Parse.FacebookUtils.logIn(null, {
   success: function(user) {
     if (!user.existed()) {
-      alert("User signed up and logged in through Facebook!");
+      alert("You have signed up and logged in through Facebook!");
       window.location.href="./wire2.html";
     } else {
-      alert("User logged in through Facebook!");
+      //alert("You logged in through Facebook!");
       window.location.href="./wire2.html";
     }
   },
   error: function(user, error) {
-    alert("User cancelled the Facebook login or did not fully authorize.");
+    alert("You cancelled the Facebook login or did not fully authorize.");
   }
 });
 }
 
 function linkfb() {
-		var user = Parse.User.current();
+	var user = Parse.User.current();
 	if (!Parse.FacebookUtils.isLinked(user)) {
-  Parse.FacebookUtils.link(user, null, {
-    success: function(user) {
-      alert("Woohoo, user logged in with Facebook!");
-    },
-    error: function(user, error) {
-      alert("User cancelled the Facebook login or did not fully authorize.");
-    }
-  });
+  		Parse.FacebookUtils.link(user, null, {
+    		success: function(user) {
+      			alert("Woohoo, you have linked your account with Facebook!");
+      			document.getElementById('fblink').innerHTML = "Unlink Facebook";
+    		},
+    		error: function(user, error) {
+      			alert("You cancelled the Facebook login or did not fully authorize.");
+    		}
+  		});
+	}
+  	else {
+  		Parse.FacebookUtils.unlink(user, {
+  			success: function(user) {
+    			alert("Your account is no longer associated with your Facebook account.");
+    			document.getElementById('fblink').innerHTML = "Link Facebook";
+  			}
+		});
+  	}
 }
-}
+
 
 function logOut() {
 	Parse.User.logOut();
@@ -84,7 +94,7 @@ function update() {
 
 	user.save(null, {
 	  success: function(user) {
-		alert("You have updated your profile.");
+		alert("Your profile has been updated.");
 	  },
 	  error: function(user, error) {
 	    // Show the error message somewhere and let the user try again.
@@ -98,6 +108,9 @@ function verify() {
 	if (currentUser) {
 		Parse.User.current().fetch().then(function (user) {
     		document.getElementById('user').innerHTML = user.get('username');
+    		if (Parse.FacebookUtils.isLinked(user)) {
+    			document.getElementById('fblink').innerHTML = "Unlink Facebook";
+    		}
 		});
 	} else {
 	    window.location.href="./index.html"

@@ -116,7 +116,7 @@ $(window).load(function() {
     $('.icon-cog').click(function() {
         $('#profile').modal('show');
     });
-
+// REMOVE THIS? NOT SURE WHAT THIS IS - ANGIE
     $('tr').click(function() {
         $(this).find('a')[0].click();
     });

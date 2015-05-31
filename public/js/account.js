@@ -69,8 +69,12 @@ function linkfb() {
     }
   }
   else {
-  	// unlink!
-
+  	Parse.FacebookUtils.unlink(user, {
+  success: function(user) {
+    alert("The user is no longer associated with their Facebook account.");
+  }
+});
+  }
   });
 }
 }

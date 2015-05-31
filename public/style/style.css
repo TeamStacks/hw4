@@ -910,6 +910,11 @@ a:hover, a:focus {
     padding: 20px;
 }
 
+.img_container > img {
+    width:160px;
+    height: 160px;
+}
+
 .img_circle {
     width: 160px;
     height: 160px;

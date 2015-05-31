@@ -136,146 +136,118 @@ $(window).load(function() {
             var Gold = Parse.Object.extend("gold_oz");
             var Silver = Parse.Object.extend("silver_oz");
             var Plat = Parse.Object.extend("plat_oz");
+            var Inventory = Parse.Object.extend("Inventory");
+            var Coin = Parse.Object.extend("Coin");
+            var currentUser = Parse.User.current();
 
             var goldQ = new Parse.Query(Gold).ascending("Date").limit(30).find();
             var silverQ = new Parse.Query(Silver).ascending("Date").limit(30).find();
             var platQ = new Parse.Query(Plat).ascending("Date").limit(30).find();
+
+            var goldCoinQ = new Parse.Query(Coin).equalTo("metal", "Gold").limit(30).find();
+            var silverCoinQ = new Parse.Query(Coin).equalTo("metal", "Silver").limit(30).find();
+            var platCoinQ = new Parse.Query(Coin).equalTo("metal", "Platinum").limit(30).find();
+
+
             var dates = [];
 
-            Parse.Promise.when(goldQ, silverQ, platQ).then(function(goldR, silverR, platR) {
-                var goldData = [];
-                var silverData = [];
-                var platData = [];
-
-                for (var i = 0; i < goldR.length; i++) {
-                    var gold = goldR[i];
-                    var silver = silverR[i];
-                    var plat = platR[i];
-
-                    dates.push(gold.get("Date"));
-                    goldData.push(gold.get("Value"));
-                    silverData.push(silver.get("USD"));
-                    platData.push(plat.get("usd_pm"));
+            Parse.Promise.when(goldCoinQ, silverCoinQ, platCoinQ).then(function(goldCoins, silverCoins, platCoins) {
+                var createPointers = function(items) {
+                    var results = [];
+                    for (var i = 0; i < items.length; i++) {
+                        var ptr = new Parse.Object("Coin");
+                        ptr.id = items[i].get("objectId");
+                        results.push(ptr);
+                    }
+                    return results;
                 }
 
-                var data = {
-                    labels: dates,
-                    // datasets: [{
-                    //     label: "Gold Total",
-                    //     fillColor: "rgba(104, 206, 222, 0.05)",
-                    //     strokeColor: "#FF6D67",
-                    //     pointColor: "#FF6D67",
-                    //     pointStrokeColor: pointStroke,
-                    //     pointHighlightFill: pointHighlightFill,
-                    //     pointHighlightStroke: pointHighlightStroke,
-                    //     data: [700, 820, 700, 800, 730, 950, 900]
-                    // }, {
-                    //     label: "Platinum Total",
-                    //     fillColor: "rgba(104, 206, 222, 0.05)",
-                    //     strokeColor: "#FFA859",
-                    //     pointColor: "#FFA859",
-                    //     pointStrokeColor: pointStroke,
-                    //     pointHighlightFill: pointHighlightFill,
-                    //     pointHighlightStroke: pointHighlightStroke,
-                    //     data: [467, 555, 490, 550, 555, 560, 660]
-                    // }, {
-                    //     label: "Silver Total",
-                    //     fillColor: "rgba(104, 206, 222, 0.05)",
-                    //     strokeColor: "#F3FF88",
-                    //     pointColor: "#F3FF88",
-                    //     pointStrokeColor: pointStroke,
-                    //     pointHighlightFill: pointHighlightFill,
-                    //     pointHighlightStroke: pointHighlightStroke,
-                    //     data: [200, 350, 300, 389, 330, 400, 488]
-                    // }, {
-                    datasets: [{
-                        label: "1oz Gold",
-                        fillColor: "rgba(104, 206, 222, 0.05)",
-                        strokeColor: "#9FFF98",
-                        pointColor: "#9FFF98",
-                        pointStrokeColor: pointStroke,
-                        pointHighlightFill: pointHighlightFill,
-                        pointHighlightStroke: pointHighlightStroke,
-                        data: goldData
-                    }, {
-                        label: "1oz Platinum",
-                        fillColor: "rgba(104, 206, 222, 0.05)",
-                        strokeColor: "#BBF5FF",
-                        pointColor: "#BBF5FF",
-                        pointStrokeColor: pointStroke,
-                        pointHighlightFill: pointHighlightFill,
-                        pointHighlightStroke: pointHighlightStroke,
-                        data: platData
-                    }, {
-                        label: "1oz Silver",
-                        fillColor: "rgba(104, 206, 222, 0.05)",
-                        strokeColor: "#C29FFF",
-                        pointColor: "#C29FFF",
-                        pointStrokeColor: pointStroke,
-                        pointHighlightFill: pointHighlightFill,
-                        pointHighlightStroke: pointHighlightStroke,
-                        data: silverData
-                    }, ]
-                };
+                var gc = createPointers(goldCoins);
+                var sc = createPointers(silverCoins);
+                var pc = createPointers(platCoins);
 
-                var options = {
+                var goldTotalQ = new Parse.Query(Inventory).ascending("Date").limit(30).containedIn("Coin", gc).equalTo("ownedBy", currentUser).find();
+                var silverTotalQ = new Parse.Query(Inventory).ascending("Date").limit(30).containedIn("Coin", sc).equalTo("ownedBy", currentUser).find();
+                var platTotalQ = new Parse.Query(Inventory).ascending("Date").limit(30).containedIn("Coin", pc).equalTo("ownedBy", currentUser).find();
 
-                    ///Boolean - Whether grid lines are shown across the chart
-                    scaleShowGridLines: true,
+                Parse.Promise.when(goldQ, silverQ, platQ, goldTotalQ, silverTotalQ, platTotalQ).then(function(goldR, silverR, platR, gTotal, sTotal, pTotal) {
+                    console.log(gTotal);
+                    console.log(sTotal);
+                    console.log(pTotal);
+                    var goldData = [];
+                    var silverData = [];
+                    var platData = [];
 
-                    //String - Colour of the grid lines
-                    scaleGridLineColor: "rgba(104, 206, 222, 0.1)",
+                    for (var i = 0; i < goldR.length; i++) {
+                        var gold = goldR[i];
+                        var silver = silverR[i];
+                        var plat = platR[i];
 
-                    //Number - Width of the grid lines
-                    scaleGridLineWidth: 1,
+                        dates.push(gold.get("Date"));
+                        goldData.push(gold.get("Value"));
+                        silverData.push(silver.get("USD"));
+                        platData.push(plat.get("usd_pm"));
+                    }
 
-                    //Boolean - Whether to show horizontal lines (except X axis)
-                    scaleShowHorizontalLines: true,
+                    var data = {
+                        labels: dates,
+                        datasets: [{
+                            label: "1oz Gold",
+                            fillColor: "rgba(104, 206, 222, 0.05)",
+                            strokeColor: "#9FFF98",
+                            pointColor: "#9FFF98",
+                            pointStrokeColor: pointStroke,
+                            pointHighlightFill: pointHighlightFill,
+                            pointHighlightStroke: pointHighlightStroke,
+                            data: goldData
+                        }, {
+                            label: "1oz Platinum",
+                            fillColor: "rgba(104, 206, 222, 0.05)",
+                            strokeColor: "#BBF5FF",
+                            pointColor: "#BBF5FF",
+                            pointStrokeColor: pointStroke,
+                            pointHighlightFill: pointHighlightFill,
+                            pointHighlightStroke: pointHighlightStroke,
+                            data: platData
+                        }, {
+                            label: "1oz Silver",
+                            fillColor: "rgba(104, 206, 222, 0.05)",
+                            strokeColor: "#C29FFF",
+                            pointColor: "#C29FFF",
+                            pointStrokeColor: pointStroke,
+                            pointHighlightFill: pointHighlightFill,
+                            pointHighlightStroke: pointHighlightStroke,
+                            data: silverData
+                        }, ]
+                    };
 
-                    //Boolean - Whether to show vertical lines (except Y axis)
-                    scaleShowVerticalLines: true,
+                    var options = {
+                        scaleShowGridLines: true,
+                        scaleGridLineColor: "rgba(104, 206, 222, 0.1)",
+                        scaleGridLineWidth: 1,
+                        scaleShowHorizontalLines: true,
+                        scaleShowVerticalLines: true,
+                        bezierCurve: true,
+                        bezierCurveTension: 0.4,
+                        pointDot: true,
+                        pointDotRadius: 4,
+                        pointDotStrokeWidth: 1,
+                        pointHitDetectionRadius: 20,
+                        datasetStroke: true,
+                        datasetStrokeWidth: 2,
+                        datasetFill: true,
+                        legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+                        responsive: true,
+                        maintainAspectRatio: false,
+                    };
 
-                    //Boolean - Whether the line is curved between points
-                    bezierCurve: true,
-
-                    //Number - Tension of the bezier curve between points
-                    bezierCurveTension: 0.4,
-
-                    //Boolean - Whether to show a dot for each point
-                    pointDot: true,
-
-                    //Number - Radius of each point dot in pixels
-                    pointDotRadius: 4,
-
-                    //Number - Pixel width of point dot stroke
-                    pointDotStrokeWidth: 1,
-
-                    //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-                    pointHitDetectionRadius: 20,
-
-                    //Boolean - Whether to show a stroke for datasets
-                    datasetStroke: true,
-
-                    //Number - Pixel width of dataset stroke
-                    datasetStrokeWidth: 2,
-
-                    //Boolean - Whether to fill the dataset with a colour
-                    datasetFill: true,
-
-                    //String - A legend template
-                    legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-
-                    responsive: true,
-
-                    maintainAspectRatio: false,
-
-
-                };
-
-                var ctx = document.getElementById("total-chart").getContext("2d");
-                var coinChart = new Chart(ctx).Line(data, options);
-                coinChart.update();
+                    var ctx = document.getElementById("total-chart").getContext("2d");
+                    var coinChart = new Chart(ctx).Line(data, options);
+                    coinChart.update();
+                });
             });
+
+
         } else if (page == "wire3.html") {
             var Gold = Parse.Object.extend("gold_oz");
             var goldQ = new Parse.Query(Gold).ascending("Date").limit(30);

@@ -45,7 +45,7 @@
     <section class="main-section">
         <section class="coin_wrapper">
             <div class="mobile-nav">
-                <a href="wire3.html">
+                <a href="#" onclick="goBack(parseURLParams()['q'])">
                     <svg class="icon icon-keyboard-arrow-left">
                         <symbol id="icon-keyboard-arrow-left" viewBox="0 0 1024 1024">
                             <title>keyboard-arrow-left</title>
@@ -57,7 +57,7 @@
                 ITEM DETAIL
             </div>
             <div class="coin_main">
-                <a href="#" onclick="window.history.back(-1);">
+                <a href="#" onclick="goBack(parseURLParams()['q'])">
                     <div class="breadcrumb">
                         <svg class="icon icon-play-arrow-rev">
                             <symbol id="icon-play-arrow" viewBox="0 0 1024 1024">
@@ -249,7 +249,7 @@
                     coin.destroy({
                       success: function(myObject) {
                             alert("You have deleted this item.");
-                          window.document.location = "wire3.html";
+                          window.document.location = "wire3.html?q=" + myObject.get("metal");
                       },
                       error: function(myObject, error) {
                         // The delete failed.
@@ -262,6 +262,10 @@
                 }
             });
             
+        }
+
+        function goBack(type) {
+            window.document.location = "wire3.html?q=" + type;
         }
     </script>
 </body>

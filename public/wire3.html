@@ -299,7 +299,11 @@
 
     function inspectCoin(row){
         //alert("Taking a closer look at coin with ID: "+ row.id);
-        window.document.location = "wire4.html?id=" + row.id;
+        if (defaultUrl == -1){
+           window.document.location = "wire4.html?id=" + row.id + "&q=Gold";
+        }
+        else{
+        window.document.location = "wire4.html?id=" + row.id + "&q=" + metalFrom;}
     }
 
     $("#search").keyup(function () {

@@ -32,13 +32,6 @@
   <script type="text/javascript">
     var metalFrom = parseURLParams()['q'];
     var defaultUrl = window.location.href.indexOf('?q=')
-    function parseURLParams() {
-      var params = {};
-      window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(ms, key,value) {
-      params[key] = value;
-      });
-      return params;
-    }
     var metalChose;
     if (metalFrom == "Gold" || defaultUrl == -1 ){
       metalChose = 1;

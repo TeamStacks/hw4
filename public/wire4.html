@@ -154,14 +154,6 @@
         loadFooter();
         loadCoin(parseURLParams()['id']);
 
-        function parseURLParams() {
-            var params = {};
-            window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(ms, key,value) {
-                params[key] = value;
-            });
-            return params;
-        }
-
         function loadCoin(coinID) {
         
             // grab info from Coin db
@@ -199,6 +191,7 @@
                       success: function(results) {
                         console.log("Successfully retrieved " + results.length + " scores.");
 
+                        console.log("date: " + results[0].get("purchaseDate"));
                         $("#purchase_date").text(results[0].get("purchaseDate").toDateString());
                         $("#quantity").text(results[0].get("quantity"));
                         $("#value").text(results[0].get("value"));

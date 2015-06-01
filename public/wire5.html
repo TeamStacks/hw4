@@ -319,7 +319,8 @@
     }
 
     function saveInventory(coin) {
-        var purchaseDate = new Date($("#purchase_date").val());
+
+        var purchaseDate = new Date(new Date($("#purchase_date").val()) + 6);
         var quantity = parseInt($("#quantity").val());
         var type = coin;
         var totalValue = parseFloat($("#total_value").text());

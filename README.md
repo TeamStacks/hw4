@@ -37,6 +37,12 @@ All the HTML validation checked out so there was no problem there.
 
 There should be no errors, but there are occasionally warnins and also, debug prints when viewing with the developer console.
 
+# Concerns
+
+# Dates
+
+There is a discrepancy between the Parse server dates and the browser dates that causes a minor difference in the dates when fetched and when stored. In Chrome, this is off by 5 hours, whereas in Firefox, the time is parsed correctly.
+
 # Implementation
 
 We used a mixture of REST API and JavaScript and jQuery for our backend.

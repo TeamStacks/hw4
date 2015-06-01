@@ -175,6 +175,7 @@ $(window).load(function() {
                 var platTotalQ = new Parse.Query(Inventory).ascending("Date").limit(30).containedIn("type", platCoins).find();
 
                 Parse.Promise.when(goldQ, silverQ, platQ, goldTotalQ, silverTotalQ, platTotalQ).then(function(goldR, silverR, platR, gTotal, sTotal, pTotal) {
+                    console.log(gTotal);
                     var goldData = [];
                     var silverData = [];
                     var platData = [];
@@ -199,15 +200,50 @@ $(window).load(function() {
                     for (var i = 0; i < gTotal.length; i++) {
                         if (gTotal[i].get("purchaseDate") < dates[ctr]) {
                             sum += gTotal[i].get("value");
+                            console.log(sum);
                         } else {
-                            goldTotal.push(sum);
+                            goldTotalData.push(sum);
                             ctr++;
                         }
                     }
 
                     if (ctr < dates.length - 1) {
                         for (var i = ctr; i < dates.length; i++) {
-                            goldTotal.push(sum);
+                            goldTotalData.push(sum);
+                        }
+                    }
+
+                    ctr = 0;
+                    sum = 0;
+                    for (var i = 0; i < sTotal.length; i++) {
+                        if (sTotal[i].get("purchaseDate") < dates[ctr]) {
+                            sum += s[i].get("value");
+                        } else {
+                            silverTotalData.push(sum);
+                            ctr++;
+                        }
+                    }
+
+                    if (ctr < dates.length - 1) {
+                        for (var i = ctr; i < dates.length; i++) {
+                            silverTotalData.push(sum);
+                        }
+                    }
+
+                    ctr = 0;
+                    sum = 0;
+                    for (var i = 0; i < pTotal.length; i++) {
+                        if (pTotal[i].get("purchaseDate") < dates[ctr]) {
+                            sum += pTotal[i].get("value");
+                        } else {
+                            platTotalData.push(sum);
+                            ctr++;
+                        }
+                    }
+
+                    if (ctr < dates.length - 1) {
+                        for (var i = ctr; i < dates.length; i++) {
+                            platTotalData.push(sum);
                         }
                     }
 
@@ -232,6 +268,24 @@ $(window).load(function() {
                             pointHighlightStroke: pointHighlightStroke,
                             data: goldTotalData
                         }, {
+                            label: "Silver Total",
+                            fillColor: "rgba(104, 206, 222, 0.05)",
+                            strokeColor: "#F3FF88",
+                            pointColor: "#F3FF88",
+                            pointStrokeColor: pointStroke,
+                            pointHighlightFill: pointHighlightFill,
+                            pointHighlightStroke: pointHighlightStroke,
+                            data: silverTotalData
+                        }, {
+                            label: "Platinum Total",
+                            fillColor: "rgba(104, 206, 222, 0.05)",
+                            strokeColor: "#FFA859",
+                            pointColor: "#FFA859",
+                            pointStrokeColor: pointStroke,
+                            pointHighlightFill: pointHighlightFill,
+                            pointHighlightStroke: pointHighlightStroke,
+                            data: platTotalData
+                        }, {
                             label: "1oz Platinum",
                             fillColor: "rgba(104, 206, 222, 0.05)",
                             strokeColor: "#BBF5FF",
@@ -250,39 +304,6 @@ $(window).load(function() {
                             pointHighlightStroke: pointHighlightStroke,
                             data: silverData
                         }, ]
-                    };
-
-                    var goldTotal = {
-                        labels: goldDates,
-
-                    };
-
-                    var silverTotal = {
-                        labels: silverDates,
-                        datasets: [{
-                            label: "Silver Total",
-                            fillColor: "rgba(104, 206, 222, 0.05)",
-                            strokeColor: "#F3FF88",
-                            pointColor: "#F3FF88",
-                            pointStrokeColor: pointStroke,
-                            pointHighlightFill: pointHighlightFill,
-                            pointHighlightStroke: pointHighlightStroke,
-                            data: silverTotalData
-                        }]
-                    };
-
-                    var platTotal = {
-                        labels: platDates,
-                        datasets: [{
-                            label: "Platinum Total",
-                            fillColor: "rgba(104, 206, 222, 0.05)",
-                            strokeColor: "#FFA859",
-                            pointColor: "#FFA859",
-                            pointStrokeColor: pointStroke,
-                            pointHighlightFill: pointHighlightFill,
-                            pointHighlightStroke: pointHighlightStroke,
-                            data: platTotalData
-                        }]
                     };
 
                     var options = {
@@ -315,30 +336,63 @@ $(window).load(function() {
 
         } else if (page == "wire3.html") {
             var Gold = Parse.Object.extend("gold_oz");
-            var goldQ = new Parse.Query(Gold).ascending("Date").limit(30);
+            var Inventory = Parse.Object.extend("Inventory");
+            var Coin = Parse.Object.extend("Coin");
+            var currentUser = Parse.User.current();
 
-            goldQ.find({
-                success: function(results) {
+            var goldQ = new Parse.Query(Gold).ascending("Date").limit(30).find();
+
+            var goldCoinQ = new Parse.Query(Coin).equalTo("metal", "Gold").find();
+            var dates = [];
+
+            Parse.Promise.when(goldCoinQ).then(function(goldCoins) {
+                var createPointers = function(items) {
+                    var results = [];
+                    for (var i = 0; i < items.length; i++) {
+                        var ptr = {
+                            __type: "Pointer",
+                            className: "_Coin",
+                            objectId: items[i].get("objectId")
+                        };
+                        results.push(ptr);
+                    }
+                    return results;
+                }
+
+                var gc = createPointers(goldCoins);
+                var goldTotalQ = new Parse.Query(Inventory).ascending("Date").limit(30).containedIn("type", goldCoins).find();
+
+                Parse.Promise.when(goldQ, goldTotalQ).then(function(goldR, gTotal) {
                     var goldData = [];
-                    var dates = [];
-                    for (var i = 0; i < results.length; i++) {
-                        var gold = results[i];
-                        dates.push(gold.get('Date'));
-                        goldData.push(gold.get('Value'));
+                    var goldTotalData = [];
+
+
+                    for (var i = 0; i < goldR.length; i++) {
+                        var gold = goldR[i];
+
+                        dates.push(gold.get("Date"));
+                        goldData.push(gold.get("Value"));
+                    }
+
+                    var ctr = 0;
+                    var sum = 0;
+                    for (var i = 0; i < gTotal.length; i++) {
+                        if (gTotal[i].get("purchaseDate") < dates[ctr]) {
+                            sum += gTotal[i].get("value");
+                        } else {
+                            goldTotalData.push(sum);
+                            ctr++;
+                        }
+                    }
+
+                    if (ctr < dates.length - 1) {
+                        for (var i = ctr; i < dates.length; i++) {
+                            goldTotalData.push(sum);
+                        }
                     }
 
                     var data = {
                         labels: dates,
-                        // datasets: [{
-                        //     label: "Gold Total",
-                        //     fillColor: "rgba(104, 206, 222, 0.05)",
-                        //     strokeColor: "#FF6D67",
-                        //     pointColor: "#FF6D67",
-                        //     pointStrokeColor: pointStroke,
-                        //     pointHighlightFill: pointHighlightFill,
-                        //     pointHighlightStroke: pointHighlightStroke,
-                        //     data: [700, 820, 700, 800, 730, 950, 900]
-                        // }, {
                         datasets: [{
                             label: "1oz Gold",
                             fillColor: "rgba(104, 206, 222, 0.05)",
@@ -348,6 +402,15 @@ $(window).load(function() {
                             pointHighlightFill: pointHighlightFill,
                             pointHighlightStroke: pointHighlightStroke,
                             data: goldData
+                        }, {
+                            label: "Gold Total",
+                            fillColor: "rgba(104, 206, 222, 0.05)",
+                            strokeColor: "#FF6D67",
+                            pointColor: "#FF6D67",
+                            pointStrokeColor: pointStroke,
+                            pointHighlightFill: pointHighlightFill,
+                            pointHighlightStroke: pointHighlightStroke,
+                            data: goldTotalData
                         }]
                     };
 
@@ -373,11 +436,12 @@ $(window).load(function() {
 
                     var ctx = document.getElementById("total-chart").getContext("2d");
                     var coinChart = new Chart(ctx).Line(data, options);
+
                     coinChart.update();
-                }
+                });
             });
         }
-    };
+    }
 
     drawGraph();
 

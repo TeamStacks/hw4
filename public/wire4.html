@@ -28,7 +28,19 @@
     loadTopNav();
     </script>
     <script type="text/javascript">
-    loadSideNav(1);
+        var metalFrom = parseURLParams()['q'];
+        var defaultUrl = window.location.href.indexOf('&q=')
+        var metalChose;
+        if (metalFrom == "Gold" || defaultUrl == -1 ){
+            metalChose = 1;
+        }
+        else if (metalFrom== "Silver"){
+            metalChose = 2;
+        }
+        else if (metalFrom== "Platinum"){
+            metalChose = 3;
+        }
+        loadSideNav(metalChose);
     </script>
     <section class="main-section">
         <section class="coin_wrapper">

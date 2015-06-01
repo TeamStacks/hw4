@@ -225,7 +225,7 @@
     });
 
     var metalFrom = parseURLParams()['q'];
-
+    var defaultUrl = window.location.href.indexOf('?q=')
         
 
         function parseURLParams() {
@@ -247,7 +247,7 @@
           var metalPercentage = coin.get("metalPercentage");
           var weightPerUnit = coin.get("weightPerUnit");
           var imageURL = coin.get("imageURL");
-          if (metalType == "Gold" && metalFrom == "Gold"){
+          if (metalType == "Gold" && (metalFrom == "Gold" || defaultUrl == -1 )){
               metalCoins[coin.id] = {};
               metalCoins[coin.id].coinType = coinType;
               metalCoins[coin.id].metalPercentage = metalPercentage;

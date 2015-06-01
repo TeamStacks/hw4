@@ -197,7 +197,9 @@
     var inventory = new Inventory();
     var query = new Parse.Query(Inventory);
     var inventories = {};
-    var coins = {};
+    var metalCoins = {};
+    var silverCoins = {};
+    var platCoins = {};
 
     query.find({
       success: function(results) {
@@ -224,17 +226,35 @@
       var query = new Parse.Query(Coin);
       query.get(coinId, {
         success: function(coin) {
+          var metalType = coin.get("metal");
           var coinType = coin.get("Type");
           var metalPercentage = coin.get("metalPercentage");
           var weightPerUnit = coin.get("weightPerUnit");
           var imageURL = coin.get("imageURL");
-
-          coins[coin.id] = {};
-          coins[coin.id].coinType = coinType;
-          coins[coin.id].metalPercentage = metalPercentage;
-          coins[coin.id].weightPerUnit = weightPerUnit;
-          coins[coin.id].imageURL = imageURL;
-          updateTable(coin.id, coinId);
+          if (metalType == "Gold"){
+              metalCoins[coin.id] = {};
+              metalCoins[coin.id].coinType = coinType;
+              metalCoins[coin.id].metalPercentage = metalPercentage;
+              metalCoins[coin.id].weightPerUnit = weightPerUnit;
+              metalCoins[coin.id].imageURL = imageURL;
+              
+              updateTable(metalCoins[coin.id], coinId, coin.id);}
+          else if (metalType == "Silver"){
+              silverCoins[coin.id] = {};
+              silverCoins[coin.id].coinType = coinType;
+              silverCoins[coin.id].metalPercentage = metalPercentage;
+              silverCoins[coin.id].weightPerUnit = weightPerUnit;
+              silverCoins[coin.id].imageURL = imageURL;
+              
+              updateTable(silverCoins[coin.id], coinId, coin.id);}
+          else if (metalType == "Platinum"){
+              platCoins[coin.id] = {};
+              platCoins[coin.id].coinType = coinType;
+              platCoins[coin.id].metalPercentage = metalPercentage;
+              platCoins[coin.id].weightPerUnit = weightPerUnit;
+              platCoins[coin.id].imageURL = imageURL;
+              
+              updateTable(platCoins[coin.id], coinId, coin.id);}
 
         },
         error: function(coin, error) {
@@ -243,17 +263,17 @@
       });
     }
 
-    function updateTable(coinId, invenId) {
-        if (coins[coinId].imageURL == null) {
+    function updateTable(metalId, invenId, coinId) {
+        if (metalId.imageURL == null) {
             var col1 = '<td class="stack_img_col"><div class="coin_mini"></div></td>';
         }
         else {
-            var col1 = '<td class="stack_img_col"><img class="img_mini" src="'+coins[coinId].imageURL+'"></td>';
+            var col1 = '<td class="stack_img_col"><img class="img_mini" src="'+metalId.imageURL+'"></td>';
         }
-        var col2 = '<td>' + coins[coinId].coinType + '</td>';
+        var col2 = '<td>' + metalId.coinType + '</td>';
         var col3 = '<td>' + inventories[invenId].quantity + '</td>';
-        var col4 = '<td>' + coins[coinId].weightPerUnit + '</td>';
-        var col5 = '<td>' + coins[coinId].metalPercentage + '</td>';
+        var col4 = '<td>' + metalId.weightPerUnit + '</td>';
+        var col5 = '<td>' + metalId.metalPercentage + '</td>';
         var col6 = '<td>' + inventories[invenId].totalValue + '</td>';
 
         $('#inventory > tbody')

@@ -16,7 +16,7 @@ Inside wire2.html, and any other page for that matter, if you click the cog symb
 
 Clicking on the AG (silver) or PT (platinum) boxes on the side nav will navigate you to your inventory pages, which should dynamically serve you your current inventory (empty if you have not added any items).
 
-## Page Break Down
+## Pages
 	index.html - Login/signup page. Should open modal and allow you to log in or sign up.
 	wire2.html - Home page with Total Coin Value and graphs for all coins
 	wire3.html - My [Gold, Silver, Platinum] page with details on owned gold coins
@@ -39,14 +39,17 @@ There should be no errors, but there are occasionally warnins and also, debug pr
 
 # Implementation
 
-## HTML
-	(From Dream Team spec) We used HTML5 so this technology was pretty straightforward. Perhaps
+We used a mixture of REST API and JavaScript and jQuery for our backend.
+
+## Front-end (From Dream Team spec)
+- HTML
+	* We used HTML5 so this technology was pretty straightforward. Perhaps
 	the one noteworthy thing is our use of SVG, particularly for icons
 	from IcoMoon.io (source: https://icomoon.io/) to save us the time
 	of actually designing our own icons
 
-## SASS/CSS
-	(From Dream Team spec) We wrote all of our CSS using SASS that compiled into CSS. We used 
+- SASS/CSS
+	* We wrote all of our CSS using SASS that compiled into CSS. We used 
 	SASS in a way that the syntax was identical to that of simply using
 	CSS. The only additions we utilized SASS for were as follows:
 
@@ -59,15 +62,11 @@ There should be no errors, but there are occasionally warnins and also, debug pr
 		                    simple @include mixins from SASS to avoid having to
 		                    type all the prefixes ourselves.
 
-    Otherwise, all of our SASS was written exactly the same as CSS. We simply
-    employed the SASS to save some time and organize common themes easier. 
+	* Otherwise, all of our SASS was written exactly the same as CSS. We simply employed the SASS to save some time and organize common themes easier. 
+	* The SASS file is located in sass/style.scss.
+	* The CSS file is located in style/style.css.
 
-    The SASS file is located in sass/style.scss.
-    The CSS file is located in style/style.css.
-
-
-## Javascript
-	(From Dream Team spec) This was the JavaScript already included in the wireframe:
+- JavaScript
 
 		1) Importing top navigation, side navigation, and footer on all pages.
 		   This allowed us to be able to just change the common elements in one 
@@ -93,26 +92,33 @@ There should be no errors, but there are occasionally warnins and also, debug pr
 		   jQuery on click events. 
 		   Source: https://jquery.com/
 
-	For the actual application functionality, we used libraries (please refer to 
-	Libraries Used section in this README).
 
 
-## Parse
+## Backend
+- Parse
 
-Our backend uses Parse, so if you would like to see a live demo of our app (working with Facebook log in as well, please use http://teamstacks.parseapp.com).
+	* Our backend uses Parse, so if you would like to see a live demo of our app (working with Facebook log in as well, please use http://teamstacks.parseapp.com).
+	
+		1) OAuth and Login. We used Parse as our account management system.
 
-1) OAuth and Login. We used Parse as our account management system.
-2) Database. Parse also provided us a database, to which we stored all data such as inventory and accounts and coin information.
-3) Storing Images. We also used Parse to store images that were uploaded of each of the coins.
+		2) Database. Parse also provided us a database, to which we stored all data such as inventory and accounts and coin information. The following is our database schema.
+		
+			- Coin: Holds specific coin information, including image.
+			- User: Holds user information
+			- Inventory: Hold inventory information connecting the Coin and User databases together.
+			
+		3) Storing Images. We also used Parse to store images that were uploaded of each of the coins.
 
-## Facebook SDK
+- Facebook SDK
+	* We used Facebook as well to also provide users another way of logging into our application.
 
-We used Facebook as well to also provide users another way of logging into our application.
+- JavaScript and jQuery
+	* For information on libraries (please refer to Libraries Used section in this README).
 
 # JavaScript Libraries Used
 
-Chart.js
-Bootstrap.js - We used this for the modals
+- Chart.js
+- Bootstrap.js - We used this for the modals
 
 # Thank you!
 

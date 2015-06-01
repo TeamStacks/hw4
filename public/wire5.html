@@ -284,6 +284,9 @@
 
     // saving the coin and inventory
     function saveCoin() {
+        if(checkInput() == false)
+            return;
+
         var type = $("#type").val();
         var imgUrl = $('#coinimg').attr('src');
         var gramsPerUnit = parseFloat($("#grams_per_unit").text());
@@ -319,7 +322,6 @@
     }
 
     function saveInventory(coin) {
-
         var purchaseDate = new Date($("#purchase_date").val());
         var quantity = parseInt($("#quantity").val());
         var type = coin;
@@ -340,6 +342,64 @@
                 alert("Unable to save inventory!");
             }
         });
+    }
+
+    function checkInput() {
+        var error = "";
+        var date = $("#purchase_date").val();
+        var quantity = $("#quantity").val();
+        var premium = $("#premium").val();
+        var unitPrice = $("#unit_price").val();
+
+        // regular expression to match required date format
+        re = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
+
+        if(date != '') {
+            if(regs = date.match(re)) {
+                // month value between 1 and 12
+                if(regs[1] < 1 || regs[1] > 12) {
+                    error += "Invalid input on 'Purchase Date': Month must be a number from 1 ~ 12\n";
+                }
+                // day value between 1 and 31
+                if(regs[2] < 1 || regs[2] > 31) {
+                    error += "Invalid input on 'Purchase Date': Day must be a number from 1 ~ 31\n";
+                }
+                // year value between 1902 and 2015
+                if(regs[3] < 1902 || regs[3] > (new Date()).getFullYear()) {
+                    error += "Invalid input on 'Purchase Date': Year must be between 1902 and " + (new Date()).getFullYear() + "\n";
+                }
+            } else {
+                error += "Invalid input on 'Purchase Date': Format must be mm/dd/yyyy\n";
+            }
+        }
+
+        if($.isNumeric(quantity) == false) {
+            error += "Invalid input on 'Quantity': Must be numeric\n";
+        } else {
+            if(quantity <= 0)
+                error += "Invalid input on 'Quantity': Must be greater than 0\n";
+        }
+
+        if($.isNumeric(premium) == false) {
+            error += "Invalid input on 'Premium': Must be numeric\n";
+        } else {
+            if(premium <= 0)
+                error += "Invalid input on 'Premium': Must be greater than 0\n";
+        }
+
+        if($.isNumeric(unitPrice) == false) {
+            error += "Invalid input on 'Unit Price': Must be numeric\n";
+        } else {
+            if(unitPrice <= 0)
+                error += "Invalid input on 'Unit Price': Must be greater than 0\n";
+        }
+
+        if(error !== "") {
+            alert("Input Error:\n\n" + error);
+            return false;
+        }
+
+        return true;
     }
 
     $("#save").click(function() {

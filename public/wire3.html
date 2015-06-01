@@ -316,14 +316,17 @@
   </script>
     <script>
       if (metalFrom == "Gold" || defaultUrl == -1 ){
-      document.getElementById("displayMetal").innerHTML = "My Gold";
-    }
-    else if (metalFrom == "Silver"){
-      document.getElementById("displayMetal").innerHTML  = "My Silver";
-    }
-    else if (metalFrom == "Platinum"){
-      document.getElementById("displayMetal").innerHTML = "My Platinum";
-    }
+        document.getElementById("my_gold_value").innerHTML = "My Gold Value";
+        document.getElementById("displayMetal").innerHTML = "My Gold";
+      }
+      else if (metalFrom == "Silver"){
+        document.getElementById("my_gold_value").innerHTML = "My Silver Value";
+        document.getElementById("displayMetal").innerHTML  = "My Silver";
+      }
+      else if (metalFrom == "Platinum"){
+        document.getElementById("my_gold_value").innerHTML = "My Platinum Value";
+        document.getElementById("displayMetal").innerHTML = "My Platinum";
+      }
   </script>
   <script type="text/javascript">
     verify();

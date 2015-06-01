@@ -1,11 +1,13 @@
 ===============================================================================
-                             CSE134B DREAM TEAM
-                               COINFLIP - HW3
+                             CSE134B TEAM STACKS
+                               COINFLIP - HW4
 ===============================================================================
 
-# # # # # # # # # # # # # # # 
-#      Application Use      #
-# # # # # # # # # # # # # # #
+Special thanks for Dream Team for making the mock-up on which we built on top of
+and extended.
+
+
+#   Application Use 
 
 Navigation:
 	Start with index.html as the login/signup page. All other pages are named
@@ -18,56 +20,11 @@ Navigation:
 	wire5.html - New Item page that is the mock-up for adding a new coin
 
 	Clicking on the AG (silver) or PT (platinum) boxes on the side nav will
-	simply navigate you to the AU (gold) page [wire3.html] as this mock-up
-	only implements the My Gold page.
+	simply navigate you to your inventory pages, split into AU, AG, and PT
 
 Responsive Design:
 	THe high-fidelity mock switches to mobile view when the screen size 
 	reaches a width of 1000px or below.
-
-
-
-# # # # # # # # # # # # # # # 
-#   Cross-Platform Issues   #
-# # # # # # # # # # # # # # #
-
-Chrome:
-	We mainly developed on Chrome, so there were issues with compatibility in
-	that department. 
-
-Firefox:
-	Firefox also seemed to work perfectly well with no issues. Did not note any
-	major problems, if any problems at all, with that browser. The only slight
-	difference that we noticed is that the dropdown selector in wire5.html was 
-	styled a little bit differently in Firefox (not as nice looking as we would
-	have hoped and seen in Chrome).
-
-Safari:
-	Here, the dropdown selector in wire5.html was also a little bit different, 
-	although not as ugly as in Firefox. One of the major issues we bumped into,
-	however, was that a lot of our SVG elements were not showing. This turned
-	out to be this really annoying problem that with SVG symbols, all other 
-	browsers let you call "use" before declaring the symbol EXCEPT Safari. 
-	This required an insane amount of browsing through all the files and 
-	doing a move of that line of code below the symbol declaration for pretty
-	much every single SVG element we used. Overall, testing on Safari brought
-	out the key point that some browsers will care about the order of certain
-	markup while others wont. 
-
-	Another thing we noticed is that Safari renders fonts a little bit 
-	differently from all the other browsers, and especially font-size. We used
-	font-size: 0 to bring some divs flush close to each other but on Safari
-	that doesn't work for some strange reason, so we compensated with some
-	white-space: nowrap so that our mobile toggling selectors didn't overflow.
-
-Internet Explorer:
-	Okay this one actually scared us a ton at first because the entire layout 
-	was whack. Turns out after some research, the "main" semantic element isn't
-	supported in IE, so the padding we had used for that element didn't have
-	any effect at all. To fix this, we simply switched out the "main" element
-	for a "section" element with a specific class and styled it the same
-	as we had with the "main" element.
-
 
 
 # # # # # # # # # # # # # # # 
@@ -77,37 +34,19 @@ Internet Explorer:
 HTML:
 	All the HTML validation checked out so there was no problem there.
 
-CSS:
-	The errors in CCS validation were broken down into only two problems:
-
-	Property fill Doesn't Exist:
-		CSS3 validator doesn't recognize fill as a valid attribute, but
-		as we tested it with Chrome, Firefox, Safari, and IE, we're willing
-		to forgo solving of this validation flag to implement the fill 
-		attribute. After some further research, this seems to be a bug in 
-		the validator, much like the one that will be described next.
-
-	Calc() parse errors:
-		Anywhere we used calc() in our CSS, the CSS validator threw a parse
-		error. However, with research, we determined that this was a bug with 
-		the CSS validator. 
-
-		Source: https://www.w3.org/Bugs/Public/show_bug.cgi?id=18913 
-
-
 
 # # # # # # # # # # # # # # # 
 #    Implementation Tech    #
 # # # # # # # # # # # # # # #
 
 HTML:
-	We used HTML5 so this technology was pretty straightforward. Perhaps
+	(From Dream Team spec) We used HTML5 so this technology was pretty straightforward. Perhaps
 	the one noteworthy thing is our use of SVG, particularly for icons
 	from IcoMoon.io (source: https://icomoon.io/) to save us the time
 	of actually designing our own icons
 
 SASS/CSS:
-	We wrote all of our CSS using SASS that compiled into CSS. We used 
+	(From Dream Team spec) We wrote all of our CSS using SASS that compiled into CSS. We used 
 	SASS in a way that the syntax was identical to that of simply using
 	CSS. The only additions we utilized SASS for were as follows:
 
@@ -128,7 +67,7 @@ SASS/CSS:
 
 
 Javascript:
-	We used a little bit a Javascript, not much, to accomplish these goals:
+	(From Dream Team spec) This was the JavaScript already included in the wireframe:
 
 		1) Importing top navigation, side navigation, and footer on all pages.
 		   This allowed us to be able to just change the common elements in one 
@@ -154,16 +93,36 @@ Javascript:
 		   jQuery on click events. 
 		   Source: https://jquery.com/
 
+	For the actual application functionality, we used libraries (please refer to 
+	Libraries Used section in this README).
 
+
+Parse:
+	Our backend uses Parse, so if you would like to see a live demo of our app (working 
+	with Facebook log in as well, please use http://teamstacks.parseapp.com).
+
+		1) OAuth and Login. We used Parse as our account management system.
+
+		2) Database. Parse also provided us a database, to which we stored all
+		   data such as inventory and accounts and coin information.
+
+		3) Storing Images. We also used Parse to store images that were uploaded of each
+		   of the coins.
+
+
+Facebook:
+	We used Facebook as well to also provide users another way of logging into our application.
+
+# # # # # # # # # # # # # # # 
+#     Libraries Used        #
+# # # # # # # # # # # # # # #	
+
+Chart
 
 # # # # # # # # # # # # # # # 
 #        Thank you!         #
 # # # # # # # # # # # # # # #
 
-We hope you enjoyed our high-fidelity mock-up of CoinFlip, the simple 
-application for managing your entire coin collection! Feel free to 
-contact us with any feedback, comments, suggestions, or concerns.
-
 Best,
-CSE134B Dream Team
+CSE134B Team Stacks
 

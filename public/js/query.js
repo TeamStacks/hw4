@@ -29,6 +29,7 @@ function addItem() {
 function parseURLParams() {
     var params = {};
     window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(ms, key,value) {
+    	console.log("key: " + key + " value: " + value);
         params[key] = value;
     });
     return params;

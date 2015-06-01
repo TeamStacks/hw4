@@ -104,7 +104,7 @@
                         <tr>
                             <td>Premium</td>
                             <td>
-                                <input id="premium" name="quantity"/>
+                                <input id="premium" name="quantity" class="values"/>
                             </td>
                         </tr>
                         <tr>
@@ -198,11 +198,10 @@
 
     // calculations for the ajax total
     $(".values").keyup(function() {
-        var total = Number($('#weight_per_unit').text());
-        $(".values").each(function(){
-            console.log("current: " + Number($(this).val()));
-            total *= Number($(this).val());
-        });
+        var total = Number($('#metal_percentage').text());
+        total *= Number($('#quantity').val());
+        total *= Number($('#unit_price').val());
+        total += Number($("#premium").val())
         $("#total_value").text(total);
         console.log("current total: " + total);
     });

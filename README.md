@@ -118,13 +118,24 @@ We used a mixture of REST API and JavaScript and jQuery for our backend.
 - Facebook SDK
 	* We used Facebook as well to also provide users another way of logging into our application.
 
-- JavaScript and jQuery
+- JavaScript
 	* For information on libraries (please refer to Libraries Used section in this README).
 
-# JavaScript Libraries Used
+# JavaScript 
+
+## JavaScript Libraries Used
 
 - Chart.js
+- d3.js - for dynamically serving data
+- parse-1.4.2.js - JavaScript library from Parse
 - Bootstrap.js - We used this for the modals
+- jquery-1.11.2.js - We used this for jQuery
+
+## JavaScript Files We Made
+
+- query.js - Holds some methods for loading information from Parse as well as other things related to querying, such as parsing URL for ID when viewing an item (wire4.html)
+- account.js - Handles all the methods for logging in and verifying log in with Parse SDK and Facebook
+- quandl.js - Handles scraping of data from Quandl for our bid and total information.
 
 # Thank you!
 

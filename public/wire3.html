@@ -11,6 +11,7 @@
   <meta name=viewport content="width=device-width, initial-scale=.8, minimum-scale = .8, user-scalable=yes">
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  <link href="./css/c3.min.css" rel="stylesheet" type="text/css">
   <script src="./js/jquery-1.11.2.min.js"></script>
   <script type="text/javascript" src="./js/parse-1.4.2.min.js"></script>
   <script type="text/javascript" src="./js/parsefb.js"></script>
@@ -224,7 +225,7 @@
     });
 
     var metalFrom = parseURLParams()['q'];
-
+    var defaultUrl = window.location.href.indexOf('?q=')
         
 
         function parseURLParams() {
@@ -246,7 +247,7 @@
           var metalPercentage = coin.get("metalPercentage");
           var weightPerUnit = coin.get("weightPerUnit");
           var imageURL = coin.get("imageURL");
-          if (metalType == "Gold" && metalFrom == "Gold"){
+          if (metalType == "Gold" && (metalFrom == "Gold" || defaultUrl == -1 )){
               metalCoins[coin.id] = {};
               metalCoins[coin.id].coinType = coinType;
               metalCoins[coin.id].metalPercentage = metalPercentage;

@@ -92,7 +92,7 @@
                             <td id="unit_price">Loading</td>
                         </tr>
                         <tr>
-                            <td>Gold %</td>
+                            <td id="metal_percentage_label">Metal %</td>
                             <td id="metal_percentage">Loading</td>
                         </tr>
                         <tr>
@@ -100,15 +100,15 @@
                             <td id="weight_per_unit">Loading</td>
                         </tr>
                         <tr>
-                            <td>Gold g/u</td>
+                            <td id="grams_per_unit_label">Metal g/u</td>
                             <td id="grams_per_unit">Loading</td>
                         </tr>
                         <tr>
-                            <td>Gold ozt/u</td>
+                            <td id="ozt_per_unit_label">Metal ozt/u</td>
                             <td id="ozt_per_unit">Loading</td>
                         </tr>
                         <tr>
-                            <td>Total au (ozt)</td>
+                            <td id="total_label">Total metal (ozt)</td>
                             <td>0.0400</td>
                         </tr>
                         <tr>
@@ -179,6 +179,12 @@
                     $("#premium").text(coin.get("premium"));
                     $("#unit_price").text(coin.get("unitPrice"));
                     $("#weight_per_unit").text(coin.get("weightPerUnit"));
+
+                    $("#metal_percentage_label").text(coin.get("metal") + " %");
+                    $("#grams_per_unit_label").text(coin.get("metal") + " g/u");
+                    $("#ozt_per_unit_label").text(coin.get("metal") + " ozt/u");
+                    $("#total_label").text("Total " + coin.get("metal") + " (ozt)");
+
                     console.log(coin.get("imageURL"));
                     if (coin.get("imageURL") != null) {
                         $(".img_container")[0].innerHTML ='<img id="coinimg" src="'+coin.get("imageURL")+'">';

@@ -162,33 +162,7 @@
         }
 
         function loadCoin(coinID) {
-            // grab info from Inventory db
-            var Inventory = Parse.Object.extend("Inventory");
-            var userInventory = new Parse.Query(Inventory);
-
-
-
-                    // // Cool, now make sure the coin is actually in the user's inventory
-                    // userInventory.find({
-                    //     success: function(userItem) {
-                    //         // THERE CAN BE ONLY ONE!!!! (I think...)
-                    //         if(userItem.length !== 1) {
-                    //             alert("Unable to retrieve inventory!");
-                    //             window.history.back();
-                    //         } else {
-                    //             $("#purchase_date").text(userItem[0].get("purchaseDate").toDateString());
-                    //             $("#quantity").text(userItem[0].get("quantity"));
-                    //             $("#value").text(userItem[0].get("value"));
-                           
-                    //         }
-                    //     },
-                    //     // Someone's a broke asshole...
-                    //     error: function(inventory, error) {
-                    //         alert("Unable to retrieve inventory! " + error.message);
-                    //         window.history.back();
-                    //     }
-                    // });
-
+        
             // grab info from Coin db
             var Coin = Parse.Object.extend("Coin");
             var coinType = new Parse.Query(Coin);
@@ -208,7 +182,25 @@
                     if (coin.get("imageURL") != null) {
                         $(".img_container")[0].innerHTML ='<img id="coinimg" src="'+coin.get("imageURL")+'">';
                     }
-        
+                
+                    // grab info from Inventory db
+                    var Inventory = Parse.Object.extend("Inventory");
+                    var userInventory = new Parse.Query(Inventory);
+
+                    userInventory.equalTo("type", coin);
+                    userInventory.find({
+                      success: function(results) {
+                        console.log("Successfully retrieved " + results.length + " scores.");
+
+                        $("#purchase_date").text(results[0].get("purchaseDate").toDateString());
+                        $("#quantity").text(results[0].get("quantity"));
+                        $("#value").text(results[0].get("value"));
+                        
+                      },
+                      error: function(error) {
+                        alert("Error: " + error.code + " " + error.message);
+                      }
+                    });
          
                 },
                 // The cake's a lie...

@@ -8,22 +8,24 @@ and extended.
 
 ## Navigation:
 
-Start with index.html as the login/signup page. All other pages are named
-as such:
+Start with index.html as the login/signup page. 
+1) If you are not logged in, you will not be able to see the other pages, as they will redirect you to index.html.
+2) Once you are logged in, unless you log out, you will automatically be redirected to wire2.html if you look at index.html.
 
-	index.html - Login/signup page with demo
+Inside wire2.html, and any other page for that matter, if you click the cog symbol in the top right, you will open your profile, from which you can log out, make changes to your profile, or link your Facebook.
+
+Clicking on the AG (silver) or PT (platinum) boxes on the side nav will navigate you to your inventory pages, which should dynamically serve you your current inventory (empty if you have not added any items).
+
+## Page Break Down
+	index.html - Login/signup page. Should open modal and allow you to log in or sign up.
 	wire2.html - Home page with Total Coin Value and graphs for all coins
-	wire3.html - My Gold page with details on owned gold coins
-	wire4.html - Gold Item page that looks at a specific gold coin
-	wire5.html - New Item page that is the mock-up for adding a new coin
-
-Clicking on the AG (silver) or PT (platinum) boxes on the side nav will
-simply navigate you to your inventory pages, split into AU, AG, and PT
+	wire3.html - My [Gold, Silver, Platinum] page with details on owned gold coins
+	wire4.html - Item page that looks at a specific gold coin
+	wire5.html - New Item page for adding a new coin
 
 ## Responsive Design
 
-The high-fidelity mock switches to mobile view when the screen size 
-reaches a width of 1000px or below.
+All interactions with the application should be supported in Mobile view.
 
 # Validation Issues	
 
@@ -31,18 +33,19 @@ reaches a width of 1000px or below.
 
 All the HTML validation checked out so there was no problem there.
 
+## JavaScript
 
-# # # # # # # # # # # # # # # 
-#    Implementation Tech    #
-# # # # # # # # # # # # # # #
+There should be no errors, but there are occasionally warnins and also, debug prints when viewing with the developer console.
 
-HTML:
+# Implementation
+
+## HTML
 	(From Dream Team spec) We used HTML5 so this technology was pretty straightforward. Perhaps
 	the one noteworthy thing is our use of SVG, particularly for icons
 	from IcoMoon.io (source: https://icomoon.io/) to save us the time
 	of actually designing our own icons
 
-SASS/CSS:
+## SASS/CSS
 	(From Dream Team spec) We wrote all of our CSS using SASS that compiled into CSS. We used 
 	SASS in a way that the syntax was identical to that of simply using
 	CSS. The only additions we utilized SASS for were as follows:
@@ -63,7 +66,7 @@ SASS/CSS:
     The CSS file is located in style/style.css.
 
 
-Javascript:
+## Javascript
 	(From Dream Team spec) This was the JavaScript already included in the wireframe:
 
 		1) Importing top navigation, side navigation, and footer on all pages.
@@ -94,27 +97,22 @@ Javascript:
 	Libraries Used section in this README).
 
 
-Parse:
-	Our backend uses Parse, so if you would like to see a live demo of our app (working 
-	with Facebook log in as well, please use http://teamstacks.parseapp.com).
+## Parse:
 
-		1) OAuth and Login. We used Parse as our account management system.
+Our backend uses Parse, so if you would like to see a live demo of our app (working with Facebook log in as well, please use http://teamstacks.parseapp.com).
 
-		2) Database. Parse also provided us a database, to which we stored all
-		   data such as inventory and accounts and coin information.
+1) OAuth and Login. We used Parse as our account management system.
+2) Database. Parse also provided us a database, to which we stored all data such as inventory and accounts and coin information.
+3) Storing Images. We also used Parse to store images that were uploaded of each of the coins.
 
-		3) Storing Images. We also used Parse to store images that were uploaded of each
-		   of the coins.
+## Facebook:
 
+We used Facebook as well to also provide users another way of logging into our application.
 
-Facebook:
-	We used Facebook as well to also provide users another way of logging into our application.
+# JavaScript Libraries Used
 
-# # # # # # # # # # # # # # # 
-#     Libraries Used        #
-# # # # # # # # # # # # # # #	
-
-Chart
+Chart.js
+Bootstrap.js - We used this for the modals
 
 # # # # # # # # # # # # # # # 
 #        Thank you!         #

@@ -6,7 +6,7 @@ and extended.
 
 # Application Use 
 
-## Navigation:
+## Navigation
 
 Start with index.html as the login/signup page. 
 1) If you are not logged in, you will not be able to see the other pages, as they will redirect you to index.html.
@@ -97,7 +97,7 @@ There should be no errors, but there are occasionally warnins and also, debug pr
 	Libraries Used section in this README).
 
 
-## Parse:
+## Parse
 
 Our backend uses Parse, so if you would like to see a live demo of our app (working with Facebook log in as well, please use http://teamstacks.parseapp.com).
 
@@ -105,7 +105,7 @@ Our backend uses Parse, so if you would like to see a live demo of our app (work
 2) Database. Parse also provided us a database, to which we stored all data such as inventory and accounts and coin information.
 3) Storing Images. We also used Parse to store images that were uploaded of each of the coins.
 
-## Facebook:
+## Facebook SDK
 
 We used Facebook as well to also provide users another way of logging into our application.
 
@@ -114,9 +114,7 @@ We used Facebook as well to also provide users another way of logging into our a
 Chart.js
 Bootstrap.js - We used this for the modals
 
-# # # # # # # # # # # # # # # 
-#        Thank you!         #
-# # # # # # # # # # # # # # #
+# Thank you!
 
 Best,
 CSE134B Team Stacks

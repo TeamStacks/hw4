@@ -116,7 +116,7 @@ $(window).load(function() {
     $('.icon-cog').click(function() {
         $('#profile').modal('show');
     });
-// REMOVE THIS? NOT SURE WHAT THIS IS - ANGIE
+    // REMOVE THIS? NOT SURE WHAT THIS IS - ANGIE
     $('tr').click(function() {
         $(this).find('a')[0].click();
     });
@@ -144,9 +144,9 @@ $(window).load(function() {
             var silverQ = new Parse.Query(Silver).ascending("Date").limit(30).find();
             var platQ = new Parse.Query(Plat).ascending("Date").limit(30).find();
 
-            var goldCoinQ = new Parse.Query(Coin).equalTo("metal", "Gold").limit(30).find();
-            var silverCoinQ = new Parse.Query(Coin).equalTo("metal", "Silver").limit(30).find();
-            var platCoinQ = new Parse.Query(Coin).equalTo("metal", "Platinum").limit(30).find();
+            var goldCoinQ = new Parse.Query(Coin).equalTo("metal", "Gold").find();
+            var silverCoinQ = new Parse.Query(Coin).equalTo("metal", "Silver").find();
+            var platCoinQ = new Parse.Query(Coin).equalTo("metal", "Platinum").find();
 
 
             var dates = [];
@@ -155,8 +155,11 @@ $(window).load(function() {
                 var createPointers = function(items) {
                     var results = [];
                     for (var i = 0; i < items.length; i++) {
-                        var ptr = new Parse.Object("Coin");
-                        ptr.id = items[i].get("objectId");
+                        var ptr = {
+                            __type: "Pointer",
+                            className: "_Coin",
+                            objectId: items[i].get("objectId")
+                        };
                         results.push(ptr);
                     }
                     return results;
@@ -166,17 +169,18 @@ $(window).load(function() {
                 var sc = createPointers(silverCoins);
                 var pc = createPointers(platCoins);
 
-                var goldTotalQ = new Parse.Query(Inventory).ascending("Date").limit(30).containedIn("Coin", gc).equalTo("ownedBy", currentUser).find();
-                var silverTotalQ = new Parse.Query(Inventory).ascending("Date").limit(30).containedIn("Coin", sc).equalTo("ownedBy", currentUser).find();
-                var platTotalQ = new Parse.Query(Inventory).ascending("Date").limit(30).containedIn("Coin", pc).equalTo("ownedBy", currentUser).find();
+                var goldTotalQ = new Parse.Query(Inventory).ascending("Date").limit(30).containedIn("type", goldCoins).find();
+                var silverTotalQ = new Parse.Query(Inventory).ascending("Date").limit(30).containedIn("type", silverCoins).find();
+                var platTotalQ = new Parse.Query(Inventory).ascending("Date").limit(30).containedIn("type", platCoins).find();
 
                 Parse.Promise.when(goldQ, silverQ, platQ, goldTotalQ, silverTotalQ, platTotalQ).then(function(goldR, silverR, platR, gTotal, sTotal, pTotal) {
-                    console.log(gTotal);
-                    console.log(sTotal);
-                    console.log(pTotal);
                     var goldData = [];
                     var silverData = [];
                     var platData = [];
+
+                    var goldTotalData = [];
+                    var silverTotalData = [];
+                    var platTotalData = [];
 
                     for (var i = 0; i < goldR.length; i++) {
                         var gold = goldR[i];
@@ -187,6 +191,23 @@ $(window).load(function() {
                         goldData.push(gold.get("Value"));
                         silverData.push(silver.get("USD"));
                         platData.push(plat.get("usd_pm"));
+                    }
+
+                    var ctr = 0;
+                    var sum = 0;
+                    for (var i = 0; i < gTotal.length; i++) {
+                        if (gTotal[i].get("purchaseDate") < dates[ctr]) {
+                            sum += gTotal[i].get("value");
+                        } else {
+                            goldTotal.push(sum);
+                            ctr++;
+                        }
+                    }
+
+                    if (ctr < dates.length - 1) {
+                        for (var i = ctr; i < dates.length; i++) {
+                            goldTotal.push(sum);
+                        }
                     }
 
                     var data = {
@@ -200,6 +221,15 @@ $(window).load(function() {
                             pointHighlightFill: pointHighlightFill,
                             pointHighlightStroke: pointHighlightStroke,
                             data: goldData
+                        }, {
+                            label: "Gold Total",
+                            fillColor: "rgba(104, 206, 222, 0.05)",
+                            strokeColor: "#FF6D67",
+                            pointColor: "#FF6D67",
+                            pointStrokeColor: pointStroke,
+                            pointHighlightFill: pointHighlightFill,
+                            pointHighlightStroke: pointHighlightStroke,
+                            data: goldTotalData
                         }, {
                             label: "1oz Platinum",
                             fillColor: "rgba(104, 206, 222, 0.05)",
@@ -219,6 +249,39 @@ $(window).load(function() {
                             pointHighlightStroke: pointHighlightStroke,
                             data: silverData
                         }, ]
+                    };
+
+                    var goldTotal = {
+                        labels: goldDates,
+
+                    };
+
+                    var silverTotal = {
+                        labels: silverDates,
+                        datasets: [{
+                            label: "Silver Total",
+                            fillColor: "rgba(104, 206, 222, 0.05)",
+                            strokeColor: "#F3FF88",
+                            pointColor: "#F3FF88",
+                            pointStrokeColor: pointStroke,
+                            pointHighlightFill: pointHighlightFill,
+                            pointHighlightStroke: pointHighlightStroke,
+                            data: silverTotalData
+                        }]
+                    };
+
+                    var platTotal = {
+                        labels: platDates,
+                        datasets: [{
+                            label: "Platinum Total",
+                            fillColor: "rgba(104, 206, 222, 0.05)",
+                            strokeColor: "#FFA859",
+                            pointColor: "#FFA859",
+                            pointStrokeColor: pointStroke,
+                            pointHighlightFill: pointHighlightFill,
+                            pointHighlightStroke: pointHighlightStroke,
+                            data: platTotalData
+                        }]
                     };
 
                     var options = {
@@ -243,6 +306,7 @@ $(window).load(function() {
 
                     var ctx = document.getElementById("total-chart").getContext("2d");
                     var coinChart = new Chart(ctx).Line(data, options);
+
                     coinChart.update();
                 });
             });

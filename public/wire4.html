@@ -249,7 +249,7 @@
                     coin.destroy({
                       success: function(myObject) {
                             alert("You have deleted this item.");
-                          window.document.location = "wire3.html";
+                          window.document.location = "wire3.html?q=" + myObject.get("metal");
                       },
                       error: function(myObject, error) {
                         // The delete failed.

@@ -39,6 +39,9 @@ There should be no errors, but there are occasionally warnins and also, debug pr
 
 # Concerns
 
+The Gold/Silver/Plat totals were very difficult to graph because of ChartJS's limitations. ChartJS only accepts one set of x-axis values, which means that all datasets must share the same set of dates for the charted information to make any sense. We ended up writing a basic function that sums up all purchases made before a certain date. In short, the gold/silver/plat totals on the chart will look inaccurate, especially if an item's purchase date is not within the range of dates on the chart.
+
+There are also gaps in the dates for the 1oz gold/silver/platinum data from Quandl (no idea why). Ideally we would have written a scraper to scrape daily info from some other site, but we weren't sure how to do this in Parse (would be much easier in Node).
 # Dates
 
 There is a discrepancy between the Parse server dates and the browser dates that causes a minor difference in the dates when fetched and when stored. In Chrome, this is off by 5 hours, whereas in Firefox, the time is parsed correctly.
@@ -114,6 +117,8 @@ We used a mixture of REST API and JavaScript and jQuery for our backend.
 			- Inventory: Hold inventory information connecting the Coin and User databases together.
 			
 		3) Storing Images. We also used Parse to store images that were uploaded of each of the coins.
+
+		4) Since making a network call to Quandl anytime a page is loaded is too slow (~2 second load time), we instead wrote background jobs that pull updated information from Quandl everyday. This sped up the script loading by a great deal.
 
 - Facebook SDK
 	* We used Facebook as well to also provide users another way of logging into our application.

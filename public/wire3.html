@@ -30,17 +30,15 @@
     loadTopNav();
   </script>
   <script type="text/javascript">
-        var metalFrom = parseURLParams()['q'];
+    var metalFrom = parseURLParams()['q'];
     var defaultUrl = window.location.href.indexOf('?q=')
-        
-
-        function parseURLParams() {
-            var params = {};
-            window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(ms, key,value) {
-                params[key] = value;
-            });
-            return params;
-        }
+    function parseURLParams() {
+      var params = {};
+      window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(ms, key,value) {
+      params[key] = value;
+      });
+      return params;
+    }
     var metalChose;
     if (metalFrom == "Gold" || defaultUrl == -1 ){
       metalChose = 1;
@@ -157,7 +155,7 @@
         <table id="inventory">
           <caption>
             <section class="label-and-search">
-              <h3>My Gold</h3>
+              <h3 id = "displayMetal">My Gold</h3>
               <div class="stack_ctrl">
                 <input id="search" type="search" placeholder="Search" />
                 <a href="wire5.html">
@@ -318,6 +316,17 @@
         rows.addClass("hidden");
         rows.children(":contains('" + searchQuery + "')").parent().removeClass("hidden");
     });
+  </script>
+    <script>
+      if (metalFrom == "Gold" || defaultUrl == -1 ){
+      document.getElementById("displayMetal").innerHTML = "My Gold";
+    }
+    else if (metalFrom == "Silver"){
+      document.getElementById("displayMetal").innerHTML  = "My Silver";
+    }
+    else if (metalFrom == "Platinum"){
+      document.getElementById("displayMetal").innerHTML = "My Platinum";
+    }
   </script>
   <script type="text/javascript">
     verify();

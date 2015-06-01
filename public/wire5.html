@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -33,7 +33,7 @@
     <section class="main-section">
         <section class="coin_wrapper">
             <div class="mobile-nav">
-                <a href="wire3.html">
+                <a href="#" onclick="window.history.back(-1);">
                     <svg class="icon icon-keyboard-arrow-left">
                         <symbol id="icon-keyboard-arrow-left" viewBox="0 0 1024 1024">
                             <title>keyboard-arrow-left</title>
@@ -45,7 +45,7 @@
                 ADD ITEM
             </div>
             <div class="coin_main">
-                <a href="wire3.html">
+                <a href="#" onclick="window.history.back(-1);">
                     <div class="breadcrumb">
                         <svg class="icon icon-play-arrow-rev">
                             <symbol id="icon-play-arrow" viewBox="0 0 1024 1024">
@@ -140,7 +140,7 @@
                         </tr>
                     </table>
                     <a href="#"><span id="save">Save to My Stack</span></a>
-                    <a href="wire3.html"><span id="cancel">Cancel</span></a>
+                    <a href="#" onclick="window.history.back(-1);"><span id="cancel">Cancel</span></a>
                 </section>
             </div>
         </section>
@@ -295,7 +295,7 @@
             value: totalValue
         }, {
             success: function(inventory) {
-                window.location.href = "./wire3.html";
+                window.history.back(-1);
             },
             error: function(inventory, error) {
                 alert("Unable to save inventory!");
@@ -308,7 +308,7 @@
     });
 
     $("#cancel").click(function() {
-        window.location.href = "/wire3.html";
+        window.history.back(-1);
     });
     </script>
 </body>

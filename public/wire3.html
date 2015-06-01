@@ -217,7 +217,7 @@
         }
       },
       error: function(error) {
-        alert("Unable to retrieve coin! " + error.message);
+        alert("Unable to retrieve inventory! " + error.message);
       }
     });
 
@@ -258,7 +258,9 @@
 
         },
         error: function(coin, error) {
+         console.log("error coin: " + coinId);
           alert("Unable to retrieve coin! " + error.message);
+
         }
       });
     }
@@ -282,7 +284,7 @@
     }
 
     function inspectCoin(row){
-        alert("Taking a closer look at coin with ID: "+ row.id);
+        //alert("Taking a closer look at coin with ID: "+ row.id);
         window.document.location = "wire4.html?id=" + row.id;
     }
 

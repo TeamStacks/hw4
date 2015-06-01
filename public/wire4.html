@@ -115,7 +115,7 @@
                             <td><strong id="value">Loading</strong></td>
                         </tr>
                     </table>
-                    <a href="wire3.html"><span id="delete">Delete</span></a>
+                    <span id="delete" onclick="deleteCoin(parseURLParams()['id'])">Delete</span>
                 </section>
             </div>
         </section>
@@ -209,6 +209,49 @@
                     //window.history.back();
                 }
             });
+        }
+
+        function deleteCoin(coinID) {
+            // grab info from Coin db
+            var Coin = Parse.Object.extend("Coin");
+            var coinType = new Parse.Query(Coin);
+
+            // Make sure the coin actually exists...
+            coinType.get(coinID, {
+                success: function(coin) {
+
+                    // grab info from Inventory db
+                    var Inventory = Parse.Object.extend("Inventory");
+                    var userInventory = new Parse.Query(Inventory);
+
+                    userInventory.equalTo("type", coin);
+                    userInventory.find({
+                      success: function(results) {
+                        results[0].destroy();
+                        
+                      },
+                      error: function(error) {
+                        alert("Error: " + error.code + " " + error.message);
+                      }
+                    });
+         
+
+                    coin.destroy({
+                      success: function(myObject) {
+                            alert("You have deleted this item.");
+                          window.document.location = "wire3.html";
+                      },
+                      error: function(myObject, error) {
+                        // The delete failed.
+                        // error is a Parse.Error with an error code and message.
+                      }
+                    });
+                },
+                error: function () {
+
+                }
+            });
+            
         }
     </script>
 </body>

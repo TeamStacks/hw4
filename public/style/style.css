@@ -1015,6 +1015,7 @@ select {
 }
 
 #delete {
+    cursor: pointer;
     background: red;
     border: 1px solid #151515;
     color: white;

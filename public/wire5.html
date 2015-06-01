@@ -207,7 +207,7 @@
         total *= Number($('#quantity').val());
         total *= Number($('#unit_price').val());
         total += Number($("#premium").val())
-        $("#total_value").text(total);
+        $("#total_value").text(total.toFixed(4));
         $("#total_metal_ozt").text(Number($('#quantity').val()) * Number($('#ozt_per_unit').text()))
     }
 

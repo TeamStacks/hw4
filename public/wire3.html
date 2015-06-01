@@ -299,7 +299,7 @@
         var col3 = '<td>' + inventories[invenId].quantity + '</td>';
         var col4 = '<td>' + metalId.weightPerUnit + '</td>';
         var col5 = '<td>' + metalId.metalPercentage + '</td>';
-        var col6 = '<td>' + inventories[invenId].totalValue + '</td>';
+        var col6 = '<td>' + inventories[invenId].totalValue.toFixed(4) + '</td>';
 
         $('#inventory > tbody')
             .append($('<tr></tr>').attr('onclick', 'inspectCoin(this)')

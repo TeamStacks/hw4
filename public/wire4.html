@@ -201,7 +201,7 @@
 
                         $("#purchase_date").text(results[0].get("purchaseDate").toDateString());
                         $("#quantity").text(results[0].get("quantity"));
-                        $("#value").text(results[0].get("value"));
+                        $("#value").text(results[0].get("value").toFixed(4));
                         
                       },
                       error: function(error) {

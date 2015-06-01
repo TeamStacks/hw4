@@ -177,7 +177,6 @@
                     $("#ozt_per_unit_label").text(coin.get("metal") + " ozt/u");
                     $("#total_label").text("Total " + coin.get("metal") + " (ozt)");
 
-                    console.log(coin.get("imageURL"));
                     if (coin.get("imageURL") != null) {
                         $(".img_container")[0].innerHTML ='<img id="coinimg" src="'+coin.get("imageURL")+'">';
                     }
@@ -189,9 +188,8 @@
                     userInventory.equalTo("type", coin);
                     userInventory.find({
                       success: function(results) {
-                        console.log("Successfully retrieved " + results.length + " scores.");
 
-                        console.log("date: " + results[0].get("purchaseDate"));
+                        console.log("purchase date: " + results[0].get("purchaseDate"));
                         $("#purchase_date").text(results[0].get("purchaseDate").toDateString());
                         $("#quantity").text(results[0].get("quantity"));
                         $("#value").text(results[0].get("value").toFixed(4));

@@ -329,20 +329,6 @@ $(window).load(function() {
                 var goldCoinQ = new Parse.Query(Coin).equalTo("metal", "Gold").find();
 
                 Parse.Promise.when(goldCoinQ).then(function(goldCoins) {
-                    var createPointers = function(items) {
-                        var results = [];
-                        for (var i = 0; i < items.length; i++) {
-                            var ptr = {
-                                __type: "Pointer",
-                                className: "_Coin",
-                                objectId: items[i].get("objectId")
-                            };
-                            results.push(ptr);
-                        }
-                        return results;
-                    }
-
-                    var gc = createPointers(goldCoins);
                     var goldTotalQ = new Parse.Query(Inventory).ascending("Date").limit(30).containedIn("type", goldCoins).find();
 
                     Parse.Promise.when(goldQ, goldTotalQ).then(function(goldR, gTotal) {

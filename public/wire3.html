@@ -210,11 +210,13 @@
           var totalValue = curr.get("value");
           var type = curr.get("type");
 
-          inventories[type.id] = {};
-          inventories[type.id].quantity = quantity;
-          inventories[type.id].totalValue = totalValue;
+          if (curr.get("ownedBy").id == Parse.User.current().id) {
+            inventories[type.id] = {};
+            inventories[type.id].quantity = quantity;
+            inventories[type.id].totalValue = totalValue;
 
-          retrieveCoin(type.id);
+            retrieveCoin(type.id);
+          }
         }
       },
       error: function(error) {

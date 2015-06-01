@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -33,7 +33,7 @@
     <section class="main-section">
         <section class="coin_wrapper">
             <div class="mobile-nav">
-                <a href="wire3.html">
+                <a href="#" onclick="window.history.back(-1);">
                     <svg class="icon icon-keyboard-arrow-left">
                         <symbol id="icon-keyboard-arrow-left" viewBox="0 0 1024 1024">
                             <title>keyboard-arrow-left</title>
@@ -45,7 +45,7 @@
                 ADD ITEM
             </div>
             <div class="coin_main">
-                <a href="wire3.html">
+                <a href="#" onclick="window.history.back(-1);">
                     <div class="breadcrumb">
                         <svg class="icon icon-play-arrow-rev">
                             <symbol id="icon-play-arrow" viewBox="0 0 1024 1024">
@@ -69,13 +69,14 @@
                     </div> 
                     <!-- 
                     <input type="file" id="uploadimg"></input> -->
+                    <p>Click above to upload a new image.</p>
                 </section>
                 <section class="coin_detail">
                     <table>
                         <tr>
                             <td>Metal</td>
                             <td>
-                                <select id="metal">
+                                <select id="metal" onchange="onMetalChange()">
                                     <option value="Gold">Gold</option>
                                     <option value="Silver">Silver</option>
                                     <option value="Platinum">Platinum</option>
@@ -115,24 +116,24 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Gold %</td>
-                            <td id="metal_percentage">0.999</td>
+                            <td id="metal_percentage_label">Gold %</td>
+                            <td id="metal_percentage">0.9167</td>
                         </tr>
                         <tr>
                             <td>Weight/unit (g)</td>
-                            <td id="weight_per_unit">1.244</td>
+                            <td id="weight_per_unit">33.930</td>
                         </tr>
                         <tr>
-                            <td>Gold g/u</td>
-                            <td id="grams_per_unit">1.244</td>
+                            <td id="grams_per_unit_label">Gold g/u</td>
+                            <td id="grams_per_unit">33.930</td>
                         </tr>
                         <tr>
-                            <td>Gold ozt/u</td>
-                            <td id="ozt_per_unit">0.0400</td>
+                            <td id="ozt_per_unit_label">Gold ozt/u</td>
+                            <td id="ozt_per_unit">1.0909</td>
                         </tr>
                         <tr>
-                            <td>Total au (ozt)</td>
-                            <td>0.0400</td>
+                            <td id="total_metal_ozt_label">Total au (ozt)</td>
+                            <td id="total_metal_ozt">0</td>
                         </tr>
                         <tr>
                             <td><strong>TOTAL</strong></td>
@@ -140,7 +141,7 @@
                         </tr>
                     </table>
                     <a href="#"><span id="save">Save to My Stack</span></a>
-                    <a href="wire3.html"><span id="cancel">Cancel</span></a>
+                    <a href="#" onclick="window.history.back(-1);"><span id="cancel">Cancel</span></a>
                 </section>
             </div>
         </section>
@@ -198,18 +199,55 @@
     loadFooter();
 
     // calculations for the ajax total
-    $(".values").keyup(function() {
+    $(".values").keyup(updateTotal);
+    $(document).ready(updateTotal);
+
+    function updateTotal() {
         var total = Number($('#metal_percentage').text());
         total *= Number($('#quantity').val());
         total *= Number($('#unit_price').val());
         total += Number($("#premium").val())
-        $("#total_value").text(total);
-        console.log("current total: " + total);
-    });
+        $("#total_value").text(total.toFixed(4));
+        $("#total_metal_ozt").text(Number($('#quantity').val()) * Number($('#ozt_per_unit').text()))
+    }
 
     // for checking if valid input before submitting
     function validateAdd() {
         // not sure, but parse might validate for us already - Angie
+    }
+
+    function onMetalChange() {
+        updateTotal();
+        var metalDropdown = document.getElementById("metal");
+
+        if(metalDropdown.value == "Gold") {
+            $('#metal_percentage_label').html('Gold %');
+            $('#grams_per_unit_label').html('Gold g/u');
+            $('#ozt_per_unit_label').html('Gold ozt/u');
+            $('#total_metal_ozt_label').html('Total au (ozt)');
+            $('#metal_percentage').text('0.9167');
+            $('#weight_per_unit').text('33.930');
+            $('#grams_per_unit').text('33.930');
+            $('#ozt_per_unit').text('1.0909');
+        } else if(metalDropdown.value == "Silver") {
+            $('#metal_percentage_label').html('Silver %');
+            $('#grams_per_unit_label').html('Silver g/u');
+            $('#ozt_per_unit_label').html('Silver ozt/u');
+            $('#total_metal_ozt_label').html('Total ag (ozt)');
+            $('#metal_percentage').text('0.999');
+            $('#weight_per_unit').text('31.103');
+            $('#grams_per_unit').text('31.103');
+            $('#ozt_per_unit').text('1.000');
+        } else {
+            $('#metal_percentage_label').html('Platinum %');
+            $('#grams_per_unit_label').html('Platinum g/u');
+            $('#ozt_per_unit_label').html('Platinum ozt/u');
+            $('#total_metal_ozt_label').html('Total pt (ozt)');
+            $('#metal_percentage').text('0.9995');
+            $('#weight_per_unit').text('31.120');
+            $('#grams_per_unit').text('31.120');
+            $('#ozt_per_unit').text('1.0005');
+        }
     }
 
     function upImg() {
@@ -281,6 +319,7 @@
     }
 
     function saveInventory(coin) {
+
         var purchaseDate = new Date($("#purchase_date").val());
         var quantity = parseInt($("#quantity").val());
         var type = coin;
@@ -295,7 +334,7 @@
             value: totalValue
         }, {
             success: function(inventory) {
-                window.location.href = "./wire3.html";
+                window.location.href = "./wire3.html?q=" + $("#metal").val();
             },
             error: function(inventory, error) {
                 alert("Unable to save inventory!");
@@ -308,7 +347,7 @@
     });
 
     $("#cancel").click(function() {
-        window.location.href = "/wire3.html";
+        window.history.back(-1);
     });
     </script>
 </body>

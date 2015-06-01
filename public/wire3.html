@@ -12,12 +12,13 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
   <script src="./js/jquery-1.11.2.min.js"></script>
-  <script src="./js/Chart.js"></script>
-  <script src="./js/main.js"></script>
-  <script src="./js/account.js"></script>
   <script type="text/javascript" src="./js/parse-1.4.2.min.js"></script>
   <script type="text/javascript" src="./js/parsefb.js"></script>
-      <script src="./js/quandl.js"></script>
+  <script src="./js/account.js"></script>
+  <script src="./js/Chart.js"></script>
+  <script src="./js/main.js"></script>
+  <script src="./js/query.js"></script>
+  <script src="./js/quandl.js"></script>
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   <title>My Gold - CoinFlip</title>
@@ -189,8 +190,6 @@
     </div>
   </div>
   <script>
-    Parse.initialize("m8lsJLtBtcOGqT0h9RmcWRIpxpiwyb3Yq6HqrCk2", "XxRGWHTh79dNb2iMpuZ9k5uKUU9IPQDmghGwfgJ6");
-
     verify();
 
 
@@ -297,7 +296,7 @@ function getQueryVariable(variable) {
     }
 
     function inspectCoin(row){
-        alert("Taking a closer look at coin with ID: "+ row.id);
+        //alert("Taking a closer look at coin with ID: "+ row.id);
         window.document.location = "wire4.html?id=" + row.id;
     }
 

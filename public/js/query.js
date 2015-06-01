@@ -25,3 +25,11 @@ function addItem() {
 
 	// maybe do a refresh here if you want or something
 }
+
+function parseURLParams() {
+    var params = {};
+    window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(ms, key,value) {
+        params[key] = value;
+    });
+    return params;
+}

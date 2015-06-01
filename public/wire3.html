@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -13,14 +13,13 @@
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
   <link href="./css/c3.min.css" rel="stylesheet" type="text/css">
   <script src="./js/jquery-1.11.2.min.js"></script>
-  <script src="./js/Chart.js"></script>
-  <script src="./js/d3.min.js" charset="utf-8"></script>
-  <script src="./js/c3.min.js"></script>
-  <script src="./js/main.js"></script>
-  <script src="./js/account.js"></script>
   <script type="text/javascript" src="./js/parse-1.4.2.min.js"></script>
-  <script type="text/javascript" src="./js/parsefb.js"></script
-      <script src="./js/quandl.js"></script>
+  <script type="text/javascript" src="./js/parsefb.js"></script>
+  <script src="./js/account.js"></script>
+  <script src="./js/Chart.js"></script>
+  <script src="./js/main.js"></script>
+  <script src="./js/query.js"></script>
+  <script src="./js/quandl.js"></script>
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   <title>My Gold - CoinFlip</title>
@@ -138,7 +137,7 @@
             <section class="label-and-search">
               <h3>My Gold</h3>
               <div class="stack_ctrl">
-                <input type="search" placeholder="Search" />
+                <input id="search" type="search" placeholder="Search" />
                 <a href="wire5.html">
                   <svg enable-background="new 0 0 24 24" height="24px" id="Layer_1" version="1.1" viewBox="0 0 24 24" width="24px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <path clip-rule="evenodd" d="M22.5,14H14v8.5c0,0.276-0.224,0.5-0.5,0.5h-4C9.224,23,9,22.776,9,22.5V14H0.5  C0.224,14,0,13.776,0,13.5v-4C0,9.224,0.224,9,0.5,9H9V0.5C9,0.224,9.224,0,9.5,0h4C13.776,0,14,0.224,14,0.5V9h8.5  C22.776,9,23,9.224,23,9.5v4C23,13.776,22.776,14,22.5,14z" fill-rule="evenodd" fill="white" />
@@ -192,15 +191,16 @@
     </div>
   </div>
   <script>
-    Parse.initialize("m8lsJLtBtcOGqT0h9RmcWRIpxpiwyb3Yq6HqrCk2", "XxRGWHTh79dNb2iMpuZ9k5uKUU9IPQDmghGwfgJ6");
-
     verify();
 
+
     var Inventory = Parse.Object.extend("Inventory");
-    var inventory = new Inventory();
+    //var inventory = new Inventory();
     var query = new Parse.Query(Inventory);
     var inventories = {};
-    var coins = {};
+    var metalCoins = {};
+    var silverCoins = {};
+    var platCoins = {};
 
     query.find({
       success: function(results) {
@@ -210,11 +210,13 @@
           var totalValue = curr.get("value");
           var type = curr.get("type");
 
-          inventories[type.id] = {};
-          inventories[type.id].quantity = quantity;
-          inventories[type.id].totalValue = totalValue;
+          if (curr.get("ownedBy").id == Parse.User.current().id) {
+            inventories[type.id] = {};
+            inventories[type.id].quantity = quantity;
+            inventories[type.id].totalValue = totalValue;
 
-          retrieveCoin(type.id);
+            retrieveCoin(type.id);
+          }
         }
       },
       error: function(error) {
@@ -222,22 +224,53 @@
       }
     });
 
+    var metalFrom = parseURLParams()['q'];
+
+        
+
+        function parseURLParams() {
+            var params = {};
+            window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(ms, key,value) {
+                params[key] = value;
+            });
+            return params;
+        }
+
+
     function retrieveCoin(coinId) {
       var Coin = Parse.Object.extend("Coin");
       var query = new Parse.Query(Coin);
       query.get(coinId, {
         success: function(coin) {
+          var metalType = coin.get("metal");
           var coinType = coin.get("Type");
           var metalPercentage = coin.get("metalPercentage");
           var weightPerUnit = coin.get("weightPerUnit");
           var imageURL = coin.get("imageURL");
-
-          coins[coin.id] = {};
-          coins[coin.id].coinType = coinType;
-          coins[coin.id].metalPercentage = metalPercentage;
-          coins[coin.id].weightPerUnit = weightPerUnit;
-          coins[coin.id].imageURL = imageURL;
-          updateTable(coin.id, coinId);
+          if (metalType == "Gold" && metalFrom == "Gold"){
+              metalCoins[coin.id] = {};
+              metalCoins[coin.id].coinType = coinType;
+              metalCoins[coin.id].metalPercentage = metalPercentage;
+              metalCoins[coin.id].weightPerUnit = weightPerUnit;
+              metalCoins[coin.id].imageURL = imageURL;
+              
+              updateTable(metalCoins[coin.id], coinId, coin.id);}
+          else if (metalType == "Silver" && metalFrom == "Silver"){
+              silverCoins[coin.id] = {};
+              silverCoins[coin.id].coinType = coinType;
+              silverCoins[coin.id].metalPercentage = metalPercentage;
+              silverCoins[coin.id].weightPerUnit = weightPerUnit;
+              silverCoins[coin.id].imageURL = imageURL;
+              
+              updateTable(silverCoins[coin.id], coinId, coin.id);}
+          else if (metalType == "Platinum" && metalFrom == "Platinum"){
+              platCoins[coin.id] = {};
+              platCoins[coin.id].coinType = coinType;
+              platCoins[coin.id].metalPercentage = metalPercentage;
+              platCoins[coin.id].weightPerUnit = weightPerUnit;
+              platCoins[coin.id].imageURL = imageURL;
+              
+              updateTable(platCoins[coin.id], coinId, coin.id);}
 
         },
         error: function(coin, error) {
@@ -246,17 +279,17 @@
       });
     }
 
-    function updateTable(coinId, invenId) {
-        if (coins[coinId].imageURL == null) {
+    function updateTable(metalId, invenId, coinId) {
+        if (metalId.imageURL == null) {
             var col1 = '<td class="stack_img_col"><div class="coin_mini"></div></td>';
         }
         else {
-            var col1 = '<td class="stack_img_col"><img class="img_mini" src="'+coins[coinId].imageURL+'"></td>';
+            var col1 = '<td class="stack_img_col"><img class="img_mini" src="'+metalId.imageURL+'"></td>';
         }
-        var col2 = '<td>' + coins[coinId].coinType + '</td>';
+        var col2 = '<td>' + metalId.coinType + '</td>';
         var col3 = '<td>' + inventories[invenId].quantity + '</td>';
-        var col4 = '<td>' + coins[coinId].weightPerUnit + '</td>';
-        var col5 = '<td>' + coins[coinId].metalPercentage + '</td>';
+        var col4 = '<td>' + metalId.weightPerUnit + '</td>';
+        var col5 = '<td>' + metalId.metalPercentage + '</td>';
         var col6 = '<td>' + inventories[invenId].totalValue + '</td>';
 
         $('#inventory > tbody')
@@ -265,9 +298,17 @@
     }
 
     function inspectCoin(row){
-        alert("Taking a closer look at coin with ID: "+ row.id);
+        //alert("Taking a closer look at coin with ID: "+ row.id);
         window.document.location = "wire4.html?id=" + row.id;
     }
+
+    $("#search").keyup(function () {
+        var searchQuery = $(this).val();
+
+        var rows = $("#inventory tbody tr");
+        rows.addClass("hidden");
+        rows.children(":contains('" + searchQuery + "')").parent().removeClass("hidden");
+    });
   </script>
   <script type="text/javascript">
     verify();

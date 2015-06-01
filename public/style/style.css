@@ -1013,6 +1013,22 @@ select {
 #cancel:hover {
     border: 1px solid #68CEDE;
 }
+
+#delete {
+    cursor: pointer;
+    background: red;
+    border: 1px solid #151515;
+    color: white;
+    text-decoration: none;
+    width: 275px;
+    height: 40px;
+    line-height: 40px;
+    margin-top: 15px;
+}
+
+#delete:hover {
+    border: 1px solid #68CEDE;
+}
 /* * * * * * * * * * * * * * * *
  *                             *
  *     RESPONSIVE HANDLING     *

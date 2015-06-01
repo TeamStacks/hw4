@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -12,11 +12,12 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <script src="./js/jquery-1.11.2.min.js"></script>
-    <script src="./js/velocity.min.js"></script>
-    <script src="./js/main.js"></script>
-    <script src="./js/account.js"></script>
     <script type="text/javascript" src="./js/parse-1.4.2.min.js"></script>
     <script type="text/javascript" src="./js/parsefb.js"></script>
+    <script src="./js/account.js"></script>
+    <script src="./js/velocity.min.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./js/query.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <title>Gold Item - CoinFlip</title>
@@ -44,7 +45,7 @@
                 ITEM DETAIL
             </div>
             <div class="coin_main">
-                <a href="wire3.html">
+                <a href="#" onclick="window.history.back(-1);">
                     <div class="breadcrumb">
                         <svg class="icon icon-play-arrow-rev">
                             <symbol id="icon-play-arrow" viewBox="0 0 1024 1024">
@@ -58,8 +59,11 @@
                 </a>
                 <section class="coin_image">
                     <div class="img_box">
-                        <div class="img_circle"></div>
-                    </div>
+                            <div class="img_container">
+                                <div class="img_circle">
+                                </div>
+                            </div>
+                    </div> 
                 </section>
                 <section class="coin_detail">
                     <table>
@@ -112,6 +116,7 @@
                             <td><strong id="value">Loading</strong></td>
                         </tr>
                     </table>
+                    <span id="delete" onclick="deleteCoin(parseURLParams()['id'])">Delete</span>
                 </section>
             </div>
         </section>
@@ -158,51 +163,96 @@
         }
 
         function loadCoin(coinID) {
+        
+            // grab info from Coin db
             var Coin = Parse.Object.extend("Coin");
             var coinType = new Parse.Query(Coin);
 
             // Make sure the coin actually exists...
             coinType.get(coinID, {
                 success: function(coin) {
+                    $("#type").text(coin.get("Type"));
+                    $("#grams_per_unit").text(coin.get("gramsPerUnit"));
+                    $("#metal").text(coin.get("metal"));
+                    $("#metal_percentage").text(coin.get("metalPercentage"));
+                    $("#ozt_per_unit").text(coin.get("oztPerUnit"));
+                    $("#premium").text(coin.get("premium"));
+                    $("#unit_price").text(coin.get("unitPrice"));
+                    $("#weight_per_unit").text(coin.get("weightPerUnit"));
+                    console.log(coin.get("imageURL"));
+                    if (coin.get("imageURL") != null) {
+                        $(".img_container")[0].innerHTML ='<img id="coinimg" src="'+coin.get("imageURL")+'">';
+                    }
+                
+                    // grab info from Inventory db
                     var Inventory = Parse.Object.extend("Inventory");
                     var userInventory = new Parse.Query(Inventory);
-                    userInventory.equalTo("ownedBy", Parse.User.current());
-                    userInventory.equalTo("type", coin);
 
-                    // Cool, now make sure the coin is actually in the user's inventory
+                    userInventory.equalTo("type", coin);
                     userInventory.find({
-                        success: function(userItem) {
-                            // THERE CAN BE ONLY ONE!!!! (I think...)
-                            if(userItem.length !== 1) {
-                                alert("Unable to retrieve inventory!");
-                                window.history.back();
-                            } else {
-                                $("#purchase_date").text(userItem[0].get("purchaseDate").toDateString());
-                                $("#quantity").text(userItem[0].get("quantity"));
-                                $("#value").text(userItem[0].get("value"));
-                                $("#type").text(coin.get("Type"));
-                                $("#grams_per_unit").text(coin.get("gramsPerUnit"));
-                                $("#metal").text(coin.get("metal"));
-                                $("#metal_percentage").text(coin.get("metalPercentage"));
-                                $("#ozt_per_unit").text(coin.get("oztPerUnit"));
-                                $("#premium").text(coin.get("premium"));
-                                $("#unit_price").text(coin.get("unitPrice"));
-                                $("#weight_per_unit").text(coin.get("weightPerUnit"));
-                            }
-                        },
-                        // Someone's a broke asshole...
-                        error: function(inventory, error) {
-                            alert("Unable to retrieve inventory! " + error.message);
-                            window.history.back();
-                        }
+                      success: function(results) {
+                        console.log("Successfully retrieved " + results.length + " scores.");
+
+                        $("#purchase_date").text(results[0].get("purchaseDate").toDateString());
+                        $("#quantity").text(results[0].get("quantity"));
+                        $("#value").text(results[0].get("value"));
+                        
+                      },
+                      error: function(error) {
+                        alert("Error: " + error.code + " " + error.message);
+                      }
                     });
+         
                 },
                 // The cake's a lie...
                 error: function(inventory, error) {
-                    alert("Unable to retrieve inventory! " + error.message);
-                    window.history.back();
+                    alert("Unable to retrieve coin information! " + error.message);
+                    //window.history.back();
                 }
             });
+        }
+
+        function deleteCoin(coinID) {
+            // grab info from Coin db
+            var Coin = Parse.Object.extend("Coin");
+            var coinType = new Parse.Query(Coin);
+
+            // Make sure the coin actually exists...
+            coinType.get(coinID, {
+                success: function(coin) {
+
+                    // grab info from Inventory db
+                    var Inventory = Parse.Object.extend("Inventory");
+                    var userInventory = new Parse.Query(Inventory);
+
+                    userInventory.equalTo("type", coin);
+                    userInventory.find({
+                      success: function(results) {
+                        results[0].destroy();
+                        
+                      },
+                      error: function(error) {
+                        alert("Error: " + error.code + " " + error.message);
+                      }
+                    });
+         
+
+                    coin.destroy({
+                      success: function(myObject) {
+                            alert("You have deleted this item.");
+                          window.document.location = "wire3.html";
+                      },
+                      error: function(myObject, error) {
+                        // The delete failed.
+                        // error is a Parse.Error with an error code and message.
+                      }
+                    });
+                },
+                error: function () {
+
+                }
+            });
+            
         }
     </script>
 </body>

@@ -199,15 +199,17 @@
     loadFooter();
 
     // calculations for the ajax total
-    $(".values").keyup(function() {
+    $(".values").keyup(updateTotal());
+    $(document).ready(updateTotal());
+
+    function updateTotal() {
         var total = Number($('#metal_percentage').text());
         total *= Number($('#quantity').val());
         total *= Number($('#unit_price').val());
         total += Number($("#premium").val())
         $("#total_value").text(total);
         $("#total_metal_ozt").text(Number($('#quantity').val()) * Number($('#ozt_per_unit').text()))
-        console.log("current total: " + total);
-    });
+    }
 
     // for checking if valid input before submitting
     function validateAdd() {
@@ -215,6 +217,7 @@
     }
 
     function onMetalChange() {
+        updateTotal();
         var metalDropdown = document.getElementById("metal");
 
         if(metalDropdown.value == "Gold") {
@@ -222,16 +225,28 @@
             $('#grams_per_unit_label').html('Gold g/u');
             $('#ozt_per_unit_label').html('Gold ozt/u');
             $('#total_metal_ozt_label').html('Total au (ozt)');
+            $('#metal_percentage').text('0.9167');
+            $('#weight_per_unit').text('33.930');
+            $('#grams_per_unit').text('33.930');
+            $('#ozt_per_unit').text('1.0909');
         } else if(metalDropdown.value == "Silver") {
             $('#metal_percentage_label').html('Silver %');
             $('#grams_per_unit_label').html('Silver g/u');
             $('#ozt_per_unit_label').html('Silver ozt/u');
             $('#total_metal_ozt_label').html('Total ag (ozt)');
+            $('#metal_percentage').text('0.999');
+            $('#weight_per_unit').text('31.103');
+            $('#grams_per_unit').text('31.103');
+            $('#ozt_per_unit').text('1.000');
         } else {
             $('#metal_percentage_label').html('Platinum %');
             $('#grams_per_unit_label').html('Platinum g/u');
             $('#ozt_per_unit_label').html('Platinum ozt/u');
             $('#total_metal_ozt_label').html('Total pt (ozt)');
+            $('#metal_percentage').text('0.9995');
+            $('#weight_per_unit').text('31.120');
+            $('#grams_per_unit').text('31.120');
+            $('#ozt_per_unit').text('1.0005');
         }
     }
 

@@ -368,6 +368,9 @@
                 if(regs[3] < 1902 || regs[3] > (new Date()).getFullYear()) {
                     error += "Invalid input on 'Purchase Date': Year must be between 1902 and " + (new Date()).getFullYear() + "\n";
                 }
+                if((new Date(date)) > (new Date())) {
+                    error += "Invalid input on 'Purchase Date': Must be a past date\n";
+                }
             } else {
                 error += "Invalid input on 'Purchase Date': Format must be mm/dd/yyyy\n";
             }

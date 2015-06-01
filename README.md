@@ -1,17 +1,15 @@
-===============================================================================
-                             CSE134B TEAM STACKS
-                               COINFLIP - HW4
-===============================================================================
+CSE134B TEAM STACKS
+COINFLIP - HW4
 
 Special thanks for Dream Team for making the mock-up on which we built on top of
 and extended.
 
+# Application Use 
 
-#   Application Use 
+## Navigation:
 
-Navigation:
-	Start with index.html as the login/signup page. All other pages are named
-	as such:
+Start with index.html as the login/signup page. All other pages are named
+as such:
 
 	index.html - Login/signup page with demo
 	wire2.html - Home page with Total Coin Value and graphs for all coins
@@ -19,20 +17,19 @@ Navigation:
 	wire4.html - Gold Item page that looks at a specific gold coin
 	wire5.html - New Item page that is the mock-up for adding a new coin
 
-	Clicking on the AG (silver) or PT (platinum) boxes on the side nav will
-	simply navigate you to your inventory pages, split into AU, AG, and PT
+Clicking on the AG (silver) or PT (platinum) boxes on the side nav will
+simply navigate you to your inventory pages, split into AU, AG, and PT
 
-Responsive Design:
-	THe high-fidelity mock switches to mobile view when the screen size 
-	reaches a width of 1000px or below.
+## Responsive Design
 
+The high-fidelity mock switches to mobile view when the screen size 
+reaches a width of 1000px or below.
 
-# # # # # # # # # # # # # # # 
-#     Validation Issues     #
-# # # # # # # # # # # # # # #	
+# Validation Issues	
 
-HTML:
-	All the HTML validation checked out so there was no problem there.
+## HTML
+
+All the HTML validation checked out so there was no problem there.
 
 
 # # # # # # # # # # # # # # # 

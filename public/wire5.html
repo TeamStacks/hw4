@@ -199,8 +199,8 @@
     loadFooter();
 
     // calculations for the ajax total
-    $(".values").keyup(updateTotal());
-    $(document).ready(updateTotal());
+    $(".values").keyup(updateTotal);
+    $(document).ready(updateTotal);
 
     function updateTotal() {
         var total = Number($('#metal_percentage').text());

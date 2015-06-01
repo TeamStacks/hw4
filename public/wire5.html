@@ -295,7 +295,7 @@
             value: totalValue
         }, {
             success: function(inventory) {
-                window.history.back(-1);
+                window.location.href = "./wire3.html?q=" + $("#metal").val();
             },
             error: function(inventory, error) {
                 alert("Unable to save inventory!");

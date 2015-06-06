@@ -88,12 +88,13 @@ function logOut() {
 }
 
 function update() {
-	theme = document.getElementById('checkbox').value == "on";
+	theme = document.getElementById('checkbox').checked;
 	var user = Parse.User.current();
 	newpass = document.getElementById('pass').value;
 	if (newpass != null)
 		user.set("password", newpass);
-	user.set("light", theme)
+	user.set("light", theme);
+	console.log(theme);
 
 	user.save(null, {
 	  success: function(user) {
@@ -118,7 +119,7 @@ function verify() {
     		}
     		if (user.get('light')) {
     			$('#checkbox').prop('checked', true);
-    			$('body, .modal-body, .modal-header, .modal-footer, .breadcrumb, input, select').css('background-color', '#fff');
+    			$('body, .modal-body, .modal-header, .modal-footer, .breadcrumb, input, select, footer').css('background-color', '#fff');
 		      $('body, a, .modal-body, .modal-header, .modal-footer, input, select').css('color', '#000');
 		      $('aside, nav, .total-value, .mobile-toggle').css('background-color', '#eee');
 		      $('input, select').css('border-color', '#000');

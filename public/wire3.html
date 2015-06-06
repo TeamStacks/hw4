@@ -126,15 +126,15 @@
       <section class="graph-panel">
         <section class="chart-legend">
           <div class="legend-left-half">
-            <section class="legend-item">
+            <section class="legend-item1">
               <div class="legend-item-color" id="legend-1"></div>
-              Gold Total
+             
             </section>
           </div>
           <div class="legend-right-half">
-            <section class="legend-item">
+            <section class="legend-item2">
               <div class="legend-item-color" id="legend-4"></div>
-              1oz Gold
+              
             </section>
           </div>
         </section>
@@ -318,14 +318,20 @@
       if (metalFrom == "Gold" || defaultUrl == -1 ){
         document.getElementById("my_gold_value").innerHTML = "My Gold Value";
         document.getElementById("displayMetal").innerHTML = "My Gold";
+        $( ".legend-item1" ).append("Gold Total");
+        $( ".legend-item2" ).append("1oz Gold");       
       }
       else if (metalFrom == "Silver"){
         document.getElementById("my_gold_value").innerHTML = "My Silver Value";
         document.getElementById("displayMetal").innerHTML  = "My Silver";
+        $( ".legend-item1" ).append("Silver Total");
+        $( ".legend-item2" ).append("1oz Silver");  
       }
       else if (metalFrom == "Platinum"){
         document.getElementById("my_gold_value").innerHTML = "My Platinum Value";
         document.getElementById("displayMetal").innerHTML = "My Platinum";
+        $( ".legend-item1" ).append("Platinum Total");
+        $( ".legend-item2" ).append("1oz Platinum"); 
       }
   </script>
   <script type="text/javascript">

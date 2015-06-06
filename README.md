@@ -179,6 +179,13 @@ We used a mixture of REST API and JavaScript and jQuery for our backend. Please 
 - init.js - The javascript that initializes our Parse and Facebook SDK libraries.
 - quandl.js - Handles scraping of data from Quandl for our bid and total information.
 
+# Error Tracking
+
+please go to https://trackjs.com/.
+Enter the following username and password to see our error tracking:
+username: TeamStacks
+password: 12345671
+
 # Concerns
 
 The Gold/Silver/Plat totals were very difficult to graph because of ChartJS's limitations. ChartJS only accepts one set of x-axis values, which means that all datasets must share the same set of dates for the charted information to make any sense. We ended up writing a basic function that sums up all purchases made before a certain date. In short, the gold/silver/plat totals on the chart will look inaccurate, especially if an item's purchase date is not within the range of dates on the chart.

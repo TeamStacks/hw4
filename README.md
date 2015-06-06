@@ -182,8 +182,10 @@ We used a mixture of REST API and JavaScript and jQuery for our backend. Please 
 # Error Tracking
 
 please go to https://trackjs.com/.
-Enter the following username and password to see our error tracking:
-username: TeamStacks
+Enter the following email and password to see our error tracking:
+
+email: onlyschumi@163.com
+
 password: 12345671
 
 # Concerns

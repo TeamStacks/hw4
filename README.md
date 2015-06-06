@@ -21,21 +21,25 @@ Please use the following URL to see our app. Using the URL will allow you to see
 
 3) Choose AU and click the plus button, since you don't have any coins added to your inventories, to add a new coin.
 
-4) Choose an image and input VALID entries. Our form validation will prevent you from adding coins that have invalid inputs. Let's save the coin as a 'Gold'.Save the coin.
+4) Choose an image from your computer for the picture.
 
-5) Check AU again and you should see your coin.
+5) Input VALID entries. Our form validation will prevent you from adding coins that have invalid inputs. Let's save the coin as a 'Gold'.
 
-6) Click the row in order to view your newly added coin in detail. You should see what you had inputted as well as the image you chose.
+6) Save the coin.
 
-7) Notice that there is a red Delete button. Click this button to delete your coin.
+7) Check AU again and you should see your coin.
 
-8) Go back to AU and you should not see your coin anymore.
+8) Click the row with your new coin in order to view the details. You should see what you inputted as well as the image you chose.
 
-9) Click the Gear/Cog icon that you see on every page. This is your profile.
+9) Notice that there is a red Delete button. Click this button to delete your coin.
 
-10) Check the box that says "Use Light Theme". Update your profile.
+10) Go back to AU and you should not see your coin anymore.
 
-11) Click on your profile again (Gear/Cog icon) and click Log Out to log out.
+11) Click the Gear/Cog icon that you see on every page. This is your profile.
+
+12) Check the box that says "Use Light Theme". Update your profile.
+
+13) Click on your profile again (Gear/Cog icon) and click "Log Out" to log out.
 
 ## Pages
 	index.html - Login/signup page. Should open modal and allow you to log in or sign up.
@@ -182,6 +186,10 @@ The Gold/Silver/Plat totals were very difficult to graph because of ChartJS's li
 There are also gaps in the dates for the 1oz gold/silver/platinum data from Quandl (no idea why). Ideally we would have written a scraper to scrape daily info from some other site, but we weren't sure how to do this in Parse (would be much easier in Node).
 
 There is a discrepancy between the Parse server dates and the browser dates that causes a minor difference in the dates when fetched and when stored. In Chrome, this is off by 5 hours, whereas in Firefox, the time is parsed correctly.
+
+We only had time to support JPG images, however, you can upload any kind of file with the Upload form.
+
+The light theme is not very legible.
 
 # Thank you!
 

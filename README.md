@@ -1,4 +1,5 @@
 CSE134B TEAM STACKS
+
 COINFLIP - HW4
 
 Special thanks for Dream Team for making the mock-up on which we built on top of
@@ -6,7 +7,7 @@ and extended.
 
 # Application Use 
 
-# Live Demo
+## Live Demo
 
 Please use the following URL to see our app. Using the URL will allow you to see our JS error tracking and analytics work.
 
@@ -51,11 +52,6 @@ Clicking on the AG (silver) or PT (platinum) boxes on the side nav will navigate
 	wire4.html - Item page that looks at a specific gold coin
 	wire5.html - New Item page for adding a new coin
 
-
-# Implementation
-
-We used a mixture of REST API and JavaScript and jQuery for our backend. Please continue reading to for more detail.
-
 # Design
 
 ## Responsiveness
@@ -64,7 +60,7 @@ All interactions with the application should be supported in Mobile view.
 
 ## Light/Dark Theme
 
-By default, our app uses the Dark theme. You can change the theme when you click the Gear/Cog icon on every page. 
+By default, our app uses the Dark theme. You can change the theme when you edit your profile settings by clicking the Gear/Cog icon on every page. 
 
 # Validation	
 
@@ -82,9 +78,11 @@ The Gold/Silver/Plat totals were very difficult to graph because of ChartJS's li
 
 There are also gaps in the dates for the 1oz gold/silver/platinum data from Quandl (no idea why). Ideally we would have written a scraper to scrape daily info from some other site, but we weren't sure how to do this in Parse (would be much easier in Node).
 
-## Dates
-
 There is a discrepancy between the Parse server dates and the browser dates that causes a minor difference in the dates when fetched and when stored. In Chrome, this is off by 5 hours, whereas in Firefox, the time is parsed correctly.
+
+# Implementation
+
+We used a mixture of REST API and JavaScript and jQuery for our backend. Please continue reading to for more detail.
 
 ## Front-end (From Dream Team spec)
 - HTML
@@ -169,13 +167,14 @@ There is a discrepancy between the Parse server dates and the browser dates that
 - Chart.js
 - d3.js - for dynamically serving data
 - parse-1.4.2.js - JavaScript library from Parse
-- Bootstrap.js - We used this for the modals
+- bootstrap.min.js (version 3.3.4) - We used this for the pop-up modals
 - jquery-1.11.2.js - We used this for jQuery
 
 ## JavaScript Files We Made
 
 - query.js - Holds some methods for loading information from Parse as well as other things related to querying, such as parsing URL for ID when viewing an item (wire4.html)
 - profile.js - Handles all the methods for logging in and verifying log in with Parse SDK and Facebook
+- init.js - The javascript that initializes our Parse and Facebook SDK libraries.
 - quandl.js - Handles scraping of data from Quandl for our bid and total information.
 
 # Thank you!

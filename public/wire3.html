@@ -128,7 +128,7 @@
           <div class="legend-left-half">
             <section class="legend-item1">
               <div class="legend-item-color" id="legend-1"></div>
-             
+              
             </section>
           </div>
           <div class="legend-right-half">
@@ -165,7 +165,7 @@
               <th>Item</th>
               <th>Qty.</th>
               <th class="weight_compr"><span>Weight/unit (g)</span></th>
-              <th class="percent_compr"><span>% au</span></th>
+              <th class="percent_compr"><span id = "metalTypePercent">% Au</span></th>
               <th>Value</th>
             </tr>
           </thead>
@@ -319,19 +319,22 @@
         document.getElementById("my_gold_value").innerHTML = "My Gold Value";
         document.getElementById("displayMetal").innerHTML = "My Gold";
         $( ".legend-item1" ).append("Gold Total");
-        $( ".legend-item2" ).append("1oz Gold");       
+        $( ".legend-item2" ).append("1oz Gold");
+        document.getElementById("metalTypePercent").innerHTML = "% Au";     
       }
       else if (metalFrom == "Silver"){
         document.getElementById("my_gold_value").innerHTML = "My Silver Value";
         document.getElementById("displayMetal").innerHTML  = "My Silver";
         $( ".legend-item1" ).append("Silver Total");
-        $( ".legend-item2" ).append("1oz Silver");  
+        $( ".legend-item2" ).append("1oz Silver");
+        document.getElementById("metalTypePercent").innerHTML = "% Ag";   
       }
       else if (metalFrom == "Platinum"){
         document.getElementById("my_gold_value").innerHTML = "My Platinum Value";
         document.getElementById("displayMetal").innerHTML = "My Platinum";
         $( ".legend-item1" ).append("Platinum Total");
-        $( ".legend-item2" ).append("1oz Platinum"); 
+        $( ".legend-item2" ).append("1oz Platinum");
+        document.getElementById("metalTypePercent").innerHTML = "% Pt"; 
       }
   </script>
   <script type="text/javascript">

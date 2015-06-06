@@ -184,7 +184,7 @@ We used a mixture of REST API and JavaScript and jQuery for our backend. Please 
 please go to https://trackjs.com/.
 Enter the following email and password to see our error tracking:
 
-email: onlyschumi@163.com
+email: jduan@ucsd.edu
 
 password: 12345671
 

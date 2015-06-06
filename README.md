@@ -13,19 +13,7 @@ Please use the following URL to see our app. Using the URL will allow you to see
 
 [http://teamstacks.parseapp.com/](http://teamstacks.parseapp.com/)
 
-## Navigation
-
-Start with index.html as the login/signup page. 
-
-1) If you are not logged in, you will not be able to see the other pages, as they will redirect you to index.html.
-
-2) Once you are logged in, unless you log out, you will automatically be redirected to wire2.html if you look at index.html.
-
-Inside wire2.html, and any other page for that matter, if you click the cog symbol in the top right, you will open your profile, from which you can log out, make changes to your profile, or link your Facebook.
-
-Clicking on the AG (silver) or PT (platinum) boxes on the side nav will navigate you to your inventory pages, which should dynamically serve you your current inventory (empty if you have not added any items).
-
-## Sample Work Flow!!!
+## Sample Work Flow
 
 1) Open index.html. Click Register to register an account: <username> and <password>
 
@@ -43,7 +31,11 @@ Clicking on the AG (silver) or PT (platinum) boxes on the side nav will navigate
 
 8) Go back to AU and you should not see your coin anymore.
 
-9) Click the Gear/Cog icon that you see on every page, and log out.
+9) Click the Gear/Cog icon that you see on every page. This is your profile.
+
+10) Check the box that says "Use Light Theme". Update your profile.
+
+11) Click on your profile again (Gear/Cog icon) and click Log Out to log out.
 
 ## Pages
 	index.html - Login/signup page. Should open modal and allow you to log in or sign up.
@@ -51,6 +43,16 @@ Clicking on the AG (silver) or PT (platinum) boxes on the side nav will navigate
 	wire3.html - My [Gold, Silver, Platinum] page with details on owned gold coins
 	wire4.html - Item page that looks at a specific gold coin
 	wire5.html - New Item page for adding a new coin
+
+## Navigation
+
+1) If you are not logged in, you will not be able to see the other pages, as they will redirect you to index.html.
+
+2) Once you are logged in, unless you log out, you will automatically be redirected to wire2.html if you look at index.html.
+
+Inside wire2.html, and any other page for that matter, if you click the cog symbol in the top right, you will open your profile, from which you can log out, make changes to your profile, or link your Facebook.
+
+Clicking on the AG (silver) or PT (platinum) boxes on the side nav will navigate you to your inventory pages, which should dynamically serve you your current inventory (empty if you have not added any items).
 
 # Design
 
@@ -72,14 +74,6 @@ All the HTML validation checked out so there was no problem there.
 
 There should be no console errors, but there are occasionally warnings and also, debug prints when viewing with the developer console.
 
-# Concerns
-
-The Gold/Silver/Plat totals were very difficult to graph because of ChartJS's limitations. ChartJS only accepts one set of x-axis values, which means that all datasets must share the same set of dates for the charted information to make any sense. We ended up writing a basic function that sums up all purchases made before a certain date. In short, the gold/silver/plat totals on the chart will look inaccurate, especially if an item's purchase date is not within the range of dates on the chart.
-
-There are also gaps in the dates for the 1oz gold/silver/platinum data from Quandl (no idea why). Ideally we would have written a scraper to scrape daily info from some other site, but we weren't sure how to do this in Parse (would be much easier in Node).
-
-There is a discrepancy between the Parse server dates and the browser dates that causes a minor difference in the dates when fetched and when stored. In Chrome, this is off by 5 hours, whereas in Firefox, the time is parsed correctly.
-
 # Implementation
 
 We used a mixture of REST API and JavaScript and jQuery for our backend. Please continue reading to for more detail.
@@ -97,9 +91,11 @@ We used a mixture of REST API and JavaScript and jQuery for our backend. Please 
 	CSS. The only additions we utilized SASS for were as follows:
 
 		1) SASS Variables - easier refactoring of color themes
+		
 		2) SASS Nesting   - easier for the developer to nest attributes, mainly
 			                used as a security fall-back against conflicting 
 			                styling as we were merging files and work
+			                
 		3) SASS Mixins    - For any CSS attributes that needed all the extra
 		                    prefix declarations for moz, webkit, etc., we used
 		                    simple @include mixins from SASS to avoid having to
@@ -158,17 +154,18 @@ We used a mixture of REST API and JavaScript and jQuery for our backend. Please 
 	* We used Facebook as well to also provide users another way of logging into our application.
 
 - JavaScript
-	* For information on libraries (please refer to Libraries Used section in this README).
+	* We used jQuery and JavaScript to accomplish all dynamically delivered content.
+	* For more information about JavaScript and JavaScript libraries we used, please refer to the next section.
 
-# JavaScript 
+# JavaScript in Detail
 
 ## JavaScript Libraries Used
 
-- Chart.js
-- d3.js - for dynamically serving data
 - parse-1.4.2.js - JavaScript library from Parse
 - bootstrap.min.js (version 3.3.4) - We used this for the pop-up modals
 - jquery-1.11.2.js - We used this for jQuery
+- Chart.js
+- d3.js - for dynamically serving data
 
 ## JavaScript Files We Made
 
@@ -176,6 +173,14 @@ We used a mixture of REST API and JavaScript and jQuery for our backend. Please 
 - profile.js - Handles all the methods for logging in and verifying log in with Parse SDK and Facebook
 - init.js - The javascript that initializes our Parse and Facebook SDK libraries.
 - quandl.js - Handles scraping of data from Quandl for our bid and total information.
+
+# Concerns
+
+The Gold/Silver/Plat totals were very difficult to graph because of ChartJS's limitations. ChartJS only accepts one set of x-axis values, which means that all datasets must share the same set of dates for the charted information to make any sense. We ended up writing a basic function that sums up all purchases made before a certain date. In short, the gold/silver/plat totals on the chart will look inaccurate, especially if an item's purchase date is not within the range of dates on the chart.
+
+There are also gaps in the dates for the 1oz gold/silver/platinum data from Quandl (no idea why). Ideally we would have written a scraper to scrape daily info from some other site, but we weren't sure how to do this in Parse (would be much easier in Node).
+
+There is a discrepancy between the Parse server dates and the browser dates that causes a minor difference in the dates when fetched and when stored. In Chrome, this is off by 5 hours, whereas in Firefox, the time is parsed correctly.
 
 # Thank you!
 

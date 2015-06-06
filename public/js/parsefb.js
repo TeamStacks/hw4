@@ -15,3 +15,11 @@ window.fbAsyncInit = function() {
    js.src = "https://connect.facebook.net/en_US/sdk.js";
    fjs.parentNode.insertBefore(js, fjs);
 } (document, 'script', 'facebook-jssdk'));
+
+if (!$('#checkbox').checked) {
+  $('body').css('background-color', '#fff');
+  $('body, a').css('color', '#000');
+  $('aside, nav').css('background-color', '#eee');
+  $('.total-value, .mobile-toggle').css('background', '#eee');
+
+}

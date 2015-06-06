@@ -955,6 +955,11 @@ input {
     outline: 0;
 }
 
+input[type=checkbox] {
+    width: initial;
+    height: initial;
+}
+
 input:focus {
     outline: 2px solid #68CEDE;
 }

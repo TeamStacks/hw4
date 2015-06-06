@@ -9,7 +9,7 @@ and extended.
 
 ## Live Demo
 
-Please use the following URL to see our app. Using the URL will allow you to see our JS error tracking and analytics work.
+Please use the following URL to see our app. Using the URL will allow you to see our JS error tracking and analytics work. If you choose to open our files statically, be wary that you WILL GET CROSS ORIGIN POLICY ERRORS because of our tracking/analytics.
 
 [http://teamstacks.parseapp.com/](http://teamstacks.parseapp.com/)
 
@@ -166,6 +166,7 @@ We used a mixture of REST API and JavaScript and jQuery for our backend. Please 
 - jquery-1.11.2.js - We used this for jQuery
 - Chart.js
 - d3.js - for dynamically serving data
+- TrackJS - for keeping track of our 
 
 ## JavaScript Files We Made
 

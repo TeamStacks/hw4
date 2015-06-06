@@ -202,10 +202,10 @@
     updateLabels();
 
     // calculations for the ajax total
-    $(".values").keyup(updateFields);
-    $(document).ready(updateFields);
+    $(".values").keyup(updateTotal);
+    $(document).ready(updateTotal);
 
-    function updateFields() {
+    function updateTotal() {
         var quantity     = Number($('#quantity').val());
         var gramsPerUnit = Number($('#weight_per_unit').text()) * Number($('#metal_percentage').text());
         var oztPerUnit   = gramsPerUnit * 0.03215;
@@ -219,7 +219,7 @@
     }
 
     function updateLabels() {
-        updateFields();
+        updateTotal();
         var option = document.getElementById("metal").value;
         var percentage, gramPerUnit, oztPerUnit, totalMetal;
 

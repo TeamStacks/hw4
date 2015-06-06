@@ -169,7 +169,7 @@ There is a discrepancy between the Parse server dates and the browser dates that
 ## JavaScript Files We Made
 
 - query.js - Holds some methods for loading information from Parse as well as other things related to querying, such as parsing URL for ID when viewing an item (wire4.html)
-- account.js - Handles all the methods for logging in and verifying log in with Parse SDK and Facebook
+- profile.js - Handles all the methods for logging in and verifying log in with Parse SDK and Facebook
 - quandl.js - Handles scraping of data from Quandl for our bid and total information.
 
 # Thank you!

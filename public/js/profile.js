@@ -124,6 +124,7 @@ function verify() {
 		      $('aside, nav, .total-value, .mobile-toggle').css('background-color', '#eee');
 		      $('input, select').css('border-color', '#000');
 		      $('input, select').css('border', '1px solid');
+		      $('path').css('fill', 'black');
     		}
 		});
 	} else {

@@ -91,7 +91,7 @@ function update() {
 	theme = document.getElementById('checkbox').checked;
 	var user = Parse.User.current();
 	newpass = document.getElementById('pass').value;
-	if (newpass != null)
+	if (newpass != '')
 		user.set("password", newpass);
 	user.set("light", theme);
 	console.log(theme);

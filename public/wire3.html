@@ -131,13 +131,13 @@
         <section class="chart-legend">
           <div class="legend-left-half">
             <section class="legend-item1">
-              <div class="legend-item-color" id="legend-1"></div>
+              
               
             </section>
           </div>
           <div class="legend-right-half">
             <section class="legend-item2">
-              <div class="legend-item-color" id="legend-4"></div>
+              
               
             </section>
           </div>
@@ -236,21 +236,27 @@
       if (metalFrom == "Gold" || defaultUrl == -1 ){
         document.getElementById("my_gold_value").innerHTML = "My Gold Value";
         document.getElementById("displayMetal").innerHTML = "My Gold";
+        $( ".legend-item1" ).append('<div class="legend-item-color" id="legend-1"></div>');
         $( ".legend-item1" ).append("Gold Total");
+        $( ".legend-item2" ).append('<div class="legend-item-color" id="legend-4"></div>');
         $( ".legend-item2" ).append("1oz Gold");
         document.getElementById("metalTypePercent").innerHTML = "% Au";     
       }
       else if (metalFrom == "Silver"){
         document.getElementById("my_gold_value").innerHTML = "My Silver Value";
         document.getElementById("displayMetal").innerHTML  = "My Silver";
+        $( ".legend-item1" ).append('<div class="legend-item-color" id="legend-3"></div>');
         $( ".legend-item1" ).append("Silver Total");
+        $( ".legend-item2" ).append('<div class="legend-item-color" id="legend-6"></div>');
         $( ".legend-item2" ).append("1oz Silver");
         document.getElementById("metalTypePercent").innerHTML = "% Ag";   
       }
       else if (metalFrom == "Platinum"){
         document.getElementById("my_gold_value").innerHTML = "My Platinum Value";
         document.getElementById("displayMetal").innerHTML = "My Platinum";
+        $( ".legend-item1" ).append('<div class="legend-item-color" id="legend-2"></div>');
         $( ".legend-item1" ).append("Platinum Total");
+        $( ".legend-item2" ).append('<div class="legend-item-color" id="legend-5"></div>');
         $( ".legend-item2" ).append("1oz Platinum");
         document.getElementById("metalTypePercent").innerHTML = "% Pt"; 
       }

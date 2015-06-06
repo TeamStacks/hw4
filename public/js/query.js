@@ -21,7 +21,7 @@ function populateTable(metalFrom) {
                             var col1 = '<td class="stack_img_col"><div class="coin_mini"></div></td>';
                         }
                         else {
-                            var col1 = '<td class="stack_img_col"><img class="img_mini" src="'+metalId.imageURL+'"></td>';
+                            var col1 = '<td class="stack_img_col"><img class="img_mini" src="'+curr.get("imageURL")+'"></td>';
                         }
                         var col2 = '<td>' + curr.get("type") + '</td>';
                         var col3 = '<td>' + curr.get("quantity") + '</td>';

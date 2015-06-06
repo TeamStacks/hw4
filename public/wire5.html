@@ -76,7 +76,7 @@
                         <tr>
                             <td>Metal</td>
                             <td>
-                                <select id="metal" onchange="onMetalChange()">
+                                <select id="metal" onchange="updateLabels()">
                                     <option value="Gold">Gold</option>
                                     <option value="Silver">Silver</option>
                                     <option value="Platinum">Platinum</option>
@@ -124,11 +124,11 @@
                             <td id="weight_per_unit">33.930</td>
                         </tr>
                         <tr>
-                            <td id="grams_per_unit_label">Gold g/u</td>
+                            <td id="grams_per_unit_label">Gold g/unit</td>
                             <td id="grams_per_unit">33.930</td>
                         </tr>
                         <tr>
-                            <td id="ozt_per_unit_label">Gold ozt/u</td>
+                            <td id="ozt_per_unit_label">Gold ozt/unit</td>
                             <td id="ozt_per_unit">1.0909</td>
                         </tr>
                         <tr>
@@ -199,52 +199,51 @@
     <script type="text/javascript">
     verify();
     loadFooter();
+    updateLabels();
 
     // calculations for the ajax total
-    $(".values").keyup(updateTotal);
-    $(document).ready(updateTotal);
+    $(".values").keyup(updateFields);
+    $(document).ready(updateFields);
 
-    function updateTotal() {
-        var total = Number($('#metal_percentage').text());
-        total *= Number($('#quantity').val());
-        total *= Number($('#unit_price').val());
-        total += Number($("#premium").val())
-        $("#total_value").text(total.toFixed(4));
-        $("#total_metal_ozt").text(Number($('#quantity').val()) * Number($('#ozt_per_unit').text()))
+    function updateFields() {
+        var quantity     = Number($('#quantity').val());
+        var gramsPerUnit = Number($('#weight_per_unit').text()) * Number($('#metal_percentage').text());
+        var oztPerUnit   = gramsPerUnit * 0.03215;
+        var totalMetal   = quantity * oztPerUnit;
+        var totalPrice   = (quantity * gramsPerUnit * 0.035274) + Number($("#premium").val());
+
+        $("#grams_per_unit").text(gramsPerUnit.toFixed(4));
+        $("#ozt_per_unit").text(oztPerUnit.toFixed(4));
+        $("#total_metal_ozt").text(totalMetal.toFixed(4));
+        $("#total_value").text("$" + totalPrice.toFixed(2));
     }
 
-    function onMetalChange() {
-        updateTotal();
-        var metalDropdown = document.getElementById("metal");
+    function updateLabels() {
+        updateFields();
+        var option = document.getElementById("metal").value;
+        var percentage, gramPerUnit, oztPerUnit, totalMetal;
 
-        if(metalDropdown.value == "Gold") {
-            $('#metal_percentage_label').html('Gold %');
-            $('#grams_per_unit_label').html('Gold g/u');
-            $('#ozt_per_unit_label').html('Gold ozt/u');
-            $('#total_metal_ozt_label').html('Total au (ozt)');
-            $('#metal_percentage').text('0.9167');
-            $('#weight_per_unit').text('33.930');
-            $('#grams_per_unit').text('33.930');
-            $('#ozt_per_unit').text('1.0909');
-        } else if(metalDropdown.value == "Silver") {
-            $('#metal_percentage_label').html('Silver %');
-            $('#grams_per_unit_label').html('Silver g/u');
-            $('#ozt_per_unit_label').html('Silver ozt/u');
-            $('#total_metal_ozt_label').html('Total ag (ozt)');
-            $('#metal_percentage').text('0.999');
-            $('#weight_per_unit').text('31.103');
-            $('#grams_per_unit').text('31.103');
-            $('#ozt_per_unit').text('1.000');
+        if(option == "Gold") {
+            percentage  = 'Gold %';
+            gramPerUnit = 'Gold g/u';
+            oztPerUnit  = 'Gold ozt/u';
+            totalMetal  = 'Total au (ozt)';
+        } else if(option == "Silver") {
+            percentage  = 'Silver %';
+            gramPerUnit = 'Silver g/u';
+            oztPerUnit  = 'Silver ozt/u';
+            totalMetal  = 'Total ag (ozt)';
         } else {
-            $('#metal_percentage_label').html('Platinum %');
-            $('#grams_per_unit_label').html('Platinum g/u');
-            $('#ozt_per_unit_label').html('Platinum ozt/u');
-            $('#total_metal_ozt_label').html('Total pt (ozt)');
-            $('#metal_percentage').text('0.9995');
-            $('#weight_per_unit').text('31.120');
-            $('#grams_per_unit').text('31.120');
-            $('#ozt_per_unit').text('1.0005');
+            percentage  = 'Platinum %';
+            gramPerUnit = 'Platinum g/u';
+            oztPerUnit  = 'Platinum ozt/u';
+            totalMetal  = 'Total pt (ozt)';
         }
+
+        $('#metal_percentage_label').html(percentage);
+        $('#grams_per_unit_label').html(gramPerUnit);
+        $('#ozt_per_unit_label').html(oztPerUnit);
+        $('#total_metal_ozt_label').html(totalMetal);
     }
 
     function upImg() {

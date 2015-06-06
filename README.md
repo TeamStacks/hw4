@@ -6,6 +6,12 @@ and extended.
 
 # Application Use 
 
+# Live Demo
+
+Please use the following URL to see our app. Using the URL will allow you to see our JS error tracking and analytics work.
+
+[http://teamstacks.parseapp.com/](http://teamstacks.parseapp.com/)
+
 ## Navigation
 
 Start with index.html as the login/signup page. 

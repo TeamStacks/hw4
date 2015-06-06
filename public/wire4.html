@@ -45,7 +45,7 @@
     <section class="main-section">
         <section class="coin_wrapper">
             <div class="mobile-nav">
-                <a href="#" onclick="goBack()">
+                <a href="#" onclick="window.history.go(-1); return false;">
                     <svg class="icon icon-keyboard-arrow-left">
                         <symbol id="icon-keyboard-arrow-left" viewBox="0 0 1024 1024">
                             <title>keyboard-arrow-left</title>
@@ -56,8 +56,8 @@
                 </a>
                 ITEM DETAIL
             </div>
-            <div class="coin_main">
-                <a href="#" onclick="goBack()">
+            <div class="coin_main"
+                <a href="#" onclick="window.history.go(-1); return false;">
                     <div class="breadcrumb">
                         <svg class="icon icon-play-arrow-rev">
                             <symbol id="icon-play-arrow" viewBox="0 0 1024 1024">
@@ -234,10 +234,6 @@
                 }
             });
             
-        }
-
-        function goBack() {
-            window.history.back();
         }
     </script>
 </body>

@@ -1,0 +1,28 @@
+{
+  "Gold" : {
+    "American Eagle":                ".9167,31.103",
+    "American Buffalo":              ".9999,31.103",
+    "Australia Kangaroo":            ".9999,31.103",
+    "Austria 100 Corona (Restrike)": ".900, 30.49",
+    "Austria Philharmonic":          ".9999,31.103",
+    "Canadian Maple Leaf":           ".9999,31.103",
+    "Chinese Panda":                 ".9999,31.103",
+    "Mexico 50 Pesos (Restrike)":    ".900, 37.5",
+    "New Zealand Kiwi":              ".9999,31.1035",
+    "Fiji Pacific Sovereign":        ".9999,31.1035",
+    "South African Krugerrand":      ".9167,31.103"
+  },
+  "Silver" : {
+    "American Eagle":                ".9167,31.103",
+    "Australia Kangaroo":            ".9999,31.103",
+    "Australian Kookaburra":         ".900, 30.49",
+    "Austria Philharmonic":          ".9999,31.103",
+    "British Silver Britannia":      ".9999,31.103",
+    "Canadian Maple Leaf":           ".9999,31.103",
+    "Chinese Panda":                 ".9999,31.103",
+    "Mexican Liberated":             ".999, 37.5"
+  },
+  "Platinum" : {
+
+  }
+}

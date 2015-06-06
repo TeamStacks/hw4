@@ -754,7 +754,7 @@ a:hover, a:focus {
     margin-top: 25px;
     margin-left: auto;
     margin-right: auto;
-    text-align: center;
+    /*text-align: center;*/
     border-spacing: 0px;
 }
 

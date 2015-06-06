@@ -211,11 +211,6 @@
         $("#total_metal_ozt").text(Number($('#quantity').val()) * Number($('#ozt_per_unit').text()))
     }
 
-    // for checking if valid input before submitting
-    function validateAdd() {
-        // not sure, but parse might validate for us already - Angie
-    }
-
     function onMetalChange() {
         updateTotal();
         var metalDropdown = document.getElementById("metal");
@@ -297,11 +292,15 @@
         var unitPrice = parseFloat($("#unit_price").val());
         var weightPerUnit = parseFloat($("#weight_per_unit").text());
 
+        var purchaseDate = new Date($("#purchase_date").val());
+        var quantity = parseInt($("#quantity").val());
+        var totalValue = parseFloat($("#total_value").text());
 
         var Coin = Parse.Object.extend("Coin");
         var coin = new Coin();
 
         coin.save({
+            ownedBy: Parse.User.current(),
             Type: type,
             imageURL: imgUrl,
             gramsPerUnit: gramsPerUnit,
@@ -310,10 +309,14 @@
             oztPerUnit: oztPerUnit,
             premium: premium,
             unitPrice: unitPrice,
-            weightPerUnit: weightPerUnit
-        }, {
+            weightPerUnit: weightPerUnit,
+            purchaseDate: purchaseDate,
+            quantity: quantity,
+            value: totalValue
+        }, 
+        {
             success: function(coin) {
-                saveInventory(coin);
+                window.location.href = "./wire3.html?q=" + $("#metal").val();
             },
             error: function(coin, error) {
                 alert("Unable to save coin!");
@@ -321,28 +324,6 @@
         });
     }
 
-    function saveInventory(coin) {
-        var purchaseDate = new Date($("#purchase_date").val());
-        var quantity = parseInt($("#quantity").val());
-        var type = coin;
-        var totalValue = parseFloat($("#total_value").text());
-        var Inventory = Parse.Object.extend("Inventory");
-        var inventory = new Inventory();
-        inventory.save({
-            purchaseDate: purchaseDate,
-            quantity: quantity,
-            type: type,
-            ownedBy: Parse.User.current(),
-            value: totalValue
-        }, {
-            success: function(inventory) {
-                window.location.href = "./wire3.html?q=" + $("#metal").val();
-            },
-            error: function(inventory, error) {
-                alert("Unable to save inventory!");
-            }
-        });
-    }
 
     function checkInput() {
         var error = "";

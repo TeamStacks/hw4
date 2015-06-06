@@ -140,7 +140,7 @@
                             <td id="total_metal_ozt">0</td>
                         </tr>
                         <tr>
-                            <td><strong>TOTAL</strong></td>
+                            <td><strong>TOTAL ($)</strong></td>
                             <td><strong id="total_value">0</strong></td>
                         </tr>
                     </table>
@@ -219,7 +219,7 @@
         $("#grams_per_unit").text(gramsPerUnit.toFixed(4));
         $("#ozt_per_unit").text(oztPerUnit.toFixed(4));
         $("#total_metal_ozt").text(totalMetal.toFixed(4));
-        $("#total_value").text("$" + totalPrice.toFixed(2));
+        $("#total_value").text(totalPrice.toFixed(2));
     }
 
     function updateLabels() {

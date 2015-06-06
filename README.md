@@ -9,12 +9,34 @@ and extended.
 ## Navigation
 
 Start with index.html as the login/signup page. 
+
 1) If you are not logged in, you will not be able to see the other pages, as they will redirect you to index.html.
+
 2) Once you are logged in, unless you log out, you will automatically be redirected to wire2.html if you look at index.html.
 
 Inside wire2.html, and any other page for that matter, if you click the cog symbol in the top right, you will open your profile, from which you can log out, make changes to your profile, or link your Facebook.
 
 Clicking on the AG (silver) or PT (platinum) boxes on the side nav will navigate you to your inventory pages, which should dynamically serve you your current inventory (empty if you have not added any items).
+
+## Sample Work Flow!!!
+
+1) Open index.html. Click Register to register an account: <username> and <password>
+
+2) You should automatically be moved to wire2.html at this point. Otherwise, you may log in with <username> and <password>
+
+3) Choose AU and click the plus button, since you don't have any coins added to your inventories, to add a new coin.
+
+4) Choose an image and input VALID entries. Our form validation will prevent you from adding coins that have invalid inputs. Let's save the coin as a 'Gold'.Save the coin.
+
+5) Check AU again and you should see your coin.
+
+6) Click the row in order to view your newly added coin in detail. You should see what you had inputted as well as the image you chose.
+
+7) Notice that there is a red Delete button. Click this button to delete your coin.
+
+8) Go back to AU and you should not see your coin anymore.
+
+9) Click the Gear/Cog icon that you see on every page, and log out.
 
 ## Pages
 	index.html - Login/signup page. Should open modal and allow you to log in or sign up.
@@ -23,11 +45,22 @@ Clicking on the AG (silver) or PT (platinum) boxes on the side nav will navigate
 	wire4.html - Item page that looks at a specific gold coin
 	wire5.html - New Item page for adding a new coin
 
-## Responsive Design
+
+# Implementation
+
+We used a mixture of REST API and JavaScript and jQuery for our backend. Please continue reading to for more detail.
+
+# Design
+
+## Responsiveness
 
 All interactions with the application should be supported in Mobile view.
 
-# Validation Issues	
+## Light/Dark Theme
+
+By default, our app uses the Dark theme. You can change the theme when you click the Gear/Cog icon on every page. 
+
+# Validation	
 
 ## HTML
 
@@ -35,20 +68,17 @@ All the HTML validation checked out so there was no problem there.
 
 ## JavaScript
 
-There should be no errors, but there are occasionally warnins and also, debug prints when viewing with the developer console.
+There should be no console errors, but there are occasionally warnings and also, debug prints when viewing with the developer console.
 
 # Concerns
 
 The Gold/Silver/Plat totals were very difficult to graph because of ChartJS's limitations. ChartJS only accepts one set of x-axis values, which means that all datasets must share the same set of dates for the charted information to make any sense. We ended up writing a basic function that sums up all purchases made before a certain date. In short, the gold/silver/plat totals on the chart will look inaccurate, especially if an item's purchase date is not within the range of dates on the chart.
 
 There are also gaps in the dates for the 1oz gold/silver/platinum data from Quandl (no idea why). Ideally we would have written a scraper to scrape daily info from some other site, but we weren't sure how to do this in Parse (would be much easier in Node).
-# Dates
+
+## Dates
 
 There is a discrepancy between the Parse server dates and the browser dates that causes a minor difference in the dates when fetched and when stored. In Chrome, this is off by 5 hours, whereas in Firefox, the time is parsed correctly.
-
-# Implementation
-
-We used a mixture of REST API and JavaScript and jQuery for our backend.
 
 ## Front-end (From Dream Team spec)
 - HTML

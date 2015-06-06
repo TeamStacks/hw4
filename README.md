@@ -166,7 +166,7 @@ We used a mixture of REST API and JavaScript and jQuery for our backend. Please 
 - jquery-1.11.2.js - We used this for jQuery
 - Chart.js
 - d3.js - for dynamically serving data
-- TrackJS - for keeping track of our 
+- tracker.js - for keeping track of our errors
 
 ## JavaScript Files We Made
 

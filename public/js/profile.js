@@ -88,13 +88,18 @@ function logOut() {
 }
 
 function update() {
-	newpass = document.getElementById('pass').value;
+	theme = document.getElementById('checkbox').value == "on";
 	var user = Parse.User.current();
-	user.set("password", newpass);
+	newpass = document.getElementById('pass').value;
+	if (newpass != null)
+		user.set("password", newpass);
+	user.set("light", theme)
 
 	user.save(null, {
 	  success: function(user) {
 		alert("Your profile has been updated.");
+		window.location.reload();
+
 	  },
 	  error: function(user, error) {
 	    // Show the error message somewhere and let the user try again.
@@ -105,11 +110,19 @@ function update() {
 
 function verify() {
 	var currentUser = Parse.User.current();
-	if (currentUser) {
+	if (currentUser) { // init some things
 		Parse.User.current().fetch().then(function (user) {
     		document.getElementById('user').innerHTML = user.get('username');
     		if (Parse.FacebookUtils.isLinked(user)) {
     			document.getElementById('fblink').innerHTML = "Unlink Facebook";
+    		}
+    		if (user.get('light')) {
+    			$('#checkbox').prop('checked', true);
+    			$('body, .modal-body, .modal-header, .modal-footer, .breadcrumb, input, select').css('background-color', '#fff');
+		      $('body, a, .modal-body, .modal-header, .modal-footer, input, select').css('color', '#000');
+		      $('aside, nav, .total-value, .mobile-toggle').css('background-color', '#eee');
+		      $('input, select').css('border-color', '#000');
+		      $('input, select').css('border', '1px solid');
     		}
 		});
 	} else {

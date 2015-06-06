@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="description" content="bullion management site, rare coins, gold, silver, platinum">
-    <meta name="author" content="CSE134B Dream Team">
+    <meta name="author" content="CSE134B Team Stacks">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="./style/style.css">
@@ -13,8 +13,8 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <script src="./js/jquery-1.11.2.min.js"></script>
     <script type="text/javascript" src="./js/parse-1.4.2.min.js"></script>
-    <script type="text/javascript" src="./js/parsefb.js"></script>
-    <script src="./js/account.js"></script>
+    <script src="./js/init.js"></script>
+    <script src="./js/profile.js"></script>
     <script src="./js/Chart.js"></script>
     <script src="./js/main.js"></script>
     <script src="./js/query.js"></script>
@@ -210,13 +210,13 @@
                     <input type="password" class="form-control" id="pass" placeholder="Password">
                 </div>
                 <label>
-      <input type="checkbox" id="checkbox"> Use Light Theme
-    </label><br>
+                  <input type="checkbox" id="checkbox"> Use Light Theme
+                </label><br>
 
-                <button type="button" class="btn btn-primary" onclick="update()">Update Profile</button> <button id ="fblink" type="button" class="btn btn-primary" onclick="linkfb()">Link Facebook</button>
+                <button type="button" class="btn btn-primary" onclick="update()">Update Profile</button>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick="logOut()">Log Out</button>
+                 <button id ="fblink" type="button" class="btn btn-primary" onclick="linkfb()">Link Facebook</button> <button type="button" class="btn btn-danger" onclick="logOut()">Log Out</button>
             </div>
           </form>
         </div>

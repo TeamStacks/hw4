@@ -17,6 +17,7 @@ function populateTable(metalFrom) {
 
     			var curr = results[i]; // all coins in user's inventory
     			if (curr.get("metal") == metalFrom) {
+                    console.log(results.length);
     				    if (curr.get("imageURL") == null) {
                             var col1 = '<td class="stack_img_col"><div class="coin_mini"></div></td>';
                         }
@@ -28,7 +29,7 @@ function populateTable(metalFrom) {
                         var col4 = '<td>' + curr.get("weightPerUnit") + '</td>';
                         var col5 = '<td>' + curr.get("metalPercentage") + '</td>';
                         var col6 = '<td>' + curr.get("value").toFixed(4) + '</td>';
-
+console.log(results.length);
                         $('#inventory > tbody')
                             .append($('<tr></tr>').attr('onclick', 'inspectCoin(this)')
                                 .attr('id', curr.id).append(col1, col2, col3, col4, col5, col6));

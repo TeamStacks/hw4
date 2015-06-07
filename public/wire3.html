@@ -12,6 +12,7 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
   <link href="./css/c3.min.css" rel="stylesheet" type="text/css">
+  <link href="./css/chart.css" rel="stylesheet" type="text/css">
   <!-- BEGIN TRACKJS -->
   <script type="text/javascript">window._trackJs = { token: 'e91fe3cc79bb4f6583216124840df056' };</script>
   <script type="text/javascript" src="./js/tracker.js" crossorigin="anonymous"></script>
@@ -24,6 +25,8 @@
   <script src="./js/main.js"></script>
   <script src="./js/query.js"></script>
   <script src="./js/quandl.js"></script>
+  <script src="./js/d3.min.js"></script>
+  <script src="./js/c3.min.js"></script>
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   <title>My Gold - CoinFlip</title>
@@ -128,20 +131,8 @@
         </section>
       </section>
       <section class="graph-panel">
-        <section class="chart-legend">
-          <div class="legend-left-half">
-            <section class="legend-item1">      
-            </section>
-          </div>
-          <div class="legend-right-half">
-            <section class="legend-item2">     
-            </section>
-          </div>
-        </section>
-        <div class="chart-y-label">PRICE</div>
-        <div class="chart-x-label">TIME</div>
         <section class="chart-wrap">
-          <canvas id="total-chart"></canvas>
+          <div id="total-chart"></div>
         </section>
       </section>
       <section class="my_stack">

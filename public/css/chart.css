@@ -1,0 +1,31 @@
+.c3-axis-y .tick {
+	fill: white;
+}
+
+.c3-axis-x .tick {
+	fill: white;
+}
+
+.c3-legend-item {
+	fill: white;
+}
+
+.c3-axis-y-label {
+	fill: white;
+}
+
+.c3-axis-x-label {
+	fill: white;
+}
+
+.c3-axis > path{
+	stroke: white;
+}
+
+.c3-tooltip td{
+	background-color: black;
+}
+
+.tick > line {
+	stroke: white;
+}

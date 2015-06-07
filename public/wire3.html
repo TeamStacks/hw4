@@ -262,28 +262,18 @@
     loadFooter();
 
     var metalFrom = parseURLParams()['q'];
-
+    
     queryOwnedCoins(metalFrom, function(results) {
         var totalValue = 0;
 
         for (var i = 0; i < results.length; i++) {
             totalValue += parseFloat(results[i].get("value"));
-            console.log(results[i].get("purchaseDate"));
         }
 
-        var dailyChange = 0;
+        // Overall change is always zero because the total value of metal does not involve unit price.
+        // Total = Qty * Weight * Gold % + Premium
+        var dailyChange = totalValue / parseFloat($('#bid').text());
         var overallChange = 0;
-
-        if (results.length >= 2) {
-            var latestValue = parseFloat(results[results.length - 1].get("value"));
-            var secondLatestValue = parseFloat(results[results.length - 2].get("value"));
-
-            dailyChange = latestValue - secondLatestValue;
-            overallChange = latestValue - (totalValue - latestValue) / results.length;
-        } else if (results.length >= 1) {
-            dailyChange = 1;
-            overallChange = 1;
-        }
 
         dailyChange *= 100;
         overallChange *= 100;

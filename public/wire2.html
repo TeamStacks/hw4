@@ -232,22 +232,25 @@
         loadFooter();
 
         queryOwnedCoins(undefined, function (results) {
-            var totalValue = 0;
+            var totalGoldValue = 0;
+            var totalSilverValue = 0;
+            var totalPlatinumValue = 0;
 
             for (var i = 0; i < results.length; i++) {
-                totalValue += results[i].get("value");
+                if (results[i].get("metal") == 'Gold') {
+                    totalGoldValue += results[i].get("value");
+                } else if (results[i].get("metal") == 'Silver') {
+                    totalSilverValue += results[i].get("value");
+                } else if (results[i].get("metal") == 'Platinum') {
+                    totalPlatinumValue += results[i].get("value");
+                }
             }
-            
-            var dailyChange = 0;
 
-            if (results.length >= 2) {
-                var latestValue = parseFloat(results[results.length - 1].get("value"));
-                var secondLatestValue = parseFloat(results[results.length - 2].get("value"));
+            var dailyGoldChange = totalGoldValue / parseFloat($('#gold_bid').text()) * 100;
+            var dailySilverChange = totalSilverValue / parseFloat($('#silver_bid').text()) * 100;
+            var dailyPlatinumChange = totalPlatinumValue / parseFloat($('#plat_bid').text()) * 100;
 
-                dailyChange = latestValue - secondLatestValue;
-            } else if (results.length >= 1) {
-                dailyChange = 1;
-            }
+            var dailyChange = dailyGoldChange + dailySilverChange + dailyPlatinumChange;
 
             var totalValueStr = '$' + totalValue.toFixed(2);
             var dailyChangeStr = dailyChange > 0 ? '+' + dailyChange.toFixed(0) + '%' : dailyChange.toFixed(0) + '%';

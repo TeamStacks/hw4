@@ -200,6 +200,8 @@ We only had time to support JPG images, however, you can upload any kind of file
 
 The light theme is not very legible.
 
+Since we are using the formula Total = Qty * Weight * Gold % + Premium (https://groups.google.com/forum/#!topic/ucsd-cse-134b-spring-2015/Ven54JMGjtc) to calculate the total value of the metal, overall change will always be zero as it does not involve market price.
+
 # Thank you!
 
 Best,

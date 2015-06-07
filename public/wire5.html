@@ -98,7 +98,7 @@
                         <tr>
                             <td>Purchase Date</td>
                             <td>
-                                <input id="purchase_date" name="purchase_date" type="values" placeholder="mm/dd/yyyy"/>
+                                <input id="purchase_date" name="purchase_date" type="text" class="values" placeholder="mm\dd\yyyy"/>
                             </td>
                         </tr>
                         <tr>
@@ -402,7 +402,7 @@
                     error += "Invalid input on 'Purchase Date': Must be a past date\n";
                 }
             } else {
-                error += "Invalid input on 'Purchase Date': Format must be mm/dd/yyyy\n";
+                error += "Invalid input on 'Purchase Date': Format must be mm\/dd\/yyyy\n";
             }
         }
 

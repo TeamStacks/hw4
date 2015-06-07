@@ -66,7 +66,7 @@ All interactions with the application should be supported in Mobile view.
 
 ## Light/Dark Theme
 
-By default, our app uses the Dark theme. You can change the theme when you edit your profile settings by clicking the Gear/Cog icon on every page. 
+By default, our app uses the Dark theme. You can change the theme when you edit your profile settings by clicking the Gear/Cog icon on every page. You will just need to check the box, then click update profile for it to refresh and work.
 
 # Validation	
 

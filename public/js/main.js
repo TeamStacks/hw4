@@ -99,14 +99,6 @@ $(window).load(function() {
     var path = window.location.pathname;
     var page = path.split("/").pop();
 
-
-
-    /* * * * * * * * * * * * * *
-     *                         *
-     *        GENERAL          *
-     *                         *
-     * * * * * * * * * * * * * */
-
     $('.icon-spinner2').click(function() {
         location.reload();
     });
@@ -116,19 +108,14 @@ $(window).load(function() {
     });
 
 
-
+    var currentUser = Parse.User.current();
     // REMOVE THIS? NOT SURE WHAT THIS IS - ANGIE
     // $('tr').click(function() {
     //     $(this).find('a')[0].click();
     // });
 
-    /* * * * * * * * * * * * * *
-     *                         *
-     *        GRAPHING         *
-     *                         *
-     * * * * * * * * * * * * * */
     // graph for wire2 page
-    var drawGraph = function() {
+    var drawGraph = function(callback) {
         var pointStroke = "rgba(255,255,255,0.6)";
         var pointHighlightFill = "#fff";
         var pointHighlightStroke = "#fff";
@@ -140,7 +127,6 @@ $(window).load(function() {
         var goldData = $.getJSON('https://www.quandl.com/api/v1/datasets/WSJ/AU_EIB.json?auth_token=T8jzdKYTBSszwxQwxkcK&trim_start=' + trim_start_str);
         var silverData = $.getJSON('https://www.quandl.com/api/v1/datasets/WSJ/AG_EIB.json?auth_token=T8jzdKYTBSszwxQwxkcK&trim_start=' + trim_start_str);
         var platData = $.getJSON('https://www.quandl.com/api/v1/datasets/WSJ/PL_EIB.json?auth_token=T8jzdKYTBSszwxQwxkcK&trim_start=' + trim_start_str);
-        var currentUser = Parse.User.current();
 
         var Coin = Parse.Object.extend("Coin");
         var goldQ = new Parse.Query(Coin).ascending("purchaseDate").equalTo("ownedBy", currentUser).equalTo("metal", "Gold").find();
@@ -175,6 +161,7 @@ $(window).load(function() {
 
                 var chart = c3.generate({
                     bindto: '#total-chart',
+                    onrendered: invert,
                     size: {
                         height: 400
                     },
@@ -215,6 +202,9 @@ $(window).load(function() {
                                 return format(value);
                             }
                         }
+                    },
+                    legend: {
+                        position: 'right'
                     }
                 });
 
@@ -302,6 +292,7 @@ $(window).load(function() {
 
                     var chart = c3.generate({
                         bindto: '#total-chart',
+                        onrendered: invert,
                         size: {
                             height: 400
                         },
@@ -340,6 +331,9 @@ $(window).load(function() {
                                     return format(value);
                                 }
                             }
+                        },
+                        legend: {
+                            position: 'right'
                         }
                     });
 
@@ -385,6 +379,7 @@ $(window).load(function() {
 
                     var chart = c3.generate({
                         bindto: '#total-chart',
+                        onrendered: invert,
                         size: {
                             height: 400
                         },
@@ -423,6 +418,9 @@ $(window).load(function() {
                                     return format(value);
                                 }
                             }
+                        },
+                        legend: {
+                            position: 'right'
                         }
                     });
 
@@ -468,6 +466,7 @@ $(window).load(function() {
 
                     var chart = c3.generate({
                         bindto: '#total-chart',
+                        onrendered: invert,
                         size: {
                             height: 400
                         },
@@ -506,6 +505,9 @@ $(window).load(function() {
                                     return format(value);
                                 }
                             }
+                        },
+                        legend: {
+                            position: 'right'
                         }
                     });
 
@@ -539,12 +541,25 @@ $(window).load(function() {
                         });
                     });
                 });
-
             }
+        }
+        callback();
+    }
+
+    function invert() {
+        if (currentUser.get('light')) {
+            $('.c3-axis-y .tick').css('fill', 'black');
+            $('.c3-axis-x .tick').css('fill', 'black');
+            $('.c3-legend-item').css('fill', 'black');
+            $('.c3-axis-y-label').css('fill', 'black');
+            $('.c3-axis-x-label').css('fill', 'black');
+            $('.c3-axis > path').css('stroke', 'black');
+            $('.c3-tooltip td').css('background-color', 'white');
+            $('.tick > line').css('stroke', 'black');
         }
     }
 
-    drawGraph();
+    drawGraph(invert);
 
     /* * * * * * * * * * * * * *
      *                         *

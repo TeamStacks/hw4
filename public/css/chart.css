@@ -12,10 +12,12 @@
 
 .c3-axis-y-label {
 	fill: white;
+	font-size: 14px;
 }
 
 .c3-axis-x-label {
 	fill: white;
+	font-size: 14px;
 }
 
 .c3-axis > path{
@@ -28,4 +30,8 @@
 
 .tick > line {
 	stroke: white;
+}
+
+.tick tspan {
+	font-size: 12px;
 }

@@ -124,8 +124,8 @@ We used a mixture of REST API and JavaScript and jQuery for our backend. Please 
 		   		- loadSideNav(selected)
 		   		- loadFooter()
 
-		2) Creating the graphs. This was done using a library called Chart.js.
-		   Source: http://www.chartjs.org/
+		2) Creating the graphs. This was done using a library called ~~Chart.js.~~
+		   C3JS Source: http://www.c3js.org/
 
 		3) Handling navigation toggle buttons. This is when the application is 
 		   shrunk down to mobile size where the toggle buttons of information
@@ -148,11 +148,12 @@ We used a mixture of REST API and JavaScript and jQuery for our backend. Please 
 		
 			- Coin: Holds specific coin information, including image.
 			- User: Holds user information
-			- Inventory: Hold inventory information connecting the Coin and User databases together.
 			
 		3) Storing Images. We also used Parse to store images that were uploaded of each of the coins.
 
-		4) Since making a network call to Quandl anytime a page is loaded is too slow (~2 second load time), we instead wrote background jobs that pull updated information from Quandl everyday. This sped up the script loading by a great deal.
+		4) ~~Since making a network call to Quandl anytime a page is loaded is too slow (~2 second load time), we instead wrote background jobs that pull updated information from Quandl everyday. This sped up the script loading by a great deal.~~ Initially the network calls to Quandl were really slow, but they're ok now.
+
+
 
 - Facebook SDK
 	* We used Facebook as well to also provide users another way of logging into our application.
@@ -168,7 +169,7 @@ We used a mixture of REST API and JavaScript and jQuery for our backend. Please 
 - parse-1.4.2.js - JavaScript library from Parse
 - bootstrap.min.js (version 3.3.4) - We used this for the pop-up modals
 - jquery-1.11.2.js - We used this for jQuery
-- Chart.js
+- c3js & d3js - for graphing needs
 - d3.js - for dynamically serving data
 - tracker.js - for keeping track of our errors
 
@@ -178,6 +179,7 @@ We used a mixture of REST API and JavaScript and jQuery for our backend. Please 
 - profile.js - Handles all the methods for logging in and verifying log in with Parse SDK and Facebook
 - init.js - The javascript that initializes our Parse and Facebook SDK libraries.
 - quandl.js - Handles scraping of data from Quandl for our bid and total information.
+- Bid/Ask scraper - This code was provided by the TA Alex. It is hosted on a separate Heroku instance at teamstacks.herokuapps.com.
 
 # Error Tracking
 
@@ -190,9 +192,9 @@ password: 12345671
 
 # Concerns
 
-The Gold/Silver/Plat totals were very difficult to graph because of ChartJS's limitations. ChartJS only accepts one set of x-axis values, which means that all datasets must share the same set of dates for the charted information to make any sense. We ended up writing a basic function that sums up all purchases made before a certain date. In short, the gold/silver/plat totals on the chart will look inaccurate, especially if an item's purchase date is not within the range of dates on the chart.
+~~The Gold/Silver/Plat totals were very difficult to graph because of ChartJS's limitations. ChartJS only accepts one set of x-axis values, which means that all datasets must share the same set of dates for the charted information to make any sense. We ended up writing a basic function that sums up all purchases made before a certain date. In short, the gold/silver/plat totals on the chart will look inaccurate, especially if an item's purchase date is not within the range of dates on the chart.~~ Resolved by scrapping ChartJS and using c3js.
 
-There are also gaps in the dates for the 1oz gold/silver/platinum data from Quandl (no idea why). Ideally we would have written a scraper to scrape daily info from some other site, but we weren't sure how to do this in Parse (would be much easier in Node).
+~~There are also gaps in the dates for the 1oz gold/silver/platinum data from Quandl (no idea why). Ideally we would have written a scraper to scrape daily info from some other site, but we weren't sure how to do this in Parse (would be much easier in Node).~~ Resolved by using the scraper provided by Alex.
 
 There is a discrepancy between the Parse server dates and the browser dates that causes a minor difference in the dates when fetched and when stored. In Chrome, this is off by 5 hours, whereas in Firefox, the time is parsed correctly.
 
@@ -201,6 +203,8 @@ We only had time to support JPG images, however, you can upload any kind of file
 The light theme is not very legible.
 
 Since we are using the formula Total = Qty * Weight * Gold % + Premium (https://groups.google.com/forum/#!topic/ucsd-cse-134b-spring-2015/Ven54JMGjtc) to calculate the total value of the metal, overall change will always be zero as it does not involve market price.
+
+For whatever reason, we are unable to dynamically modify the c3js tooltip text color and background color despite being able to set the CSS with JavaScript for all other parts of the graphs.
 
 # Thank you!
 

@@ -554,7 +554,6 @@ $(window).load(function() {
             $('.c3-axis-y-label').css('fill', 'black');
             $('.c3-axis-x-label').css('fill', 'black');
             $('.c3-axis > path').css('stroke', 'black');
-            $('.c3-tooltip td').css('background-color', 'white');
             $('.tick > line').css('stroke', 'black');
         }
     }

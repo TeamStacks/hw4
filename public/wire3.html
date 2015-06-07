@@ -260,6 +260,21 @@
   <script type="text/javascript">
     verify();
     loadFooter();
+
+    queryOwnedCoins(function(results) {
+        var totalValue = 0;
+        var metalFrom = parseURLParams()['q'];
+
+        for (var i = 0; i < results.length; i++) {
+            var curr = results[i];
+
+            if (curr.get("metal") == metalFrom) {
+                totalValue += curr.get("value");
+            }
+        }
+
+        $(".total-value > .total-dollars").text('$' + totalValue.toFixed(2));
+    });
   </script>
 </body>
 

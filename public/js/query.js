@@ -7,6 +7,21 @@ function parseURLParams() {
     return params;
 }
 
+function queryOwnedCoins(success) {
+    var query = new Parse.Query(Parse.Object.extend("Coin"));
+    query.equalTo("ownedBy", Parse.User.current());
+    query.addDescending("purchaseDate");
+
+    query.find({
+        success: function(results) {
+            success(results)
+        },
+        error: function (error) {
+            alert("You do not have any coins added. " + error);
+        }
+    });
+}
+
 function populateTable(metalFrom) {
     var query = new Parse.Query(Parse.Object.extend("Coin"));
     query.equalTo("ownedBy", Parse.User.current());

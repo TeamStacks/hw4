@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -230,7 +230,17 @@
     <script type="text/javascript">
         verify();
         loadFooter();
-    
+
+        queryOwnedCoins(function (results) {
+            var totalValue = 0;
+
+            for (var i = 0; i < results.length; i++) {
+                var curr = results[i];
+                totalValue += curr.get("value");
+            }
+
+            $(".total-value > .total-dollars").text('$' + totalValue.toFixed(2));
+        });
     </script>
 </body>
 

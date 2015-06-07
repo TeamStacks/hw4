@@ -6,7 +6,7 @@
   <meta name="description" content="bullion management site, rare coins, gold, silver, platinum">
   <meta name="author" content="CSE134B Team Stacks">
   <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="./style/style.css">
   <meta name=viewport content="width=device-width, initial-scale=.8, minimum-scale = .8, user-scalable=yes">
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
@@ -28,7 +28,7 @@
   <script src="./js/d3.min.js"></script>
   <script src="./js/c3.min.js"></script>
   <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script src="./js/bootstrap.min.js"></script>
   <title>My Gold - CoinFlip</title>
 </head>
 
@@ -81,11 +81,11 @@
           <table class="current_gold">
             <tr>
               <td>Daily</td>
-              <td>+3.5%</td>
+              <td id="daily-change">+3.5%</td>
             </tr>
             <tr>
               <td>Overall</td>
-              <td>+1.2%</td>
+              <td id="overall-change">+1.2%</td>
             </tr>
           </table>
           <div class="total-label" id="my_gold_value">My Gold Value</div>
@@ -251,6 +251,54 @@
   <script type="text/javascript">
     verify();
     loadFooter();
+
+    var metalFrom = parseURLParams()['q'];
+
+    queryOwnedCoins(metalFrom, function(results) {
+        var totalValue = 0;
+
+        for (var i = 0; i < results.length; i++) {
+            totalValue += parseFloat(results[i].get("value"));
+            console.log(results[i].get("purchaseDate"));
+        }
+
+        var dailyChange = 0;
+        var overallChange = 0;
+
+        if (results.length >= 2) {
+            var latestValue = parseFloat(results[results.length - 1].get("value"));
+            var secondLatestValue = parseFloat(results[results.length - 2].get("value"));
+
+            dailyChange = latestValue - secondLatestValue;
+            overallChange = latestValue - (totalValue - latestValue) / results.length;
+        } else if (results.length >= 1) {
+            dailyChange = 1;
+            overallChange = 1;
+        }
+
+        dailyChange *= 100;
+        overallChange *= 100;
+
+        var totalValueStr = '$' + totalValue.toFixed(2);
+        var dailyChangeStr = dailyChange > 0 ? '+' + dailyChange.toFixed(0) + '%' : dailyChange.toFixed(0) + '%';
+        var overallChangeStr = overallChange > 0 ? '+' + overallChange.toFixed(0) + '%' : overallChange.toFixed(0) + '%';
+
+        $(".total-value > .total-dollars").text(totalValueStr);
+        $("#daily-change").text(dailyChangeStr);
+        $("#overall-change").text(overallChangeStr);
+
+        if (dailyChange >= 0) {
+            $("#daily-change").removeClass('neg-change').addClass('pos-change');
+        } else {
+            $("#daily-change").removeClass('pos-change').addClass('neg-change');
+        }
+
+        if (overallChange >= 0) {
+            $("#overall-change").removeClass('neg-change').addClass('pos-change');
+        } else {
+            $("#overall-change").removeClass('pos-change').addClass('neg-change');
+        }
+    });
   </script>
 </body>
 

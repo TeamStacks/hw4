@@ -78,11 +78,11 @@
           <table class="current_gold">
             <tr>
               <td>Daily</td>
-              <td>+3.5%</td>
+              <td id="daily-change">+3.5%</td>
             </tr>
             <tr>
               <td>Overall</td>
-              <td>+1.2%</td>
+              <td id="overall-change">+1.2%</td>
             </tr>
           </table>
           <div class="total-label" id="my_gold_value">My Gold Value</div>
@@ -261,19 +261,52 @@
     verify();
     loadFooter();
 
-    queryOwnedCoins(function(results) {
+    var metalFrom = parseURLParams()['q'];
+
+    queryOwnedCoins(metalFrom, function(results) {
         var totalValue = 0;
-        var metalFrom = parseURLParams()['q'];
 
         for (var i = 0; i < results.length; i++) {
-            var curr = results[i];
-
-            if (curr.get("metal") == metalFrom) {
-                totalValue += curr.get("value");
-            }
+            totalValue += parseFloat(results[i].get("value"));
+            console.log(results[i].get("purchaseDate"));
         }
 
-        $(".total-value > .total-dollars").text('$' + totalValue.toFixed(2));
+        var dailyChange = 0;
+        var overallChange = 0;
+
+        if (results.length >= 2) {
+            var latestValue = parseFloat(results[results.length - 1].get("value"));
+            var secondLatestValue = parseFloat(results[results.length - 2].get("value"));
+
+            dailyChange = latestValue - secondLatestValue;
+            overallChange = latestValue - (totalValue - latestValue) / results.length;
+        } else if (results.length >= 1) {
+            dailyChange = 1;
+            overallChange = 1;
+        }
+
+        dailyChange *= 100;
+        overallChange *= 100;
+
+        var totalValueStr = '$' + totalValue.toFixed(2);
+        var dailyChangeStr = dailyChange > 0 ? '+' + dailyChange.toFixed(0) + '%' : dailyChange.toFixed(0) + '%';
+        var overallChangeStr = overallChange > 0 ? '+' + overallChange.toFixed(0) + '%' : overallChange.toFixed(0) + '%';
+
+        $(".total-value > .total-dollars").text(totalValueStr);
+        $("#daily-change").text(dailyChangeStr);
+        $("#overall-change").text(overallChangeStr);
+
+        if (dailyChange >= 0) {
+            $("#daily-change").removeClass('neg-change').addClass('pos-change');
+        } else {
+            $("#daily-change").removeClass('pos-change').addClass('neg-change');
+        }
+
+        if (overallChange >= 0) {
+            $("#overall-change").removeClass('neg-change').addClass('pos-change');
+        } else {
+            $("#overall-change").removeClass('pos-change').addClass('neg-change');
+        }
     });
   </script>
 </body>

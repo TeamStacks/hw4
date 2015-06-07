@@ -7,14 +7,26 @@ function parseURLParams() {
     return params;
 }
 
-function queryOwnedCoins(success) {
+function queryOwnedCoins(metal, success) {
     var query = new Parse.Query(Parse.Object.extend("Coin"));
     query.equalTo("ownedBy", Parse.User.current());
-    query.addDescending("purchaseDate");
+    query.addAscending("purchaseDate");
 
     query.find({
-        success: function(results) {
-            success(results)
+        success: function (queryResults) {
+            if (metal === undefined) {
+                success(queryResults)
+            } else {
+                var results = [];
+
+                for (var i = 0; i < queryResults.length; i++) {
+                    if (queryResults[i].get("metal") == metal) {
+                        results.push(queryResults[i]);
+                    }
+                }
+
+                success(results);
+            }
         },
         error: function (error) {
             alert("You do not have any coins added. " + error);

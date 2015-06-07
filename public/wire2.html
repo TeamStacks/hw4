@@ -231,15 +231,35 @@
         verify();
         loadFooter();
 
-        queryOwnedCoins(function (results) {
+        queryOwnedCoins(undefined, function (results) {
             var totalValue = 0;
 
             for (var i = 0; i < results.length; i++) {
-                var curr = results[i];
-                totalValue += curr.get("value");
+                totalValue += results[i].get("value");
+            }
+            
+            var dailyChange = 0;
+
+            if (results.length >= 2) {
+                var latestValue = parseFloat(results[results.length - 1].get("value"));
+                var secondLatestValue = parseFloat(results[results.length - 2].get("value"));
+
+                dailyChange = latestValue - secondLatestValue;
+            } else if (results.length >= 1) {
+                dailyChange = 1;
             }
 
-            $(".total-value > .total-dollars").text('$' + totalValue.toFixed(2));
+            var totalValueStr = '$' + totalValue.toFixed(2);
+            var dailyChangeStr = dailyChange > 0 ? '+' + dailyChange.toFixed(0) + '%' : dailyChange.toFixed(0) + '%';
+
+            $(".total-value > .total-dollars").text(totalValueStr);
+            $(".total-value .total-change").text(dailyChangeStr);
+
+            if (dailyChange >= 0) {
+                $(".total-value .total-change").removeClass('neg-change').addClass('pos-change');
+            } else {
+                $(".total-value .total-change").removeClass('pos-change').addClass('neg-change');
+            }
         });
     </script>
 </body>
